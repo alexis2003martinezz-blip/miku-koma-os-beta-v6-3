@@ -320,10 +320,14 @@
     <video id="bg-video" autoplay loop muted src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/YTDown.com_YouTube_Black-Dragon-4K-Live-Wallpaper_Media_9y4UGT0GW6Y_001_1080p.mp4"></video>
     <div id="brightness-overlay"></div>
 
-    <div id="boot-screen" class="system-layer active">
-        <h1 class="koma-brand">KomaOS</h1>
-        <div id="kernel-log"></div>
-        <button id="boot-btn" class="koma-btn hidden" onclick="startBoot()">START SYSTEM</button>
+    <div id="start-screen" class="system-layer active" style="background:#000;z-index:10001;cursor:pointer;" onclick="playBootloader()">
+        <h1 class="koma-brand" style="margin-bottom:30px;">KomaOS</h1>
+        <button class="koma-btn" style="font-size:1.2rem;padding:15px 40px;pointer-events:none;">▶ START</button>
+        <p style="margin-top:15px;opacity:0.5;font-size:13px;">Click anywhere to start</p>
+    </div>
+
+    <div id="boot-screen" class="system-layer" style="background:#000;z-index:10000;">
+        <video id="bootloader-video" style="width:100%;height:100%;object-fit:cover;" src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/koma-os-v1.5-bootloader-new.mp4"></video>
     </div>
 
     <div id="auth-screen" class="system-layer">
