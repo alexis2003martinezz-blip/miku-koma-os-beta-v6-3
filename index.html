@@ -1974,13 +1974,25 @@ let currentAudio = new Audio();
         }
 
         function playBootloader() {
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('boot-screen').classList.add('active');
-            const vid = document.getElementById('bootloader-video');
-            vid.play();
-            vid.onended = function() {
-                transitionLayer('boot-screen', 'auth-screen');
-            };
+            // Fade out start screen elements
+            document.getElementById('start-title').style.opacity = '0';
+            document.getElementById('start-btn').style.opacity = '0';
+            document.getElementById('start-hint').style.opacity = '0';
+            
+            // After fade, show video
+            setTimeout(() => {
+                document.getElementById('start-screen').style.display = 'none';
+                document.getElementById('boot-screen').classList.add('active');
+                const vid = document.getElementById('bootloader-video');
+                vid.play().catch(e => {
+                    console.log('Video autoplay blocked, waiting for interaction');
+                    vid.muted = true;
+                    vid.play();
+                });
+                vid.onended = function() {
+                    transitionLayer('boot-screen', 'auth-screen');
+                };
+            }, 300);
         }
 
         function startBoot() {
