@@ -327,7 +327,9 @@
     </div>
 
     <div id="boot-screen" class="system-layer" style="background:#000;z-index:10000;">
-        <video id="bootloader-video" style="width:100%;height:100%;object-fit:cover;" autoplay playsinline src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/koma-os-v1.5-bootloader-new.mp4"></video>
+        <video id="bootloader-video" style="width:100%;height:100%;object-fit:cover;" playsinline preload="auto">
+            <source src="https://github.com/alexis2003martinezz-blip/Miku-station-music-storage1/raw/main/koma-os-v1.5-bootloader-new.mp4" type="video/mp4">
+        </video>
     </div>
 
     <div id="auth-screen" class="system-layer">
@@ -1984,12 +1986,24 @@ let currentAudio = new Audio();
                 document.getElementById('start-screen').style.display = 'none';
                 document.getElementById('boot-screen').classList.add('active');
                 const vid = document.getElementById('bootloader-video');
+                
+                // Try to play with sound first, fallback to muted
                 vid.play().catch(e => {
-                    console.log('Video autoplay blocked, waiting for interaction');
                     vid.muted = true;
-                    vid.play();
+                    return vid.play();
+                }).catch(e => {
+                    console.error('Video failed to play:', e);
+                    // If video can't play at all, skip to auth
+                    transitionLayer('boot-screen', 'auth-screen');
                 });
+                
                 vid.onended = function() {
+                    transitionLayer('boot-screen', 'auth-screen');
+                };
+                
+                // Fallback if video fails to load
+                vid.onerror = function() {
+                    console.error('Video failed to load');
                     transitionLayer('boot-screen', 'auth-screen');
                 };
             }, 300);
