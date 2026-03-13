@@ -321,13 +321,13 @@
     <div id="brightness-overlay"></div>
 
     <div id="start-screen" class="system-layer active" style="background:#000;z-index:10001;cursor:pointer;" onclick="playBootloader()">
-        <h1 class="koma-brand" style="margin-bottom:30px;">KomaOS</h1>
-        <button class="koma-btn" style="font-size:1.2rem;padding:15px 40px;pointer-events:none;">▶ START</button>
-        <p style="margin-top:15px;opacity:0.5;font-size:13px;">Click anywhere to start</p>
+        <h1 id="start-title" class="koma-brand" style="margin-bottom:30px;transition:opacity 0.3s;">KomaOS</h1>
+        <button id="start-btn" class="koma-btn" style="font-size:1.2rem;padding:15px 40px;pointer-events:none;transition:opacity 0.3s;">▶ START</button>
+        <p id="start-hint" style="margin-top:15px;opacity:0.5;font-size:13px;transition:opacity 0.3s;">Click anywhere to start</p>
     </div>
 
     <div id="boot-screen" class="system-layer" style="background:#000;z-index:10000;">
-        <video id="bootloader-video" style="width:100%;height:100%;object-fit:cover;" src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/koma-os-v1.5-bootloader-new.mp4"></video>
+        <video id="bootloader-video" style="width:100%;height:100%;object-fit:cover;" autoplay playsinline src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/koma-os-v1.5-bootloader-new.mp4"></video>
     </div>
 
     <div id="auth-screen" class="system-layer">
