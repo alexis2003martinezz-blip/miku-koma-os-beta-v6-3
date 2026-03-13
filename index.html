@@ -1968,32 +1968,19 @@ let currentAudio = new Audio();
         };
 
         function initSystem() {
-            const log = document.getElementById('kernel-log');
-            const lines = [
-                "KOMA KERNEL v6.0.2-RELEASE",
-                "Initializing Firebase Bridge...",
-                "Loading Liquid Glass Drivers...",
-                "Mounting Video Storage: BLACK_DRAGON_4K",
-                "Checking network...",
-                "CAUTION: Envy-Factor detected. Resetting to checkpoint...","Return by Death protocols... [ACTIVE]","Syncing with Ethereal Gaze...","Hollow Deep Dive authorized. Welcome back, Proxy","System ready","credits to our agents","larry","jose","allison","esteban","inspired on:","cinehub","cineos"
-            ];
-            
-            let i = 0;
-            const interval = setInterval(() => {
-                if (i < lines.length) {
-                    const p = document.createElement('p');
-                    p.textContent = `[${(Math.random()*2).toFixed(4)}] ${lines[i]}`;
-                    log.appendChild(p);
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    document.getElementById('boot-btn').classList.remove('hidden');
-                }
-            }, 300);
-
             updateClock();
             setInterval(updateClock, 1000);
             initBattery();
+        }
+
+        function playBootloader() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('boot-screen').classList.add('active');
+            const vid = document.getElementById('bootloader-video');
+            vid.play();
+            vid.onended = function() {
+                transitionLayer('boot-screen', 'auth-screen');
+            };
         }
 
         function startBoot() {
