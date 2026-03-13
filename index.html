@@ -305,31 +305,16 @@
 }
 
     </style>
-  <meta property="og:title" content="KomaOS v6.0 | Extreme Edition">
-  <meta name="twitter:title" content="KomaOS v6.0 | Extreme Edition">
-  <meta name="description" content="koma os the news web os">
-  <meta property="og:description" content="koma os the news web os">
-  <meta name="twitter:description" content="koma os the news web os">
-  <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/788efbec-020b-49fa-af36-6fae2a8e9349/id-preview-defdc850--da885287-c172-48b0-b37a-c2291b764f7c.lovable.app-1773293086480.png">
-  <meta name="twitter:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/788efbec-020b-49fa-af36-6fae2a8e9349/id-preview-defdc850--da885287-c172-48b0-b37a-c2291b764f7c.lovable.app-1773293086480.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:type" content="website">
 </head>
 <body onload="initSystem()">
 
     <video id="bg-video" autoplay loop muted src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/YTDown.com_YouTube_Black-Dragon-4K-Live-Wallpaper_Media_9y4UGT0GW6Y_001_1080p.mp4"></video>
     <div id="brightness-overlay"></div>
 
-    <div id="start-screen" class="system-layer active" style="background:#000;z-index:10001;cursor:pointer;" onclick="playBootloader()">
-        <h1 id="start-title" class="koma-brand" style="margin-bottom:30px;transition:opacity 0.3s;">KomaOS</h1>
-        <button id="start-btn" class="koma-btn" style="font-size:1.2rem;padding:15px 40px;pointer-events:none;transition:opacity 0.3s;">▶ START</button>
-        <p id="start-hint" style="margin-top:15px;opacity:0.5;font-size:13px;transition:opacity 0.3s;">Click anywhere to start</p>
-    </div>
-
-    <div id="boot-screen" class="system-layer" style="background:#000;z-index:10000;">
-        <video id="bootloader-video" style="width:100%;height:100%;object-fit:cover;" playsinline preload="auto">
-            <source src="https://github.com/alexis2003martinezz-blip/Miku-station-music-storage1/raw/main/koma-os-v1.5-bootloader-new.mp4" type="video/mp4">
-        </video>
+    <div id="boot-screen" class="system-layer active">
+        <h1 class="koma-brand">KomaOS</h1>
+        <div id="kernel-log"></div>
+        <button id="boot-btn" class="koma-btn hidden" onclick="startBoot()">START SYSTEM</button>
     </div>
 
     <div id="auth-screen" class="system-layer">
@@ -1970,43 +1955,32 @@ let currentAudio = new Audio();
         };
 
         function initSystem() {
+            const log = document.getElementById('kernel-log');
+            const lines = [
+                "KOMA KERNEL v6.0.2-RELEASE",
+                "Initializing Firebase Bridge...",
+                "Loading Liquid Glass Drivers...",
+                "Mounting Video Storage: BLACK_DRAGON_4K",
+                "Checking network...",
+                "CAUTION: Envy-Factor detected. Resetting to checkpoint...","Return by Death protocols... [ACTIVE]","Syncing with Ethereal Gaze...","Hollow Deep Dive authorized. Welcome back, Proxy","System ready","credits to our agents","larry","jose","allison","esteban","inspired on:","cinehub","cineos"
+            ];
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < lines.length) {
+                    const p = document.createElement('p');
+                    p.textContent = `[${(Math.random()*2).toFixed(4)}] ${lines[i]}`;
+                    log.appendChild(p);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    document.getElementById('boot-btn').classList.remove('hidden');
+                }
+            }, 300);
+
             updateClock();
             setInterval(updateClock, 1000);
             initBattery();
-        }
-
-        function playBootloader() {
-            // Fade out start screen elements
-            document.getElementById('start-title').style.opacity = '0';
-            document.getElementById('start-btn').style.opacity = '0';
-            document.getElementById('start-hint').style.opacity = '0';
-            
-            // After fade, show video
-            setTimeout(() => {
-                document.getElementById('start-screen').style.display = 'none';
-                document.getElementById('boot-screen').classList.add('active');
-                const vid = document.getElementById('bootloader-video');
-                
-                // Try to play with sound first, fallback to muted
-                vid.play().catch(e => {
-                    vid.muted = true;
-                    return vid.play();
-                }).catch(e => {
-                    console.error('Video failed to play:', e);
-                    // If video can't play at all, skip to auth
-                    transitionLayer('boot-screen', 'auth-screen');
-                });
-                
-                vid.onended = function() {
-                    transitionLayer('boot-screen', 'auth-screen');
-                };
-                
-                // Fallback if video fails to load
-                vid.onerror = function() {
-                    console.error('Video failed to load');
-                    transitionLayer('boot-screen', 'auth-screen');
-                };
-            }, 300);
         }
 
         function startBoot() {
