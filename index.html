@@ -2829,19 +2829,83 @@ function setAccent(color) {
     document.documentElement.style.setProperty('--primary', color);
 }
 let aiActive = false;
-let aiLang = 'en';
+let aiConversationHistory = [];
+const AI_GREETINGS = [
+    "¡Hola de nuevo! 😊 ¿En qué te ayudo?",
+    "Hey! Aquí Koma AI, lista para lo que necesites 🚀",
+    "¡Qué onda! ¿Qué quieres saber hoy? 🤓",
+    "¡Bienvenido de vuelta! Pregúntame lo que sea 💡"
+];
+
+const AI_THINKING_PHRASES = [
+    "Déjame buscar eso...",
+    "Procesando tu consulta...",
+    "Investigando...",
+    "Un momento, estoy pensando...",
+    "Buscando información relevante..."
+];
+
+const FUN_FACTS = [
+    "🐙 Los pulpos tienen tres corazones y su sangre es azul.",
+    "🍯 La miel nunca se echa a perder. Se ha encontrado miel comestible en tumbas egipcias de 3000 años.",
+    "🌍 Un día en Venus dura más que un año en Venus.",
+    "🧠 Tu cerebro usa aproximadamente el 20% de la energía total de tu cuerpo.",
+    "🐋 El corazón de una ballena azul es tan grande que un niño podría nadar por sus arterias.",
+    "⚡ Un rayo es 5 veces más caliente que la superficie del sol.",
+    "🦈 Los tiburones existían antes que los árboles.",
+    "🌙 La Luna se aleja de la Tierra unos 3.8 cm cada año.",
+    "🎵 Las vacas producen más leche cuando escuchan música relajante.",
+    "🐝 Las abejas pueden reconocer rostros humanos.",
+    "💎 Llueven diamantes en Júpiter y Saturno.",
+    "🦷 Los dientes de un caracol (rádula) pueden tener más de 20,000 dientes microscópicos.",
+    "🌊 El océano Pacífico es más grande que toda la superficie terrestre combinada.",
+    "🧬 Compartimos el 60% de nuestro ADN con los plátanos.",
+    "🔥 La temperatura del núcleo de la Tierra es similar a la de la superficie del sol (~5500°C)."
+];
+
+const JOKES_ES = [
+    "¿Qué le dijo un techo a otro techo? Techo de menos 😂",
+    "¿Qué hace una abeja en el gimnasio? ¡Zumba! 🐝",
+    "¿Por qué el libro de matemáticas estaba triste? Porque tenía demasiados problemas 📚",
+    "¿Qué le dice un semáforo a otro? No me mires, me estoy cambiando 🚦",
+    "¿Cómo se llama el campeón de buceo japonés? Tokofondo 🏊",
+    "¿Qué le dijo el número 1 al número 10? Para ser como yo, tienes que ser sincero (sin cero) 🔢",
+    "¿Qué estudian los hijos de los árabes? Beni, ¿qué álgebra! 📐",
+    "Doctor, vengo a que me revise. ¿De parte de quién? 🏥"
+];
+
+const APP_COMMANDS = {
+    'calculadora': 'win-calc', 'calculator': 'win-calc', 'calc': 'win-calc',
+    'notas': 'win-notes', 'notes': 'win-notes',
+    'archivos': 'win-files', 'files': 'win-files',
+    'reloj': 'win-clock', 'clock': 'win-clock',
+    'terminal': 'win-terminal',
+    'configuración': 'win-settings', 'settings': 'win-settings', 'ajustes': 'win-settings',
+    'música': 'win-komafy', 'music': 'win-komafy', 'komafy': 'win-komafy',
+    'cine': 'win-cinema', 'cinema': 'win-cinema',
+    'tienda': 'win-store', 'store': 'win-store',
+    'paint': 'win-paint', 'dibujo': 'win-paint',
+    'clima': 'win-weather', 'weather': 'win-weather',
+    'cámara': 'win-camera', 'camera': 'win-camera',
+    'wikipedia': 'win-wiki', 'wiki': 'win-wiki',
+    'juegos': 'win-games', 'games': 'win-games'
+};
 
 function toggleAI(enabled) {
     aiActive = enabled;
     const win = document.getElementById('win-ai-koma');
     if(enabled) {
         win.classList.remove('hidden');
-        showNotification('System', 'Koma AI Activated');
-        // Agregar al dock visualmente si lo deseas
+        showNotification('Sistema', '🧠 Koma AI Activada');
         addToDock('ai', 'https://cdn-icons-png.flaticon.com/512/2103/2103633.png', () => openWin('win-ai-koma'));
     } else {
         win.classList.add('hidden');
     }
+}
+
+function aiSuggest(text) {
+    document.getElementById('ai-prompt').value = text;
+    sendToAI();
 }
 
 async function sendToAI() {
@@ -2852,73 +2916,280 @@ async function sendToAI() {
     addBubble(msg, 'user');
     input.value = '';
     
-    document.getElementById('ai-status').style.display = 'block';
+    // Show thinking state
+    document.getElementById('ai-status').style.display = 'flex';
+    document.getElementById('ai-think-bar').style.display = 'block';
+    
+    // Hide suggestions after first message
+    document.getElementById('ai-suggestions').style.display = 'none';
 
-    // Lógica de respuesta
+    const query = msg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
+    // Simulate thinking delay for realism
+    const thinkTime = 600 + Math.random() * 1200;
+    
     setTimeout(async () => {
         let response = "";
-        const query = msg.toLowerCase();
+        let source = "";
 
-        // 1. Visión de Pantalla (Contexto)
-        if(query.includes('see') || query.includes('screen') || query.includes('pantalla')) {
-            const screenText = scanScreen();
-            response = `I can see that you have windows open. Here is some text I found: "${screenText.substring(0, 100)}..."`;
-        } 
-        // 2. Matemáticas
-        else if(/\d+[\+\-\*\/]\d+/.test(query)) {
+        // 1. Greetings
+        if(/^(hola|hi|hey|hello|que tal|buenas|saludos|ey|sup|yo)$/i.test(query.trim())) {
+            response = AI_GREETINGS[Math.floor(Math.random() * AI_GREETINGS.length)];
+            source = "Koma AI Core";
+        }
+        // 2. How are you / conversational
+        else if(query.includes('como estas') || query.includes('how are you') || query.includes('que onda')) {
+            const replies = [
+                "¡Funcionando al 100%! 🚀 Mis circuitos están a tope. ¿Y tú qué tal?",
+                "¡Mejor que nunca! Acabo de procesar 2 millones de datos y me siento genial 😄",
+                "¡Excelente! Lista para ayudarte con lo que necesites 💪"
+            ];
+            response = replies[Math.floor(Math.random() * replies.length)];
+            source = "Koma AI Core";
+        }
+        // 3. Identity
+        else if(query.includes('quien eres') || query.includes('que eres') || query.includes('who are you') || query.includes('your name')) {
+            response = "Soy <b>Koma AI</b>, la inteligencia artificial integrada en KomaOS v6.0 🧠\n\nFui creada para ser tu asistente personal dentro del sistema. Puedo buscar información, resolver matemáticas, contar chistes, abrir apps, y mucho más. ¡Estoy en Beta pero mejorando cada día!";
+            source = "Koma AI Core";
+        }
+        // 4. Thanks
+        else if(query.includes('gracias') || query.includes('thank')) {
+            const thanks = ["¡De nada! Para eso estoy 😊", "¡Un placer! Pregunta cuando quieras 🤗", "¡No hay de qué! Aquí siempre para ti 💚"];
+            response = thanks[Math.floor(Math.random() * thanks.length)];
+            source = "Koma AI Core";
+        }
+        // 5. Jokes
+        else if(query.includes('chiste') || query.includes('joke') || query.includes('gracioso') || query.includes('funny') || query.includes('hazme reir')) {
+            response = JOKES_ES[Math.floor(Math.random() * JOKES_ES.length)];
+            source = "Koma Comedy Engine";
+        }
+        // 6. Fun facts / trivia
+        else if(query.includes('dato curioso') || query.includes('fun fact') || query.includes('trivia') || query.includes('sabias que') || query.includes('curiosidad') || query.includes('interesante')) {
+            response = FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+            source = "Koma Trivia Database";
+        }
+        // 7. Open apps
+        else if(query.includes('abre') || query.includes('abrir') || query.includes('open') || query.includes('launch')) {
+            let appOpened = false;
+            for(const [keyword, winId] of Object.entries(APP_COMMANDS)) {
+                if(query.includes(keyword)) {
+                    openWin(winId);
+                    response = `✅ ¡Listo! He abierto <b>${keyword}</b> para ti.`;
+                    source = "Koma System Control";
+                    appOpened = true;
+                    break;
+                }
+            }
+            if(!appOpened) {
+                response = "No encontré esa app. Las disponibles son: " + Object.keys(APP_COMMANDS).filter((v,i,a) => a.indexOf(v) === i).slice(0, 10).join(', ') + "...";
+                source = "Koma System";
+            }
+        }
+        // 8. Time / Date
+        else if(query.includes('hora') || query.includes('time') || query.includes('que hora')) {
+            const now = new Date();
+            response = `🕐 Son las <b>${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}</b><br>📅 ${now.toLocaleDateString('es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'})}`;
+            source = "Koma System Clock";
+        }
+        // 9. Math
+        else if(/[\d][\+\-\*\/\^][\d]|sqrt|sin|cos|tan|log|pi|pow/.test(query)) {
             try {
-                const result = eval(query.replace(/[^-()\d/*+.]/g, ''));
-                response = `The result is ${result}.`;
-            } catch { response = "I couldn't calculate that math expression."; }
+                let expr = query.replace(/[^-()\d/*+.^sqrtcosanlogiepw,]/g, '')
+                    .replace(/sqrt\(([^)]+)\)/g, 'Math.sqrt($1)')
+                    .replace(/sin\(([^)]+)\)/g, 'Math.sin($1)')
+                    .replace(/cos\(([^)]+)\)/g, 'Math.cos($1)')
+                    .replace(/tan\(([^)]+)\)/g, 'Math.tan($1)')
+                    .replace(/log\(([^)]+)\)/g, 'Math.log($1)')
+                    .replace(/pi/g, 'Math.PI')
+                    .replace(/\^/g, '**');
+                const result = eval(expr);
+                response = `🧮 <b>Resultado:</b> ${result}<br><small style="opacity:0.5">Expresión evaluada: ${query}</small>`;
+                source = "Koma Math Engine";
+            } catch { 
+                response = "🤔 No pude calcular esa expresión. Intenta algo como: 2+2, sqrt(144), 5^2";
+                source = "Koma Math Engine";
+            }
         }
-        // 3. Wikipedia / Diccionario
-        else if(query.includes('what is') || query.includes('define') || query.includes('who is')) {
-            const term = query.replace('what is', '').replace('define', '').replace('who is', '').trim();
+        // 10. Dictionary (English)
+        else if(query.includes('define') || query.includes('definicion de') || query.includes('definition') || query.includes('significa')) {
+            let term = query.replace(/define|definicion de|definition of|que significa|significa/gi, '').trim();
+            response = await fetchDictionary(term);
+            source = "Free Dictionary API";
+        }
+        // 11. Screen vision
+        else if(query.includes('see') || query.includes('screen') || query.includes('pantalla') || query.includes('que ves') || query.includes('vision')) {
+            const screenText = scanScreen();
+            const wordCount = screenText.split(/\s+/).length;
+            response = `👁️ <b>Análisis de pantalla:</b><br>Detecto <b>${document.querySelectorAll('.window:not(.hidden):not(.ai-window)').length}</b> ventanas abiertas con ~${wordCount} palabras visibles.<br><br>Texto encontrado: "<i>${screenText.substring(0, 150)}${screenText.length > 150 ? '...' : ''}</i>"`;
+            source = "Koma Screen Vision";
+        }
+        // 12. Weather
+        else if(query.includes('clima') || query.includes('weather') || query.includes('temperatura')) {
+            response = "🌤️ El módulo de clima real está en desarrollo. Por ahora, te sugiero abrir la app de Clima diciendo: <b>\"abre clima\"</b>";
+            source = "Koma Weather (Coming Soon)";
+        }
+        // 13. Wikipedia
+        else if(query.includes('que es') || query.includes('what is') || query.includes('quien es') || query.includes('who is') || query.includes('explica') || query.includes('explain') || query.includes('dime sobre') || query.includes('tell me about') || query.length > 10) {
+            let term = query
+                .replace(/que es|what is|quien es|who is|explica|explain|dime sobre|tell me about|busca|search/gi, '')
+                .trim();
+            if(!term) term = query;
             response = await fetchWiki(term);
+            if(response.includes("couldn't find") || response.includes("Connection error")) {
+                // Try English Wikipedia as fallback
+                const enResponse = await fetchWikiEN(term);
+                if(!enResponse.includes("couldn't find") && !enResponse.includes("Connection error")) {
+                    response = enResponse;
+                    source = "Wikipedia (EN)";
+                } else {
+                    response = `🤔 No encontré información sobre "<b>${term}</b>" en Wikipedia. Intenta reformular tu pregunta o pregunta algo más específico.`;
+                    source = "Koma AI";
+                }
+            } else {
+                source = "Wikipedia (ES)";
+            }
         }
+        // 14. Fallback conversational
         else {
-            response = "I am currently in Beta. I can help with Wikipedia, Math, or reading your screen text. Try asking 'What is Physics?'";
+            const fallbacks = [
+                `🤔 Hmm, no estoy segura de cómo responder a "<i>${msg}</i>", pero estoy aprendiendo. ¡Intenta preguntarme sobre ciencia, historia, o pídeme un chiste!`,
+                `Todavía estoy en Beta, así que no conozco todo. Pero prueba: <b>"¿Qué es la fotosíntesis?"</b> o <b>"Dato curioso"</b> 🧪`,
+                `No tengo una respuesta para eso... aún 😅 Pero puedo buscar en Wikipedia, resolver matemáticas, contar chistes, o abrir apps del sistema.`
+            ];
+            response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            source = "Koma AI Core";
         }
 
-        addBubble(response, 'bot');
+        addBubble(response, 'bot', source);
         document.getElementById('ai-status').style.display = 'none';
-    }, 800);
+        document.getElementById('ai-think-bar').style.display = 'none';
+        
+        // Update suggestions based on context
+        updateAISuggestions(query);
+    }, thinkTime);
 }
 
-function addBubble(text, type) {
+function addBubble(text, type, source) {
     const container = document.getElementById('ai-messages');
     const b = document.createElement('div');
     b.className = `ai-bubble ${type}`;
-    b.innerText = text;
+    
+    const now = new Date();
+    const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    
+    if(type === 'bot') {
+        b.innerHTML = text + 
+            (source ? `<span class="ai-source">📡 ${source}</span>` : '') +
+            `<span class="timestamp">${timeStr}</span>`;
+    } else {
+        b.innerHTML = text + `<span class="timestamp">${timeStr}</span>`;
+    }
+    
     container.appendChild(b);
     container.scrollTop = container.scrollHeight;
+    
+    // Track conversation
+    aiConversationHistory.push({ role: type, content: text });
+}
+
+function updateAISuggestions(lastQuery) {
+    const container = document.getElementById('ai-suggestions');
+    container.style.display = 'flex';
+    
+    const contextSuggestions = {
+        default: [
+            { emoji: '🌌', text: '¿Qué es un agujero negro?' },
+            { emoji: '😂', text: 'Cuéntame un chiste' },
+            { emoji: '🎲', text: 'Dato curioso' },
+            { emoji: '📖', text: 'Define serendipity' }
+        ],
+        science: [
+            { emoji: '⚛️', text: '¿Qué es la materia oscura?' },
+            { emoji: '🧬', text: '¿Qué es el ADN?' },
+            { emoji: '🔬', text: 'Explica la relatividad' },
+            { emoji: '🎲', text: 'Dato curioso' }
+        ],
+        fun: [
+            { emoji: '😂', text: 'Otro chiste' },
+            { emoji: '🎲', text: 'Dato curioso' },
+            { emoji: '🌍', text: '¿Cuántos países hay?' },
+            { emoji: '🧮', text: '¿Cuánto es 42^2?' }
+        ]
+    };
+    
+    let suggestions = contextSuggestions.default;
+    if(lastQuery.includes('ciencia') || lastQuery.includes('physics') || lastQuery.includes('quimica')) {
+        suggestions = contextSuggestions.science;
+    } else if(lastQuery.includes('chiste') || lastQuery.includes('dato')) {
+        suggestions = contextSuggestions.fun;
+    }
+    
+    container.innerHTML = suggestions.map(s => 
+        `<div class="ai-suggest-chip" onclick="aiSuggest('${s.text}')">${s.emoji} ${s.text.substring(0, 20)}${s.text.length > 20 ? '...' : ''}</div>`
+    ).join('');
 }
 
 function scanScreen() {
-    // Escanea el texto de todas las ventanas abiertas que no sean la de la IA
     const windows = document.querySelectorAll('.window:not(.hidden):not(.ai-window)');
     let textFound = "";
-    windows.forEach(w => {
-        textFound += w.innerText + " ";
-    });
-    return textFound || "The desktop seems empty.";
+    windows.forEach(w => { textFound += w.innerText + " "; });
+    return textFound.trim() || "El escritorio parece vacío.";
 }
 
 async function fetchWiki(term) {
     try {
+        const res = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`);
+        const data = await res.json();
+        if(data.extract) {
+            const extract = data.extract.length > 400 ? data.extract.substring(0, 400) + '...' : data.extract;
+            return `📚 <b>${data.title || term}</b><br><br>${extract}`;
+        }
+        return null;
+    } catch {
+        return "Error de conexión con Wikipedia.";
+    }
+}
+
+async function fetchWikiEN(term) {
+    try {
         const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`);
         const data = await res.json();
-        return data.extract || "I couldn't find information about that on Wikipedia.";
+        if(data.extract) {
+            const extract = data.extract.length > 400 ? data.extract.substring(0, 400) + '...' : data.extract;
+            return `📚 <b>${data.title || term}</b><br><br>${extract}`;
+        }
+        return "I couldn't find information about that.";
     } catch {
         return "Connection error with Wikipedia API.";
     }
 }
 
-function openAISettings() {
-    addBubble("AI Settings: Language is set to English. You can ask me to 'speak in Spanish' to change it temporarily.", 'bot');
+async function fetchDictionary(term) {
+    try {
+        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(term)}`);
+        if(!res.ok) {
+            return `📖 No encontré la definición de "<b>${term}</b>". Intenta con una palabra en inglés.`;
+        }
+        const data = await res.json();
+        const entry = data[0];
+        const phonetic = entry.phonetics?.find(p => p.text)?.text || '';
+        let definitions = '';
+        entry.meanings?.slice(0, 2).forEach(m => {
+            definitions += `<br><b>${m.partOfSpeech}:</b> ${m.definitions[0]?.definition || 'N/A'}`;
+            if(m.definitions[0]?.example) {
+                definitions += `<br><i style="opacity:0.6">Ej: "${m.definitions[0].example}"</i>`;
+            }
+        });
+        return `📖 <b>${entry.word}</b> ${phonetic ? `<span style="opacity:0.5">${phonetic}</span>` : ''}${definitions}`;
+    } catch {
+        return "Error connecting to Dictionary API.";
+    }
 }
 
-// Función para simular el botón en el dock
+function openAISettings() {
+    addBubble("⚙️ <b>Configuración de Koma AI:</b><br><br>🔹 Motor: Koma AI Core v2.0 Beta<br>🔹 Fuentes: Wikipedia (ES/EN), Dictionary API, Trivia DB<br>🔹 Idioma: Auto-detect (ES/EN)<br>🔹 Visión de pantalla: Activa<br>🔹 Control de sistema: Activo<br><br>💡 <i>Tip: Puedes pedirme que abra cualquier app diciendo 'abre [nombre]'</i>", 'bot', 'Koma Settings');
+}
+
 function addToDock(id, icon, action) {
     const dock = document.querySelector('.dock');
     if(!document.getElementById('dock-item-' + id)) {
