@@ -1118,11 +1118,11 @@
     </div>
 </div>
 
-<div id="win-ai-koma" class="window hidden ai-window" style="width: 400px; height: 500px; top: 100px; right: 50px; z-index: 5000;">
-    <div class="win-header" style="background: rgba(0, 255, 204, 0.1);">
+<div id="win-ai-koma" class="window hidden ai-window" style="width: 420px; height: 580px; top: 80px; right: 50px; z-index: 5000;">
+    <div class="win-header" style="background: rgba(0, 255, 204, 0.06);">
         <div style="display: flex; align-items: center;">
-            <span style="font-weight: bold; color: var(--accent);">KOMA AI</span>
-            <span class="beta-badge">BETA</span>
+            <span style="font-weight: bold; color: var(--accent); font-size: 15px;">KOMA AI</span>
+            <span class="beta-badge">BETA v2</span>
         </div>
         <div class="win-btns">
             <div class="win-btn min" onclick="minWin('win-ai-koma')"></div>
@@ -1131,14 +1131,43 @@
         </div>
     </div>
     <div class="ai-body">
-        <div class="ai-chat-area" id="ai-messages">
-            <div class="ai-bubble bot">Hello! I am Koma AI. I can see your screen and help you with Wikipedia, Math, or Dictionary. How can I help you today?</div>
+        <div class="ai-header-banner">
+            <div class="ai-avatar">🧠</div>
+            <div>
+                <div style="font-weight: bold; font-size: 13px; color: var(--accent);">Koma Intelligence</div>
+                <div style="font-size: 10px; opacity: 0.5;">Wikipedia • Dictionary • Math • Jokes • Trivia • Screen Vision</div>
+            </div>
+            <div class="ai-status-dot" id="ai-online-dot"></div>
         </div>
-        <div id="ai-status" class="ai-typing">Koma is thinking...</div>
+        <div class="ai-thinking-bar" id="ai-think-bar"></div>
+        <div class="ai-chat-area" id="ai-messages">
+            <div class="ai-bubble bot">
+                ¡Hola! 👋 Soy <b>Koma AI</b>, tu asistente integrado en KomaOS.<br><br>
+                Puedo ayudarte con:
+                <br>📚 <b>Wikipedia</b> — "¿Qué es la física cuántica?"
+                <br>📖 <b>Diccionario</b> — "Define serendipity"
+                <br>🧮 <b>Matemáticas</b> — "2+2" o "sqrt(144)"
+                <br>😂 <b>Chistes</b> — "Cuéntame un chiste"
+                <br>🎲 <b>Trivia</b> — "Dato curioso"
+                <br>👁️ <b>Visión</b> — "¿Qué hay en mi pantalla?"
+                <br>💻 <b>Sistema</b> — "Abre calculadora"
+                <span class="timestamp">Koma AI • Online</span>
+            </div>
+        </div>
+        <div id="ai-status" class="ai-typing">
+            <div class="ai-typing-dots"><span></span><span></span><span></span></div>
+            <span style="font-size: 12px; color: var(--accent);">Koma está pensando...</span>
+        </div>
+        <div class="ai-suggestions" id="ai-suggestions">
+            <div class="ai-suggest-chip" onclick="aiSuggest('¿Qué es un agujero negro?')">🌌 Agujeros negros</div>
+            <div class="ai-suggest-chip" onclick="aiSuggest('Cuéntame un chiste')">😂 Chiste</div>
+            <div class="ai-suggest-chip" onclick="aiSuggest('Dato curioso')">🎲 Trivia</div>
+            <div class="ai-suggest-chip" onclick="aiSuggest('Define ephemeral')">📖 Diccionario</div>
+        </div>
         <div class="ai-input-zone">
-            <button onclick="openAISettings()" style="background:none; border:none; cursor:pointer; font-size:18px;">⚙️</button>
-            <input type="text" id="ai-prompt" class="ai-input" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter') sendToAI()">
-            <button onclick="sendToAI()" class="koma-btn" style="padding: 8px 15px; border-radius: 20px;">Send</button>
+            <button onclick="openAISettings()" style="background:none; border:none; cursor:pointer; font-size:16px; opacity:0.5; transition:0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">⚙️</button>
+            <input type="text" id="ai-prompt" class="ai-input" placeholder="Pregúntame lo que quieras..." onkeypress="if(event.key==='Enter') sendToAI()">
+            <button onclick="sendToAI()" class="ai-send-btn" title="Enviar">➤</button>
         </div>
     </div>
 </div>
