@@ -29,6 +29,8 @@
 
         // Exponer a global para uso en botones
         window.komaAuth = { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, setDoc, doc };
+   <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
     </script>
 
     <style>
@@ -303,6 +305,106 @@
     display: flex;
     flex-direction: column;
 }
+/* --- KOMA AI: STYLES --- */
+#win-koma-ai {
+    width: 400px;
+    height: 550px;
+    top: 50px;
+    right: 50px;
+    left: auto; /* Posicionada a la derecha */
+    border: 1px solid rgba(0, 255, 204, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-beta-tag {
+    background: var(--accent);
+    color: #000;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.ai-chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(0,0,0,0.2);
+}
+
+.ai-bubble {
+    max-width: 85%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bubblePop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.ai-bubble.user {
+    align-self: flex-end;
+    background: var(--primary);
+    color: white;
+    border-bottom-right-radius: 2px;
+}
+
+.ai-bubble.bot {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.1);
+    color: #eee;
+    border-bottom-left-radius: 2px;
+    border: 1px solid var(--border);
+}
+
+.ai-input-area {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    background: rgba(255,255,255,0.05);
+    border-top: 1px solid var(--border);
+}
+
+.ai-input {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    outline: none;
+}
+
+.ai-config-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.ai-config-btn:hover { transform: rotate(90deg); }
+
+/* Animación de carga */
+.typing-dots { display: flex; gap: 4px; padding: 5px; }
+.dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: dotBounce 1.4s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+}
 
     </style>
 </head>
@@ -548,6 +650,12 @@
 <input type="range" min="0.1" max="1.5" step="0.1" value="0.4" class="auth-input" style="padding:0" oninput="updateAnimSpeed(this.value)">
 
 </div>
+<hr style="opacity: 0.1; margin: 20px 0;">
+<p style="font-size: 14px; font-weight: bold; color: var(--accent);">Koma AI Services</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+    <span>Enable Koma AI Desktop</span>
+    <input type="checkbox" id="ai-toggle" onchange="toggleAIService(this.checked)">
+</div>
 
             </div>
         </div>
@@ -649,15 +757,17 @@
                     <div style="flex: 1;"><strong>KOMA Games</strong><p style="font-size:12px; margin:4px 0;">Diversión Online</p></div>
                     <button class="mac-get-btn" onclick="animateMacDownload(this, 'KOMA Games', 'https://cdn-icons-png.flaticon.com/512/808/808439.png', 'https://fgdfdgdfg.ajh.boats.cdn.cloudflare.net/')">get</button>
                 </div>
-               <div class="store-item-card">
-                    <img src="https://cdn-icons-png.flaticon.com/512/564/564442.png" style="width:60px; border-radius:14px;">
-               <div style="flex: 1;"><strong>Rapid Identity</strong><p style="font-size:12px; margin:4px 0;">CCPS Portal</p></div>
-                    <button class="mac-get-btn" onclick="animateMacDownload(this, 'equionx', 'https://cdn-icons-png.flaticon.com/512/564/564442.png', 'https://mathworks.kennesawcommons.com/')">get</button>
-                </div>
+                <div class="store-item-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2965/2965306.png" style="width:60px; border-radius:14px;">
+                    <div style="flex: 1;"><strong>Rapid Identity</strong><p style="font-size:12px; margin:4px 0;">CCPS Portal</p></div>
+                    <button class="mac-get-btn" onclick="animateMacDownload(this, 'Rapid Identity', 'https://cdn-icons-png.flaticon.com/512/2965/2965306.png', 'https://my.ccpsnet.net/ui/applications')">get</button>
+              
+              </div>
+              
                <div class="store-item-card">
                     <img src="https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png" style="width:60px; border-radius:14px;">
                     <div style="flex: 1;"><strong>Nikehub</strong><p style="font-size:12px; margin:4px 0;"></p></div>
-                    <button class="mac-get-btn" onclick="animateMacDownload(this, 'nikehub', 'https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png', 'https://securly.pages.dev/')">get</button>
+                    <button class="mac-get-btn" onclick="animateMacDownload(this, 'Rapid Identity', 'https://cdn-icons-png.flaticon.com/512/2965/2965306.png', 'https://securly.pages.dev/')">get</button>
                 </div>
             </div>
 
@@ -682,21 +792,11 @@
                     <div style="width:100%; height:100px; border-radius:10px; background: url('https://i.pinimg.com/originals/ec/d6/72/ecd67255b08380eb534d3f8ee397bc85.gif') center/cover;"></div>
                     <p>minecraft nature gif</p>
                     <button class="mac-get-btn" onclick="animateWallDownload(this, 'https://i.pinimg.com/originals/ec/d6/72/ecd67255b08380eb534d3f8ee397bc85.gif')">donwload</button>
-                                             </div>
-                                              <div class="store-item-card" style="flex-direction:column; align-items:flex-start;">
-                    <div style="width:100%; height:100px; border-radius:10px; background: url('https://tinyurl.com/ypx9jrn9') center/cover;"></div>
-                    <p>dragon sumaria anime boy</p>
-                    <button class="mac-get-btn" onclick="animateWallDownload(this, 'https://tinyurl.com/ypx9jrn9')">donwload</button>
-              </div>
-                                              <div class="store-item-card" style="flex-direction:column; align-items:flex-start;">
-                    <div style="width:100%; height:100px; border-radius:10px; background: url('https://i.pinimg.com/originals/51/2f/c3/512fc362a4ca2663778db016c2b7f703.gif') center/cover;"></div>
-                    <p>sukuna gif</p>
-                    <button class="mac-get-btn" onclick="animateWallDownload(this, 'https://i.pinimg.com/originals/51/2f/c3/512fc362a4ca2663778db016c2b7f703.gif')">donwload</button>
                 </div>
             </div>
         </div>
     </div>
-<div id="win-cinema" class="window hidden" style="width: 90%; height: 85%; top: 5%; left: 5%;">https://tinyurl.com/ypx9jrn9
+<div id="win-cinema" class="window hidden" style="width: 90%; height: 85%; top: 5%; left: 5%;">
     <div class="win-header">
         <span style="color: #ff6400; font-weight: bold;">KOMA CINEMA PRO</span>
         <div class="win-btns">
@@ -860,6 +960,38 @@
     </div>
 </div>
 
+<div id="win-koma-ai" class="window hidden liquid-glass">
+    <div class="win-header">
+        <div style="display:flex; align-items:center;">
+            <span>Koma AI</span>
+            <span class="ai-beta-tag">Beta</span>
+        </div>
+        <div class="win-btns">
+            <button class="ai-config-btn" onclick="toggleAIConfig()">⚙️</button>
+            <div class="win-btn min" onclick="minWin('win-koma-ai')"></div>
+            <div class="win-btn max" onclick="maxWin('win-koma-ai')"></div>
+            <div class="win-btn close" onclick="closeWin('win-koma-ai')"></div>
+        </div>
+    </div>
+    
+    <div id="ai-chat" class="ai-chat-container">
+        <div class="ai-bubble bot">Hello! I am Koma AI. I can see your screen and help you with Wikipedia, Math, or Dictionary. (English by default).</div>
+    </div>
+
+    <div id="ai-config-panel" class="hidden" style="padding: 10px; background: rgba(0,0,0,0.5); font-size: 12px; border-top: 1px solid var(--border);">
+        <p>Personalization:</p>
+        <select id="ai-tone" class="auth-input" style="font-size:11px; padding:5px;">
+            <option value="helpful">Helpful Assistant</option>
+            <option value="miku">Hatsune Miku Style</option>
+            <option value="pro">Professional OS Expert</option>
+        </select>
+    </div>
+
+    <div class="ai-input-area">
+        <input type="text" id="ai-prompt" class="ai-input" placeholder="Type something..." onkeypress="if(event.key==='Enter') sendAIMessage()">
+        <button onclick="sendAIMessage()" class="koma-btn" style="padding: 5px 15px; border-radius: 20px;">Send</button>
+    </div>
+</div>
 
 <div id="win-app-launcher" class="window hidden liquid-glass" style="width: 550px; bottom: 100px; left: 50%; transform: translateX(-50%); border-radius: 30px; z-index: 9999;">
     <div class="win-body" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; padding: 35px;" id="launcher-container">
@@ -895,6 +1027,9 @@
         <div class="dock-item" onclick="openApp('win-files')"><img src="https://images.icon-icons.com/2963/PNG/512/macos_big_sur_wpaper_folder_icon_186058.png"></div>
         <div class="dock-item" onclick="openApp('win-settings')"><img src="https://cdn.jim-nielsen.com/macos/512/system-preferences-2021-06-03.png?rf=1024"></div>
    <div class="dock-item" onclick="openPaint()" title="Paint"><img src="https://cdn-icons-png.flaticon.com/512/16075/16075971.png"></div></div>
+<div id="dock-ai" class="dock-item hidden" onclick="openWin('win-koma-ai')">
+    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" title="Koma AI">
+</div>
 
     </div>
 </footer>
@@ -1040,11 +1175,11 @@
     }
 
     function animateWallDownload(btn, url) {
-        btn.classList.add('downloading'); btn.innerText = "downloading...";
+        btn.classList.add('downloading'); btn.innerText = "Bajando...";
         setTimeout(() => {
-            btn.classList.remove('downloading'); btn.innerText = "APLY";
+            btn.classList.remove('downloading'); btn.innerText = "APLICAR";
             btn.onclick = () => changeBG(url);
-            showNotification("Store", "Wallpaper donwload.");
+            showNotification("Store", "Fondo descargado.");
         }, 2000);
     }
 
@@ -1162,20 +1297,7 @@ function initDockAutoArchive() {
         }
     });
 }
-// --- Lógica de Koma Paint ---
-const canvas = document.getElementById('paint-canvas');
-const ctx = canvas.getContext('2d');
-let drawing = false;
-
-function initPaint() {
-    canvas.width = 600; canvas.height = 400;
-    ctx.strokeStyle = '#000'; ctx.lineWidth = 5; ctx.lineCap = 'round';
-    
-    canvas.onmousedown = (e) => { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); };
-    canvas.onmousemove = (e) => { if(drawing) { ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); } };
-    canvas.onmouseup = () => drawing = false;
-}
-function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }// --- Lógica Avanzada de Koma Paint ---
+// --- Lógica Avanzada de Koma Paint ---
 let p_canvas, p_ctx, p_drawing = false;
 
 function initPaint() {
@@ -1254,6 +1376,7 @@ function saveToLocal() {
     nameInput.value = "";
     updateLoadList();
 }
+
 function updateLoadList() {
     const list = document.getElementById('paint-load-list');
     const drawings = JSON.parse(localStorage.getItem('koma_drawings') || '{}');
@@ -1287,7 +1410,6 @@ function loadFromLocal() {
 
 // Inicializar al cargar el sistema
 // Puedes llamar a initPaint() dentro de tu función initSystem() existente
-
 
 // --- Lógica de la Terminal ---
 const termInput = document.getElementById('term-input');
@@ -1438,6 +1560,102 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si ya tienes un sistema de apertura de ventanas, llama a renderCinema() ahí
     renderCinema();
 });
+const GROQ_API_KEY = "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";
+let aiActive = localStorage.getItem('komaAI_enabled') === 'true';
+
+// Inicializar estado de IA al cargar
+function initAI() {
+    if (aiActive) {
+        document.getElementById('ai-toggle').checked = true;
+        document.getElementById('dock-ai').classList.remove('hidden');
+    }
+}
+
+function toggleAIService(enabled) {
+    aiActive = enabled;
+    localStorage.setItem('komaAI_enabled', enabled);
+    const dockIcon = document.getElementById('dock-ai');
+    
+    if (enabled) {
+        dockIcon.classList.remove('hidden');
+        showNotification('Koma AI', 'AI System activated on desktop');
+        openWin('win-koma-ai');
+    } else {
+        dockIcon.classList.add('hidden');
+        closeWin('win-koma-ai');
+    }
+}
+
+function toggleAIConfig() {
+    document.getElementById('ai-config-panel').classList.toggle('hidden');
+}
+
+// Escanear texto de todas las ventanas abiertas
+function scanDesktopText() {
+    let screenContext = "";
+    document.querySelectorAll('.window:not(.hidden):not(#win-koma-ai)').forEach(win => {
+        const title = win.querySelector('.win-header span').innerText;
+        const content = win.querySelector('.win-body').innerText.substring(0, 500); // Límite de texto
+        screenContext += `[Window: ${title}] Content: ${content}\n`;
+    });
+    return screenContext || "The desktop is empty.";
+}
+
+async function sendAIMessage() {
+    const input = document.getElementById('ai-prompt');
+    const chat = document.getElementById('ai-chat');
+    const msg = input.value.trim();
+    const tone = document.getElementById('ai-tone').value;
+
+    if (!msg) return;
+
+    // Agregar mensaje de usuario
+    chat.innerHTML += `<div class="ai-bubble user">${msg}</div>`;
+    input.value = "";
+    chat.scrollTop = chat.scrollHeight;
+
+    // Indicador de carga
+    const loadingId = 'loading-' + Date.now();
+    chat.innerHTML += `<div class="ai-bubble bot" id="${loadingId}"><div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+
+    const context = scanDesktopText();
+
+    try {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${GROQ_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "llama3-8b-8192",
+                messages: [
+                    {
+                        role: "system", 
+                        content: `You are Koma AI, an integrated OS assistant for KomaOS v6.0. 
+                        Context of the user's screen: ${context}.
+                        Personality tone: ${tone}.
+                        Capabilities: Use Wikipedia-like knowledge, solve math, and act as a dictionary.
+                        IMPORTANT: Always respond in ENGLISH unless the user speaks in Spanish or asks for Spanish. 
+                        Be concise and use animations-friendly text.`
+                    },
+                    { role: "user", content: msg }
+                ]
+            })
+        });
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content;
+
+        document.getElementById(loadingId).innerText = aiResponse;
+    } catch (error) {
+        document.getElementById(loadingId).innerText = "Error connecting to Koma AI Brain. Check connection.";
+    }
+    chat.scrollTop = chat.scrollHeight;
+}
+
+// Llamar a initAI en tu función window.onload o initSystem
+setTimeout(initAI, 1000);
 
     // Drag System
     document.querySelectorAll('.win-header').forEach(header => {
@@ -2562,7 +2780,7 @@ function initBattery() {
     if (navigator.getBattery) {
         navigator.getBattery().then(bat => {
             const update = () => {
-                document.getElementById('top-bar').textContent = `${bat.charging ? '⚡' : '🔋'} ${Math.round(bat.level * 100)}%`;
+                document.getElementById('top-bat').textContent = `${bat.charging ? '⚡' : '🔋'} ${Math.round(bat.level * 100)}%`;
             };
             update();
             bat.addEventListener('levelchange', update);
