@@ -303,108 +303,269 @@
     display: flex;
     flex-direction: column;
 }
-/* --- KOMA AI: STYLES --- */
-#win-koma-ai {
-    width: 400px;
-    height: 550px;
-    top: 50px;
-    right: 50px;
-    left: auto; /* Posicionada a la derecha */
-    border: 1px solid rgba(0, 255, 204, 0.3);
+/* --- KOMA AI: EXTREME EDITION STYLES --- */
+.ai-window {
+    border: 1px solid rgba(0, 255, 204, 0.3) !important;
+    box-shadow: 0 0 40px rgba(0, 255, 204, 0.15), inset 0 0 60px rgba(0, 255, 204, 0.03) !important;
+    animation: aiWindowGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes aiWindowGlow {
+    0% { box-shadow: 0 0 30px rgba(0, 255, 204, 0.1), inset 0 0 40px rgba(0, 255, 204, 0.02); }
+    100% { box-shadow: 0 0 50px rgba(0, 255, 204, 0.25), inset 0 0 80px rgba(0, 255, 204, 0.05); }
+}
+
+.ai-body {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(10, 10, 15, 0.9) 0%, rgba(5, 15, 20, 0.95) 100%);
 }
 
-.ai-beta-tag {
-    background: var(--accent);
-    color: #000;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    margin-left: 8px;
-    font-weight: 900;
-    text-transform: uppercase;
+.ai-header-banner {
+    padding: 12px 15px;
+    background: linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(23, 147, 209, 0.08));
+    border-bottom: 1px solid rgba(0, 255, 204, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: bannerShimmer 4s ease-in-out infinite;
 }
 
-.ai-chat-container {
+@keyframes bannerShimmer {
+    0%, 100% { background: linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(23, 147, 209, 0.08)); }
+    50% { background: linear-gradient(135deg, rgba(23, 147, 209, 0.12), rgba(0, 255, 204, 0.12)); }
+}
+
+.ai-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    animation: avatarPulse 2s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+}
+
+@keyframes avatarPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
+    50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(0, 255, 204, 0.5); }
+}
+
+.ai-status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #00ff88; margin-left: auto;
+    animation: statusBlink 1.5s infinite;
+}
+
+@keyframes statusBlink {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+}
+
+.ai-chat-area {
     flex: 1;
-    overflow-y: auto;
     padding: 15px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: rgba(0,0,0,0.2);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,255,204,0.2) transparent;
 }
 
 .ai-bubble {
     max-width: 85%;
-    padding: 10px 15px;
-    border-radius: 15px;
-    font-size: 14px;
-    line-height: 1.4;
-    animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes bubblePop {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    position: relative;
+    word-wrap: break-word;
 }
 
 .ai-bubble.user {
     align-self: flex-end;
-    background: var(--primary);
+    background: linear-gradient(135deg, var(--primary), #1565c0);
     color: white;
-    border-bottom-right-radius: 2px;
+    border-bottom-right-radius: 4px;
+    animation: bubbleSlideLeft 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .ai-bubble.bot {
     align-self: flex-start;
-    background: rgba(255,255,255,0.1);
-    color: #eee;
-    border-bottom-left-radius: 2px;
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 204, 0.15);
+    border-bottom-left-radius: 4px;
+    animation: bubbleSlideRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.ai-input-area {
-    padding: 15px;
+.ai-bubble.bot::before {
+    content: '🤖';
+    position: absolute;
+    top: -8px;
+    left: -4px;
+    font-size: 14px;
+}
+
+.ai-bubble .timestamp {
+    font-size: 10px;
+    opacity: 0.4;
+    margin-top: 4px;
+    display: block;
+}
+
+.ai-bubble.bot .ai-source {
+    font-size: 10px;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-top: 6px;
+    display: block;
+    font-style: italic;
+}
+
+@keyframes bubbleSlideLeft {
+    from { opacity: 0; transform: translateX(30px) scale(0.8); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes bubbleSlideRight {
+    from { opacity: 0; transform: translateX(-30px) scale(0.8); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.ai-input-zone {
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(0, 255, 204, 0.1);
     display: flex;
-    gap: 10px;
-    background: rgba(255,255,255,0.05);
-    border-top: 1px solid var(--border);
+    gap: 8px;
+    align-items: center;
 }
 
 .ai-input {
     flex: 1;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 255, 204, 0.15);
+    padding: 10px 15px;
+    border-radius: 25px;
     color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
     outline: none;
-}
-
-.ai-config-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
     transition: 0.3s;
+    font-size: 13px;
 }
 
-.ai-config-btn:hover { transform: rotate(90deg); }
-
-/* Animación de carga */
-.typing-dots { display: flex; gap: 4px; padding: 5px; }
-.dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: dotBounce 1.4s infinite; }
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes dotBounce {
-    0%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-6px); }
+.ai-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.15);
+    background: rgba(255, 255, 255, 0.08);
 }
 
-    </style>
+.ai-send-btn {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ai-send-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+}
+
+.beta-badge {
+    background: linear-gradient(135deg, var(--accent), #00cc99);
+    color: black;
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 900;
+    margin-left: 8px;
+    text-transform: uppercase;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { opacity: 1; } 50% { opacity: 0.7; }
+}
+
+.ai-typing {
+    padding: 8px 15px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-typing-dots {
+    display: flex;
+    gap: 4px;
+}
+
+.ai-typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: typingDot 1.4s infinite;
+}
+
+.ai-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.ai-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingDot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+    30% { transform: translateY(-8px); opacity: 1; }
+}
+
+.ai-suggestions {
+    display: flex;
+    gap: 6px;
+    padding: 8px 15px;
+    flex-wrap: wrap;
+}
+
+.ai-suggest-chip {
+    background: rgba(0, 255, 204, 0.08);
+    border: 1px solid rgba(0, 255, 204, 0.2);
+    color: var(--accent);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.ai-suggest-chip:hover {
+    background: rgba(0, 255, 204, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 255, 204, 0.15);
+}
+
+.ai-thinking-bar {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--primary), transparent);
+    background-size: 200% 100%;
+    animation: thinkBar 1.5s linear infinite;
+    display: none;
+}
+
+@keyframes thinkBar {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+
 </head>
 <body onload="initSystem()">
 
@@ -649,10 +810,9 @@
 
 </div>
 <hr style="opacity: 0.1; margin: 20px 0;">
-<p style="font-size: 14px; font-weight: bold; color: var(--accent);">Koma AI Services</p>
-<div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-    <span>Enable Koma AI Desktop</span>
-    <input type="checkbox" id="ai-toggle" onchange="toggleAIService(this.checked)">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <p style="font-size: 14px; color: var(--accent);">Enable Koma AI (Beta)</p>
+    <input type="checkbox" id="ai-toggle" onchange="toggleAI(this.checked)" style="width: 20px; height: 20px; cursor: pointer;">
 </div>
 
             </div>
@@ -958,36 +1118,57 @@
     </div>
 </div>
 
-<div id="win-koma-ai" class="window hidden liquid-glass">
-    <div class="win-header">
-        <div style="display:flex; align-items:center;">
-            <span>Koma AI</span>
-            <span class="ai-beta-tag">Beta</span>
+<div id="win-ai-koma" class="window hidden ai-window" style="width: 420px; height: 580px; top: 80px; right: 50px; z-index: 5000;">
+    <div class="win-header" style="background: rgba(0, 255, 204, 0.06);">
+        <div style="display: flex; align-items: center;">
+            <span style="font-weight: bold; color: var(--accent); font-size: 15px;">KOMA AI</span>
+            <span class="beta-badge">BETA v2</span>
         </div>
         <div class="win-btns">
-            <button class="ai-config-btn" onclick="toggleAIConfig()">⚙️</button>
-            <div class="win-btn min" onclick="minWin('win-koma-ai')"></div>
-            <div class="win-btn max" onclick="maxWin('win-koma-ai')"></div>
-            <div class="win-btn close" onclick="closeWin('win-koma-ai')"></div>
+            <div class="win-btn min" onclick="minWin('win-ai-koma')"></div>
+            <div class="win-btn max" onclick="maxWin('win-ai-koma')"></div>
+            <div class="win-btn close" onclick="closeWin('win-ai-koma')"></div>
         </div>
     </div>
-    
-    <div id="ai-chat" class="ai-chat-container">
-        <div class="ai-bubble bot">Hello! I am Koma AI. I can see your screen and help you with Wikipedia, Math, or Dictionary. (English by default).</div>
-    </div>
-
-    <div id="ai-config-panel" class="hidden" style="padding: 10px; background: rgba(0,0,0,0.5); font-size: 12px; border-top: 1px solid var(--border);">
-        <p>Personalization:</p>
-        <select id="ai-tone" class="auth-input" style="font-size:11px; padding:5px;">
-            <option value="helpful">Helpful Assistant</option>
-            <option value="miku">Hatsune Miku Style</option>
-            <option value="pro">Professional OS Expert</option>
-        </select>
-    </div>
-
-    <div class="ai-input-area">
-        <input type="text" id="ai-prompt" class="ai-input" placeholder="Type something..." onkeypress="if(event.key==='Enter') sendAIMessage()">
-        <button onclick="sendAIMessage()" class="koma-btn" style="padding: 5px 15px; border-radius: 20px;">Send</button>
+    <div class="ai-body">
+        <div class="ai-header-banner">
+            <div class="ai-avatar">🧠</div>
+            <div>
+                <div style="font-weight: bold; font-size: 13px; color: var(--accent);">Koma Intelligence</div>
+                <div style="font-size: 10px; opacity: 0.5;">Wikipedia • Dictionary • Math • Jokes • Trivia • Screen Vision</div>
+            </div>
+            <div class="ai-status-dot" id="ai-online-dot"></div>
+        </div>
+        <div class="ai-thinking-bar" id="ai-think-bar"></div>
+        <div class="ai-chat-area" id="ai-messages">
+            <div class="ai-bubble bot">
+                ¡Hola! 👋 Soy <b>Koma AI</b>, tu asistente integrado en KomaOS.<br><br>
+                Puedo ayudarte con:
+                <br>📚 <b>Wikipedia</b> — "¿Qué es la física cuántica?"
+                <br>📖 <b>Diccionario</b> — "Define serendipity"
+                <br>🧮 <b>Matemáticas</b> — "2+2" o "sqrt(144)"
+                <br>😂 <b>Chistes</b> — "Cuéntame un chiste"
+                <br>🎲 <b>Trivia</b> — "Dato curioso"
+                <br>👁️ <b>Visión</b> — "¿Qué hay en mi pantalla?"
+                <br>💻 <b>Sistema</b> — "Abre calculadora"
+                <span class="timestamp">Koma AI • Online</span>
+            </div>
+        </div>
+        <div id="ai-status" class="ai-typing">
+            <div class="ai-typing-dots"><span></span><span></span><span></span></div>
+            <span style="font-size: 12px; color: var(--accent);">Koma está pensando...</span>
+        </div>
+        <div class="ai-suggestions" id="ai-suggestions">
+            <div class="ai-suggest-chip" onclick="aiSuggest('¿Qué es un agujero negro?')">🌌 Agujeros negros</div>
+            <div class="ai-suggest-chip" onclick="aiSuggest('Cuéntame un chiste')">😂 Chiste</div>
+            <div class="ai-suggest-chip" onclick="aiSuggest('Dato curioso')">🎲 Trivia</div>
+            <div class="ai-suggest-chip" onclick="aiSuggest('Define ephemeral')">📖 Diccionario</div>
+        </div>
+        <div class="ai-input-zone">
+            <button onclick="openAISettings()" style="background:none; border:none; cursor:pointer; font-size:16px; opacity:0.5; transition:0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">⚙️</button>
+            <input type="text" id="ai-prompt" class="ai-input" placeholder="Pregúntame lo que quieras..." onkeypress="if(event.key==='Enter') sendToAI()">
+            <button onclick="sendToAI()" class="ai-send-btn" title="Enviar">➤</button>
+        </div>
     </div>
 </div>
 
@@ -1025,9 +1206,6 @@
         <div class="dock-item" onclick="openApp('win-files')"><img src="https://images.icon-icons.com/2963/PNG/512/macos_big_sur_wpaper_folder_icon_186058.png"></div>
         <div class="dock-item" onclick="openApp('win-settings')"><img src="https://cdn.jim-nielsen.com/macos/512/system-preferences-2021-06-03.png?rf=1024"></div>
    <div class="dock-item" onclick="openPaint()" title="Paint"><img src="https://cdn-icons-png.flaticon.com/512/16075/16075971.png"></div></div>
-<div id="dock-ai" class="dock-item hidden" onclick="openWin('win-koma-ai')">
-    <img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" title="Koma AI">
-</div>
 
     </div>
 </footer>
@@ -1558,107 +1736,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si ya tienes un sistema de apertura de ventanas, llama a renderCinema() ahí
     renderCinema();
 });
-const GROQ_API_KEY = "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";
-let aiActive = localStorage.getItem('komaAI_enabled') === 'true';
-
-// Inicializar estado de IA al cargar
-function initAI() {
-    if (aiActive) {
-        document.getElementById('ai-toggle').checked = true;
-        document.getElementById('dock-ai').classList.remove('hidden');
-    }
-}
-
-function toggleAIService(enabled) {
-    aiActive = enabled;
-    localStorage.setItem('komaAI_enabled', enabled);
-    const dockIcon = document.getElementById('dock-ai');
-    
-    if (enabled) {
-        dockIcon.classList.remove('hidden');
-        showNotification('Koma AI', 'AI System activated on desktop');
-        openWin('win-koma-ai');
-    } else {
-        dockIcon.classList.add('hidden');
-        closeWin('win-koma-ai');
-    }
-}
-
-function toggleAIConfig() {
-    document.getElementById('ai-config-panel').classList.toggle('hidden');
-}
-
-// Escanear texto de todas las ventanas abiertas
-function scanDesktopText() {
-    let screenContext = "";
-    document.querySelectorAll('.window:not(.hidden):not(#win-koma-ai)').forEach(win => {
-        const title = win.querySelector('.win-header span').innerText;
-        const content = win.querySelector('.win-body').innerText.substring(0, 500); // Límite de texto
-        screenContext += `[Window: ${title}] Content: ${content}\n`;
-    });
-    return screenContext || "The desktop is empty.";
-}
-
-async function sendAIMessage() {
-    const input = document.getElementById('ai-prompt');
-    const chat = document.getElementById('ai-chat');
-    const msg = input.value.trim();
-    const tone = document.getElementById('ai-tone').value;
-
-    if (!msg) return;
-
-    // Agregar mensaje de usuario
-    chat.innerHTML += `<div class="ai-bubble user">${msg}</div>`;
-    input.value = "";
-    chat.scrollTop = chat.scrollHeight;
-
-    // Indicador de carga
-    const loadingId = 'loading-' + Date.now();
-    chat.innerHTML += `<div class="ai-bubble bot" id="${loadingId}"><div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
-
-    const context = scanDesktopText();
-
-    try {
-        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${GROQ_API_KEY}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: "llama3-8b-8192",
-                messages: [
-                    {
-                        role: "system", 
-                        content: `You are Koma AI, an integrated OS assistant for KomaOS v6.0. 
-                        Context of the user's screen: ${context}.
-                        Personality tone: ${tone}.
-                        Capabilities: Use Wikipedia-like knowledge, solve math, and act as a dictionary.
-                        IMPORTANT: Always respond in ENGLISH unless the user speaks in Spanish or asks for Spanish. 
-                        Be concise and use animations-friendly text.`
-                    },
-                    { role: "user", content: msg }
-                ]
-            })
-        });
-
-        if (!response.ok) {
-            const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.error?.message || `API Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const aiResponse = data.choices?.[0]?.message?.content || "No response received.";
-
-        document.getElementById(loadingId).innerText = aiResponse;
-    } catch (error) {
-        document.getElementById(loadingId).innerText = "⚠️ " + (error.message || "Error connecting to Koma AI Brain. Check connection.");
-    }
-    chat.scrollTop = chat.scrollHeight;
-}
-
-// Llamar a initAI en tu función window.onload o initSystem
-setTimeout(initAI, 1000);
 
     // Drag System
     document.querySelectorAll('.win-header').forEach(header => {
@@ -2750,6 +2827,379 @@ function maxWin(id) {
 
 function setAccent(color) {
     document.documentElement.style.setProperty('--primary', color);
+}
+let aiActive = false;
+let aiConversationHistory = [];
+const AI_GREETINGS = [
+    "¡Hola de nuevo! 😊 ¿En qué te ayudo?",
+    "Hey! Aquí Koma AI, lista para lo que necesites 🚀",
+    "¡Qué onda! ¿Qué quieres saber hoy? 🤓",
+    "¡Bienvenido de vuelta! Pregúntame lo que sea 💡"
+];
+
+const AI_THINKING_PHRASES = [
+    "Déjame buscar eso...",
+    "Procesando tu consulta...",
+    "Investigando...",
+    "Un momento, estoy pensando...",
+    "Buscando información relevante..."
+];
+
+const FUN_FACTS = [
+    "🐙 Los pulpos tienen tres corazones y su sangre es azul.",
+    "🍯 La miel nunca se echa a perder. Se ha encontrado miel comestible en tumbas egipcias de 3000 años.",
+    "🌍 Un día en Venus dura más que un año en Venus.",
+    "🧠 Tu cerebro usa aproximadamente el 20% de la energía total de tu cuerpo.",
+    "🐋 El corazón de una ballena azul es tan grande que un niño podría nadar por sus arterias.",
+    "⚡ Un rayo es 5 veces más caliente que la superficie del sol.",
+    "🦈 Los tiburones existían antes que los árboles.",
+    "🌙 La Luna se aleja de la Tierra unos 3.8 cm cada año.",
+    "🎵 Las vacas producen más leche cuando escuchan música relajante.",
+    "🐝 Las abejas pueden reconocer rostros humanos.",
+    "💎 Llueven diamantes en Júpiter y Saturno.",
+    "🦷 Los dientes de un caracol (rádula) pueden tener más de 20,000 dientes microscópicos.",
+    "🌊 El océano Pacífico es más grande que toda la superficie terrestre combinada.",
+    "🧬 Compartimos el 60% de nuestro ADN con los plátanos.",
+    "🔥 La temperatura del núcleo de la Tierra es similar a la de la superficie del sol (~5500°C)."
+];
+
+const JOKES_ES = [
+    "¿Qué le dijo un techo a otro techo? Techo de menos 😂",
+    "¿Qué hace una abeja en el gimnasio? ¡Zumba! 🐝",
+    "¿Por qué el libro de matemáticas estaba triste? Porque tenía demasiados problemas 📚",
+    "¿Qué le dice un semáforo a otro? No me mires, me estoy cambiando 🚦",
+    "¿Cómo se llama el campeón de buceo japonés? Tokofondo 🏊",
+    "¿Qué le dijo el número 1 al número 10? Para ser como yo, tienes que ser sincero (sin cero) 🔢",
+    "¿Qué estudian los hijos de los árabes? Beni, ¿qué álgebra! 📐",
+    "Doctor, vengo a que me revise. ¿De parte de quién? 🏥"
+];
+
+const APP_COMMANDS = {
+    'calculadora': 'win-calc', 'calculator': 'win-calc', 'calc': 'win-calc',
+    'notas': 'win-notes', 'notes': 'win-notes',
+    'archivos': 'win-files', 'files': 'win-files',
+    'reloj': 'win-clock', 'clock': 'win-clock',
+    'terminal': 'win-terminal',
+    'configuración': 'win-settings', 'settings': 'win-settings', 'ajustes': 'win-settings',
+    'música': 'win-komafy', 'music': 'win-komafy', 'komafy': 'win-komafy',
+    'cine': 'win-cinema', 'cinema': 'win-cinema',
+    'tienda': 'win-store', 'store': 'win-store',
+    'paint': 'win-paint', 'dibujo': 'win-paint',
+    'clima': 'win-weather', 'weather': 'win-weather',
+    'cámara': 'win-camera', 'camera': 'win-camera',
+    'wikipedia': 'win-wiki', 'wiki': 'win-wiki',
+    'juegos': 'win-games', 'games': 'win-games'
+};
+
+function toggleAI(enabled) {
+    aiActive = enabled;
+    const win = document.getElementById('win-ai-koma');
+    if(enabled) {
+        win.classList.remove('hidden');
+        showNotification('Sistema', '🧠 Koma AI Activada');
+        addToDock('ai', 'https://cdn-icons-png.flaticon.com/512/2103/2103633.png', () => openWin('win-ai-koma'));
+    } else {
+        win.classList.add('hidden');
+    }
+}
+
+function aiSuggest(text) {
+    document.getElementById('ai-prompt').value = text;
+    sendToAI();
+}
+
+async function sendToAI() {
+    const input = document.getElementById('ai-prompt');
+    const msg = input.value.trim();
+    if(!msg) return;
+
+    addBubble(msg, 'user');
+    input.value = '';
+    
+    // Show thinking state
+    document.getElementById('ai-status').style.display = 'flex';
+    document.getElementById('ai-think-bar').style.display = 'block';
+    
+    // Hide suggestions after first message
+    document.getElementById('ai-suggestions').style.display = 'none';
+
+    const query = msg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    
+    // Simulate thinking delay for realism
+    const thinkTime = 600 + Math.random() * 1200;
+    
+    setTimeout(async () => {
+        let response = "";
+        let source = "";
+
+        // 1. Greetings
+        if(/^(hola|hi|hey|hello|que tal|buenas|saludos|ey|sup|yo)$/i.test(query.trim())) {
+            response = AI_GREETINGS[Math.floor(Math.random() * AI_GREETINGS.length)];
+            source = "Koma AI Core";
+        }
+        // 2. How are you / conversational
+        else if(query.includes('como estas') || query.includes('how are you') || query.includes('que onda')) {
+            const replies = [
+                "¡Funcionando al 100%! 🚀 Mis circuitos están a tope. ¿Y tú qué tal?",
+                "¡Mejor que nunca! Acabo de procesar 2 millones de datos y me siento genial 😄",
+                "¡Excelente! Lista para ayudarte con lo que necesites 💪"
+            ];
+            response = replies[Math.floor(Math.random() * replies.length)];
+            source = "Koma AI Core";
+        }
+        // 3. Identity
+        else if(query.includes('quien eres') || query.includes('que eres') || query.includes('who are you') || query.includes('your name')) {
+            response = "Soy <b>Koma AI</b>, la inteligencia artificial integrada en KomaOS v6.0 🧠\n\nFui creada para ser tu asistente personal dentro del sistema. Puedo buscar información, resolver matemáticas, contar chistes, abrir apps, y mucho más. ¡Estoy en Beta pero mejorando cada día!";
+            source = "Koma AI Core";
+        }
+        // 4. Thanks
+        else if(query.includes('gracias') || query.includes('thank')) {
+            const thanks = ["¡De nada! Para eso estoy 😊", "¡Un placer! Pregunta cuando quieras 🤗", "¡No hay de qué! Aquí siempre para ti 💚"];
+            response = thanks[Math.floor(Math.random() * thanks.length)];
+            source = "Koma AI Core";
+        }
+        // 5. Jokes
+        else if(query.includes('chiste') || query.includes('joke') || query.includes('gracioso') || query.includes('funny') || query.includes('hazme reir')) {
+            response = JOKES_ES[Math.floor(Math.random() * JOKES_ES.length)];
+            source = "Koma Comedy Engine";
+        }
+        // 6. Fun facts / trivia
+        else if(query.includes('dato curioso') || query.includes('fun fact') || query.includes('trivia') || query.includes('sabias que') || query.includes('curiosidad') || query.includes('interesante')) {
+            response = FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+            source = "Koma Trivia Database";
+        }
+        // 7. Open apps
+        else if(query.includes('abre') || query.includes('abrir') || query.includes('open') || query.includes('launch')) {
+            let appOpened = false;
+            for(const [keyword, winId] of Object.entries(APP_COMMANDS)) {
+                if(query.includes(keyword)) {
+                    openWin(winId);
+                    response = `✅ ¡Listo! He abierto <b>${keyword}</b> para ti.`;
+                    source = "Koma System Control";
+                    appOpened = true;
+                    break;
+                }
+            }
+            if(!appOpened) {
+                response = "No encontré esa app. Las disponibles son: " + Object.keys(APP_COMMANDS).filter((v,i,a) => a.indexOf(v) === i).slice(0, 10).join(', ') + "...";
+                source = "Koma System";
+            }
+        }
+        // 8. Time / Date
+        else if(query.includes('hora') || query.includes('time') || query.includes('que hora')) {
+            const now = new Date();
+            response = `🕐 Son las <b>${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}</b><br>📅 ${now.toLocaleDateString('es-ES', {weekday:'long', year:'numeric', month:'long', day:'numeric'})}`;
+            source = "Koma System Clock";
+        }
+        // 9. Math
+        else if(/[\d][\+\-\*\/\^][\d]|sqrt|sin|cos|tan|log|pi|pow/.test(query)) {
+            try {
+                let expr = query.replace(/[^-()\d/*+.^sqrtcosanlogiepw,]/g, '')
+                    .replace(/sqrt\(([^)]+)\)/g, 'Math.sqrt($1)')
+                    .replace(/sin\(([^)]+)\)/g, 'Math.sin($1)')
+                    .replace(/cos\(([^)]+)\)/g, 'Math.cos($1)')
+                    .replace(/tan\(([^)]+)\)/g, 'Math.tan($1)')
+                    .replace(/log\(([^)]+)\)/g, 'Math.log($1)')
+                    .replace(/pi/g, 'Math.PI')
+                    .replace(/\^/g, '**');
+                const result = eval(expr);
+                response = `🧮 <b>Resultado:</b> ${result}<br><small style="opacity:0.5">Expresión evaluada: ${query}</small>`;
+                source = "Koma Math Engine";
+            } catch { 
+                response = "🤔 No pude calcular esa expresión. Intenta algo como: 2+2, sqrt(144), 5^2";
+                source = "Koma Math Engine";
+            }
+        }
+        // 10. Dictionary (English)
+        else if(query.includes('define') || query.includes('definicion de') || query.includes('definition') || query.includes('significa')) {
+            let term = query.replace(/define|definicion de|definition of|que significa|significa/gi, '').trim();
+            response = await fetchDictionary(term);
+            source = "Free Dictionary API";
+        }
+        // 11. Screen vision
+        else if(query.includes('see') || query.includes('screen') || query.includes('pantalla') || query.includes('que ves') || query.includes('vision')) {
+            const screenText = scanScreen();
+            const wordCount = screenText.split(/\s+/).length;
+            response = `👁️ <b>Análisis de pantalla:</b><br>Detecto <b>${document.querySelectorAll('.window:not(.hidden):not(.ai-window)').length}</b> ventanas abiertas con ~${wordCount} palabras visibles.<br><br>Texto encontrado: "<i>${screenText.substring(0, 150)}${screenText.length > 150 ? '...' : ''}</i>"`;
+            source = "Koma Screen Vision";
+        }
+        // 12. Weather
+        else if(query.includes('clima') || query.includes('weather') || query.includes('temperatura')) {
+            response = "🌤️ El módulo de clima real está en desarrollo. Por ahora, te sugiero abrir la app de Clima diciendo: <b>\"abre clima\"</b>";
+            source = "Koma Weather (Coming Soon)";
+        }
+        // 13. Wikipedia
+        else if(query.includes('que es') || query.includes('what is') || query.includes('quien es') || query.includes('who is') || query.includes('explica') || query.includes('explain') || query.includes('dime sobre') || query.includes('tell me about') || query.length > 10) {
+            let term = query
+                .replace(/que es|what is|quien es|who is|explica|explain|dime sobre|tell me about|busca|search/gi, '')
+                .trim();
+            if(!term) term = query;
+            response = await fetchWiki(term);
+            if(response.includes("couldn't find") || response.includes("Connection error")) {
+                // Try English Wikipedia as fallback
+                const enResponse = await fetchWikiEN(term);
+                if(!enResponse.includes("couldn't find") && !enResponse.includes("Connection error")) {
+                    response = enResponse;
+                    source = "Wikipedia (EN)";
+                } else {
+                    response = `🤔 No encontré información sobre "<b>${term}</b>" en Wikipedia. Intenta reformular tu pregunta o pregunta algo más específico.`;
+                    source = "Koma AI";
+                }
+            } else {
+                source = "Wikipedia (ES)";
+            }
+        }
+        // 14. Fallback conversational
+        else {
+            const fallbacks = [
+                `🤔 Hmm, no estoy segura de cómo responder a "<i>${msg}</i>", pero estoy aprendiendo. ¡Intenta preguntarme sobre ciencia, historia, o pídeme un chiste!`,
+                `Todavía estoy en Beta, así que no conozco todo. Pero prueba: <b>"¿Qué es la fotosíntesis?"</b> o <b>"Dato curioso"</b> 🧪`,
+                `No tengo una respuesta para eso... aún 😅 Pero puedo buscar en Wikipedia, resolver matemáticas, contar chistes, o abrir apps del sistema.`
+            ];
+            response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            source = "Koma AI Core";
+        }
+
+        addBubble(response, 'bot', source);
+        document.getElementById('ai-status').style.display = 'none';
+        document.getElementById('ai-think-bar').style.display = 'none';
+        
+        // Update suggestions based on context
+        updateAISuggestions(query);
+    }, thinkTime);
+}
+
+function addBubble(text, type, source) {
+    const container = document.getElementById('ai-messages');
+    const b = document.createElement('div');
+    b.className = `ai-bubble ${type}`;
+    
+    const now = new Date();
+    const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    
+    if(type === 'bot') {
+        b.innerHTML = text + 
+            (source ? `<span class="ai-source">📡 ${source}</span>` : '') +
+            `<span class="timestamp">${timeStr}</span>`;
+    } else {
+        b.innerHTML = text + `<span class="timestamp">${timeStr}</span>`;
+    }
+    
+    container.appendChild(b);
+    container.scrollTop = container.scrollHeight;
+    
+    // Track conversation
+    aiConversationHistory.push({ role: type, content: text });
+}
+
+function updateAISuggestions(lastQuery) {
+    const container = document.getElementById('ai-suggestions');
+    container.style.display = 'flex';
+    
+    const contextSuggestions = {
+        default: [
+            { emoji: '🌌', text: '¿Qué es un agujero negro?' },
+            { emoji: '😂', text: 'Cuéntame un chiste' },
+            { emoji: '🎲', text: 'Dato curioso' },
+            { emoji: '📖', text: 'Define serendipity' }
+        ],
+        science: [
+            { emoji: '⚛️', text: '¿Qué es la materia oscura?' },
+            { emoji: '🧬', text: '¿Qué es el ADN?' },
+            { emoji: '🔬', text: 'Explica la relatividad' },
+            { emoji: '🎲', text: 'Dato curioso' }
+        ],
+        fun: [
+            { emoji: '😂', text: 'Otro chiste' },
+            { emoji: '🎲', text: 'Dato curioso' },
+            { emoji: '🌍', text: '¿Cuántos países hay?' },
+            { emoji: '🧮', text: '¿Cuánto es 42^2?' }
+        ]
+    };
+    
+    let suggestions = contextSuggestions.default;
+    if(lastQuery.includes('ciencia') || lastQuery.includes('physics') || lastQuery.includes('quimica')) {
+        suggestions = contextSuggestions.science;
+    } else if(lastQuery.includes('chiste') || lastQuery.includes('dato')) {
+        suggestions = contextSuggestions.fun;
+    }
+    
+    container.innerHTML = suggestions.map(s => 
+        `<div class="ai-suggest-chip" onclick="aiSuggest('${s.text}')">${s.emoji} ${s.text.substring(0, 20)}${s.text.length > 20 ? '...' : ''}</div>`
+    ).join('');
+}
+
+function scanScreen() {
+    const windows = document.querySelectorAll('.window:not(.hidden):not(.ai-window)');
+    let textFound = "";
+    windows.forEach(w => { textFound += w.innerText + " "; });
+    return textFound.trim() || "El escritorio parece vacío.";
+}
+
+async function fetchWiki(term) {
+    try {
+        const res = await fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`);
+        const data = await res.json();
+        if(data.extract) {
+            const extract = data.extract.length > 400 ? data.extract.substring(0, 400) + '...' : data.extract;
+            return `📚 <b>${data.title || term}</b><br><br>${extract}`;
+        }
+        return null;
+    } catch {
+        return "Error de conexión con Wikipedia.";
+    }
+}
+
+async function fetchWikiEN(term) {
+    try {
+        const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`);
+        const data = await res.json();
+        if(data.extract) {
+            const extract = data.extract.length > 400 ? data.extract.substring(0, 400) + '...' : data.extract;
+            return `📚 <b>${data.title || term}</b><br><br>${extract}`;
+        }
+        return "I couldn't find information about that.";
+    } catch {
+        return "Connection error with Wikipedia API.";
+    }
+}
+
+async function fetchDictionary(term) {
+    try {
+        const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(term)}`);
+        if(!res.ok) {
+            return `📖 No encontré la definición de "<b>${term}</b>". Intenta con una palabra en inglés.`;
+        }
+        const data = await res.json();
+        const entry = data[0];
+        const phonetic = entry.phonetics?.find(p => p.text)?.text || '';
+        let definitions = '';
+        entry.meanings?.slice(0, 2).forEach(m => {
+            definitions += `<br><b>${m.partOfSpeech}:</b> ${m.definitions[0]?.definition || 'N/A'}`;
+            if(m.definitions[0]?.example) {
+                definitions += `<br><i style="opacity:0.6">Ej: "${m.definitions[0].example}"</i>`;
+            }
+        });
+        return `📖 <b>${entry.word}</b> ${phonetic ? `<span style="opacity:0.5">${phonetic}</span>` : ''}${definitions}`;
+    } catch {
+        return "Error connecting to Dictionary API.";
+    }
+}
+
+function openAISettings() {
+    addBubble("⚙️ <b>Configuración de Koma AI:</b><br><br>🔹 Motor: Koma AI Core v2.0 Beta<br>🔹 Fuentes: Wikipedia (ES/EN), Dictionary API, Trivia DB<br>🔹 Idioma: Auto-detect (ES/EN)<br>🔹 Visión de pantalla: Activa<br>🔹 Control de sistema: Activo<br><br>💡 <i>Tip: Puedes pedirme que abra cualquier app diciendo 'abre [nombre]'</i>", 'bot', 'Koma Settings');
+}
+
+function addToDock(id, icon, action) {
+    const dock = document.querySelector('.dock');
+    if(!document.getElementById('dock-item-' + id)) {
+        const item = document.createElement('div');
+        item.id = 'dock-item-' + id;
+        item.className = 'dock-item';
+        item.innerHTML = `<img src="${icon}">`;
+        item.onclick = action;
+        dock.appendChild(item);
+    }
 }
 
 // Draggable Logic
