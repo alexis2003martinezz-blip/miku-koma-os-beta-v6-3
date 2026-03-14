@@ -1642,12 +1642,17 @@ async function sendAIMessage() {
             })
         });
 
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error?.message || `API Error: ${response.status}`);
+        }
+
         const data = await response.json();
-        const aiResponse = data.choices[0].message.content;
+        const aiResponse = data.choices?.[0]?.message?.content || "No response received.";
 
         document.getElementById(loadingId).innerText = aiResponse;
     } catch (error) {
-        document.getElementById(loadingId).innerText = "Error connecting to Koma AI Brain. Check connection.";
+        document.getElementById(loadingId).innerText = "⚠️ " + (error.message || "Error connecting to Koma AI Brain. Check connection.");
     }
     chat.scrollTop = chat.scrollHeight;
 }
