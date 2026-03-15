@@ -2435,42 +2435,65 @@ let currentAudio = new Audio();
                 theme_color: "Accent Color"
             }
         };
-function initSystem() { // 'function' siempre en minúsculas
+function initSystem() {
     const bootBtn = document.getElementById('boot-btn');
     const vid = document.getElementById('bootloader-vid');
     const bootScreen = document.getElementById('boot-screen');
     
-    // Función para saltar al Auth y DESBLOQUEAR la pantalla
+    // Generate boot particles
+    const particlesContainer = document.getElementById('boot-particles');
+    if (particlesContainer) {
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.className = 'boot-particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 4 + 's';
+            p.style.animationDuration = (3 + Math.random() * 3) + 's';
+            particlesContainer.appendChild(p);
+        }
+    }
+
     const goToAuth = () => {
-        // Esto es lo más importante: eliminamos el bloqueo físico
         bootScreen.style.display = 'none'; 
-        bootScreen.style.pointerEvents = 'none'; // Por si acaso
+        bootScreen.style.pointerEvents = 'none';
         transitionLayer('boot-screen', 'auth-screen');
     };
 
     bootBtn.onclick = function() {
-        bootBtn.style.display = 'none';
+        bootBtn.style.opacity = '0';
+        bootBtn.style.transform = 'scale(0.8)';
+        setTimeout(() => bootBtn.style.display = 'none', 300);
         vid.style.display = 'block';
         vid.muted = false;
         vid.volume = 1.0;
         vid.load();
         
         vid.play().catch(err => {
-            console.warn("Error de autoplay, forzando...");
+            console.warn("Autoplay error, forcing...");
             vid.play();
         });
 
-        // Failsafe: Si a los 35s no ha pasado nada, saltamos
         setTimeout(goToAuth, 35000);
     };
 
     vid.onended = goToAuth;
     vid.onerror = goToAuth;
 
-    // Reloj
     if (typeof updateClock === "function") {
         updateClock();
         setInterval(updateClock, 1000);
+    }
+    
+    // Update battery widget on lock screen
+    if (navigator.getBattery) {
+        navigator.getBattery().then(bat => {
+            const widgets = document.querySelectorAll('.lock-widget');
+            if (widgets[2]) {
+                const updateBat = () => widgets[2].textContent = `🔋 ${Math.round(bat.level * 100)}%`;
+                updateBat();
+                bat.addEventListener('levelchange', updateBat);
+            }
+        });
     }
 }
 
