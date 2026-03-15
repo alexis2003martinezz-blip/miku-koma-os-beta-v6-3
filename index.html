@@ -619,13 +619,15 @@
 
     <div id="auth-screen" class="system-layer">
         <div class="auth-card">
+            <div class="auth-logo-icon">🔐</div>
             <h2 id="auth-title">KomaOS Account</h2>
-            <input type="email" id="auth-email" class="auth-input" placeholder="Email">
-            <input type="password" id="auth-pass" class="auth-input" placeholder="Password">
-            <button class="koma-btn" style="width: 100%; margin-top: 15px;" onclick="handleAuth('login')">Login</button>
-            <button class="koma-btn" style="width: 100%; margin-top: 10px; background: #333;" onclick="handleAuth('register')">Register</button>
-            <hr style="margin: 20px 0; opacity: 0.2;">
-            <button class="koma-btn" style="width: 100%; background: var(--accent); color: black;" onclick="bypassAuth()">Guest Access</button>
+            <p class="auth-subtitle">Sign in to your universe</p>
+            <input type="email" id="auth-email" class="auth-input" placeholder="✉️  Email address">
+            <input type="password" id="auth-pass" class="auth-input" placeholder="🔑  Password">
+            <button class="auth-btn-primary" onclick="handleAuth('login')">Sign In</button>
+            <button class="auth-btn-secondary" onclick="handleAuth('register')">Create Account</button>
+            <div class="auth-divider">or continue as</div>
+            <button class="auth-btn-guest" onclick="bypassAuth()">👤 Guest Access</button>
         </div>
     </div>
 
