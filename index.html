@@ -651,13 +651,20 @@
         </div>
     </div>
 
-    <div id="lock-screen" class="system-layer">
+    <div id="lock-screen" class="system-layer" onclick="unlock()">
         <div class="lock-blur">
             <div id="lock-time">00:00</div>
             <div id="lock-date">Day, 00 Month</div>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <div style="width: 80px; height: 80px; background: var(--primary); border-radius: 50%; border: 3px solid white;"></div>
-                <h3 id="user-display">User</h3>
+            <div class="lock-avatar">👤</div>
+            <h3 id="user-display" style="font-weight: 400; font-size: 18px; opacity: 0.8;">User</h3>
+            <div class="lock-widgets">
+                <div class="lock-widget">🎵 Komafy</div>
+                <div class="lock-widget">📡 Online</div>
+                <div class="lock-widget">🔋 100%</div>
+            </div>
+            <div class="lock-swipe-hint">▲ TAP ANYWHERE TO UNLOCK ▲</div>
+        </div>
+    </div>
                 <button class="koma-btn" onclick="unlock()">Unlock</button>
             </div>
         </div>
