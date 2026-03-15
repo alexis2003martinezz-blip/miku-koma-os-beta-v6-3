@@ -592,20 +592,29 @@
     <video id="bg-video" autoplay loop muted src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/YTDown.com_YouTube_Black-Dragon-4K-Live-Wallpaper_Media_9y4UGT0GW6Y_001_1080p.mp4"></video>
     <div id="brightness-overlay"></div>
 
-<div id="boot-screen" class="system-layer active" style="background: #000; align-items: center; justify-content: center; position: fixed; top:0; left:0; width:100vw; height:100vh; z-index: 10000;">
-    <button id="boot-btn" class="koma-btn" style="z-index: 101;">START SYSTEM</button>
+<div id="boot-screen" class="system-layer active" style="position: fixed; top:0; left:0; width:100vw; height:100vh; z-index: 10000;">
+    <!-- Particles -->
+    <div class="boot-particles" id="boot-particles"></div>
+    <!-- Rings -->
+    <div class="boot-ring" style="animation-delay: 0s;"></div>
+    <div class="boot-ring" style="animation-delay: 1.5s;"></div>
+    <div class="boot-ring" style="animation-delay: 3s;"></div>
+    
+    <!-- Logo -->
+    <div style="position: relative; z-index: 10; text-align: center;">
+        <div style="font-size: 80px; margin-bottom: 10px; animation: brandFloat 3s ease-in-out infinite;">🌀</div>
+        <h1 class="koma-brand">KomaOS</h1>
+        <p style="font-size: 14px; opacity: 0.4; letter-spacing: 8px; margin-top: 10px; color: var(--accent);">EXTREME EDITION v6.1</p>
+        <div style="margin-top: 40px;">
+            <button id="boot-btn">INITIALIZE SYSTEM</button>
+        </div>
+    </div>
     
     <video id="bootloader-vid" 
-           playsinline 
-           webkit-playsinline
-           crossorigin="anonymous"
+           playsinline webkit-playsinline crossorigin="anonymous"
            style="display:none; width:100%; height:100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 50;">
         <source src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/koma-os-v1.5-bootloader-new.mp4" type="video/mp4">
     </video>
-</div>
-
-    <h1 class="koma-brand" style="display:none">KomaOS</h1>
-    <div id="kernel-log" style="display:none"></div>
 </div>
 
     <div id="auth-screen" class="system-layer">
