@@ -591,7 +591,7 @@
     </div>
 
     <!-- ===== LOCK SCREEN ===== -->
-    <div id="lock-screen" class="system-layer" onclick="unlock()">
+    <div id="lock-screen" class="system-layer">
         <div class="lock-blur">
             <div id="lock-time">00:00</div>
             <div id="lock-date">Day, 00 Month</div>
@@ -602,7 +602,42 @@
                 <div class="lock-widget">📡 Online</div>
                 <div class="lock-widget" id="lock-battery">🔋 100%</div>
             </div>
-            <div class="lock-swipe-hint">▲ TAP ANYWHERE TO UNLOCK ▲</div>
+            <!-- PIN/Password unlock area -->
+            <div id="lock-auth-area" style="margin-top: 30px;">
+                <div id="lock-pin-display" style="display:none; margin-bottom: 15px;">
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 15px;">
+                        <div class="pin-dot" id="pin-dot-0"></div>
+                        <div class="pin-dot" id="pin-dot-1"></div>
+                        <div class="pin-dot" id="pin-dot-2"></div>
+                        <div class="pin-dot" id="pin-dot-3"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 240px; margin: 0 auto;">
+                        <button class="pin-key" onclick="enterPin('1')">1</button>
+                        <button class="pin-key" onclick="enterPin('2')">2</button>
+                        <button class="pin-key" onclick="enterPin('3')">3</button>
+                        <button class="pin-key" onclick="enterPin('4')">4</button>
+                        <button class="pin-key" onclick="enterPin('5')">5</button>
+                        <button class="pin-key" onclick="enterPin('6')">6</button>
+                        <button class="pin-key" onclick="enterPin('7')">7</button>
+                        <button class="pin-key" onclick="enterPin('8')">8</button>
+                        <button class="pin-key" onclick="enterPin('9')">9</button>
+                        <button class="pin-key" onclick="enterPin('clear')" style="font-size: 14px;">⌫</button>
+                        <button class="pin-key" onclick="enterPin('0')">0</button>
+                        <button class="pin-key" onclick="enterPin('submit')" style="background: rgba(0,255,204,0.15); color: var(--accent);">→</button>
+                    </div>
+                    <p id="pin-error" style="color: #ff5f56; font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s;">Wrong PIN</p>
+                </div>
+                <div id="lock-password-display" style="display:none; margin-bottom: 15px;">
+                    <div style="display: flex; gap: 10px; justify-content: center; max-width: 280px; margin: 0 auto;">
+                        <input type="password" id="lock-pass-input" placeholder="Enter password..." style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white; padding:12px 16px; border-radius:14px; outline:none; font-size:14px; backdrop-filter:blur(10px); transition:0.3s;" onkeypress="if(event.key==='Enter')checkLockPassword()">
+                        <button onclick="checkLockPassword()" style="background:rgba(0,255,204,0.15); border:1px solid rgba(0,255,204,0.3); color:var(--accent); padding:12px 18px; border-radius:14px; cursor:pointer; font-weight:700; transition:0.3s;">→</button>
+                    </div>
+                    <p id="pass-error" style="color: #ff5f56; font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s;">Wrong password</p>
+                </div>
+                <div id="lock-no-security" style="cursor: pointer;" onclick="unlock()">
+                    <div class="lock-swipe-hint">▲ TAP TO UNLOCK ▲</div>
+                </div>
+            </div>
         </div>
     </div>
 
