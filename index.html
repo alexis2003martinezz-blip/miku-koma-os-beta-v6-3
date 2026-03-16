@@ -1262,11 +1262,26 @@
                 </div>
             </div>
 
-            <!-- CALENDAR -->
-            <div id="win-calendar" class="window hidden liquid-glass" style="width: 350px; height: 300px; top: 100px; left: 500px;">
-                <div class="win-header"><span>📅 Calendar</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-calendar')"></div></div></div>
-                <div class="win-body" style="display: flex; align-items: center; justify-content: center; padding: 20px;">
-                    <div id="cal-display" style="font-size: 16px; text-align: center; line-height: 2;"></div>
+            <!-- CALENDAR — REDESIGNED -->
+            <div id="win-calendar" class="window hidden liquid-glass" style="width: 400px; height: 450px; top: 80px; left: 450px;">
+                <div class="win-header">
+                    <span>📅 Calendar</span>
+                    <div class="win-btns"><div class="win-btn min" onclick="minWin('win-calendar')"></div><div class="win-btn max" onclick="maxWin('win-calendar')"></div><div class="win-btn close" onclick="closeWin('win-calendar')"></div></div>
+                </div>
+                <div class="win-body" style="padding: 20px; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <button onclick="calChangeMonth(-1)" class="cal-nav-btn">◀</button>
+                        <h3 id="cal-month-label" style="font-size: 18px; font-weight: 600; margin: 0;"></h3>
+                        <button onclick="calChangeMonth(1)" class="cal-nav-btn">▶</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 10px;">
+                        <span class="cal-day-label">Sun</span><span class="cal-day-label">Mon</span><span class="cal-day-label">Tue</span><span class="cal-day-label">Wed</span><span class="cal-day-label">Thu</span><span class="cal-day-label">Fri</span><span class="cal-day-label">Sat</span>
+                    </div>
+                    <div id="cal-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;"></div>
+                    <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 15px;">
+                        <p style="font-size: 12px; opacity: 0.4; margin-bottom: 8px;">Events today</p>
+                        <div id="cal-events" style="font-size: 13px; opacity: 0.6;"></div>
+                    </div>
                 </div>
             </div>
 
