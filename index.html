@@ -2004,6 +2004,7 @@
 
         // Setup lock screen security display
         setupLockUI();
+        applyLockPersonalization();
 
         // Load lock type in settings
         const savedLockType = localStorage.getItem('koma_lock_type') || 'none';
