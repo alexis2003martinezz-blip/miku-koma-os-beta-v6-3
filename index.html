@@ -957,6 +957,41 @@
                     <button onclick="clearLockSecurity()" class="mac-get-btn" style="width:100%; margin-top:10px; color: #ff5f56; border-color: rgba(255,95,86,0.3);">Remove Lock Security</button>
 
                     <hr style="opacity: 0.06; margin: 20px 0;">
+                    <p style="font-size: 13px; font-weight: 600; color: var(--primary);">🎨 Lock Screen Personalization</p>
+                    <p style="font-size: 11px; opacity: 0.4; margin: 5px 0 10px;">Customize your lock screen appearance</p>
+
+                    <p style="font-size: 12px; opacity: 0.5; margin-top: 10px;">Lock Screen Message:</p>
+                    <div style="display: flex; gap: 10px; margin-top: 6px;">
+                        <input type="text" id="lock-msg-input" placeholder="e.g. Welcome back!" class="auth-input no-icon" style="flex: 1;">
+                        <button onclick="saveLockMessage()" class="mac-get-btn">Save</button>
+                    </div>
+
+                    <p style="font-size: 12px; opacity: 0.5; margin-top: 14px;">Avatar Emoji:</p>
+                    <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
+                        <button onclick="setLockAvatar('👤')" class="lock-avatar-pick">👤</button>
+                        <button onclick="setLockAvatar('🐱')" class="lock-avatar-pick">🐱</button>
+                        <button onclick="setLockAvatar('🦊')" class="lock-avatar-pick">🦊</button>
+                        <button onclick="setLockAvatar('🐻')" class="lock-avatar-pick">🐻</button>
+                        <button onclick="setLockAvatar('🌸')" class="lock-avatar-pick">🌸</button>
+                        <button onclick="setLockAvatar('🎮')" class="lock-avatar-pick">🎮</button>
+                        <button onclick="setLockAvatar('🎵')" class="lock-avatar-pick">🎵</button>
+                        <button onclick="setLockAvatar('⚡')" class="lock-avatar-pick">⚡</button>
+                        <button onclick="setLockAvatar('🔥')" class="lock-avatar-pick">🔥</button>
+                        <button onclick="setLockAvatar('💎')" class="lock-avatar-pick">💎</button>
+                    </div>
+
+                    <p style="font-size: 12px; opacity: 0.5; margin-top: 14px;">Lock Screen Wallpaper:</p>
+                    <div style="display: flex; gap: 10px; margin-top: 6px;">
+                        <input type="text" id="lock-wall-input" placeholder="Image URL..." class="auth-input no-icon" style="flex: 1;">
+                        <button onclick="saveLockWallpaper()" class="mac-get-btn">Set</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;">
+                        <div class="bg-preview" onclick="setLockWallPreset('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800')" style="background-image:url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=200');"></div>
+                        <div class="bg-preview" onclick="setLockWallPreset('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800')" style="background-image:url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=200');"></div>
+                        <div class="bg-preview" onclick="setLockWallPreset('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800')" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200');"></div>
+                    </div>
+
+                    <hr style="opacity: 0.06; margin: 20px 0;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <p style="font-size: 13px; color: var(--accent); font-weight: 600;">🤖 Enable Koma AI (Beta)</p>
                         <input type="checkbox" id="ai-toggle" onchange="toggleAI(this.checked)" style="width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent);">
