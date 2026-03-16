@@ -511,6 +511,37 @@
             background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.1));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
+
+        /* PIN Pad */
+        .pin-dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4); background: transparent;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pin-dot.filled {
+            background: var(--accent); border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(0,255,204,0.5);
+            transform: scale(1.2);
+        }
+        .pin-dot.error {
+            background: #ff5f56; border-color: #ff5f56;
+            box-shadow: 0 0 12px rgba(255,95,86,0.5);
+            animation: pinShake 0.4s ease;
+        }
+        .pin-key {
+            width: 64px; height: 64px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06); color: white; font-size: 22px; font-weight: 300;
+            cursor: pointer; transition: 0.2s; backdrop-filter: blur(10px);
+            display: flex; align-items: center; justify-content: center; margin: 0 auto;
+        }
+        .pin-key:hover { background: rgba(255,255,255,0.15); transform: scale(1.08); }
+        .pin-key:active { transform: scale(0.95); background: rgba(0,255,204,0.2); }
+        @keyframes pinShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-4px); }
+        }
     </style>
   <meta property="og:title" content="KomaOS v6.1">
   <meta name="twitter:title" content="KomaOS v6.1">
