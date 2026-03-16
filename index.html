@@ -1497,12 +1497,239 @@
         const now = new Date();
         const el = document.getElementById('clock-txt');
         if (el) el.innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
+        const cs = document.getElementById('clock-seconds');
+        if (cs) cs.innerText = ':' + now.getSeconds().toString().padStart(2,'0');
         const dt = document.getElementById('date-txt');
-        if (dt) dt.innerText = now.toLocaleDateString();
+        if (dt) dt.innerText = now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        // World clocks
+        const tzNy = document.getElementById('tz-ny');
+        if(tzNy) tzNy.innerText = now.toLocaleTimeString('en-US', {timeZone:'America/New_York', hour:'2-digit', minute:'2-digit', hour12:false});
+        const tzLn = document.getElementById('tz-london');
+        if(tzLn) tzLn.innerText = now.toLocaleTimeString('en-US', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false});
+        const tzTk = document.getElementById('tz-tokyo');
+        if(tzTk) tzTk.innerText = now.toLocaleTimeString('en-US', {timeZone:'Asia/Tokyo', hour:'2-digit', minute:'2-digit', hour12:false});
         // Desktop time widget
         const dw = document.getElementById('desktop-time');
         if (dw) dw.innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
     }, 1000);
+
+    // --- CLOCK TABS ---
+    function switchClockTab(tab) {
+        document.querySelectorAll('.clock-panel').forEach(p => p.style.display = 'none');
+        document.querySelectorAll('.clock-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('clock-panel-' + tab).style.display = 'flex';
+        document.getElementById('tab-' + tab).classList.add('active');
+    }
+
+    // --- TIMER ---
+    let timerInterval = null, timerSeconds = 300, timerRunning = false;
+    function startTimer() {
+        if(timerRunning) { clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-start-btn').innerText = '▶ Start'; return; }
+        timerSeconds = parseInt(document.getElementById('timer-min').value)*60 + parseInt(document.getElementById('timer-sec').value);
+        if(timerSeconds <= 0) return;
+        timerRunning = true;
+        document.getElementById('timer-start-btn').innerText = '⏸ Pause';
+        timerInterval = setInterval(() => {
+            timerSeconds--;
+            if(timerSeconds <= 0) { clearInterval(timerInterval); timerRunning = false; document.getElementById('timer-start-btn').innerText = '▶ Start'; showNotification('Timer', 'Time is up!'); }
+            const m = Math.floor(timerSeconds/60).toString().padStart(2,'0');
+            const s = (timerSeconds%60).toString().padStart(2,'0');
+            document.getElementById('timer-display').innerText = `${m}:${s}`;
+        }, 1000);
+    }
+    function resetTimer() { clearInterval(timerInterval); timerRunning = false; timerSeconds = parseInt(document.getElementById('timer-min').value)*60 + parseInt(document.getElementById('timer-sec').value); const m = Math.floor(timerSeconds/60).toString().padStart(2,'0'); const s = (timerSeconds%60).toString().padStart(2,'0'); document.getElementById('timer-display').innerText = `${m}:${s}`; document.getElementById('timer-start-btn').innerText = '▶ Start'; }
+
+    // --- STOPWATCH ---
+    let swInterval = null, swTime = 0, swRunning = false, swLaps = [];
+    function toggleStopwatch() {
+        if(swRunning) { clearInterval(swInterval); swRunning = false; document.getElementById('sw-btn').innerText = '▶ Resume'; return; }
+        swRunning = true; document.getElementById('sw-btn').innerText = '⏸ Pause';
+        swInterval = setInterval(() => { swTime += 10; updateSwDisplay(); }, 10);
+    }
+    function updateSwDisplay() {
+        const min = Math.floor(swTime/60000).toString().padStart(2,'0');
+        const sec = Math.floor((swTime%60000)/1000).toString().padStart(2,'0');
+        const ms = Math.floor((swTime%1000)/10).toString().padStart(2,'0');
+        document.getElementById('sw-display').innerText = `${min}:${sec}.${ms}`;
+    }
+    function lapStopwatch() {
+        if(swTime === 0) return;
+        swLaps.push(swTime);
+        const laps = document.getElementById('sw-laps');
+        const min = Math.floor(swTime/60000).toString().padStart(2,'0');
+        const sec = Math.floor((swTime%60000)/1000).toString().padStart(2,'0');
+        const ms = Math.floor((swTime%1000)/10).toString().padStart(2,'0');
+        laps.innerHTML = `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.06);"><span>Lap ${swLaps.length}</span><span>${min}:${sec}.${ms}</span></div>` + laps.innerHTML;
+    }
+    function resetStopwatch() { clearInterval(swInterval); swRunning = false; swTime = 0; swLaps = []; document.getElementById('sw-display').innerText = '00:00.00'; document.getElementById('sw-btn').innerText = '▶ Start'; document.getElementById('sw-laps').innerHTML = ''; }
+
+    // --- ALARMS ---
+    let alarms = JSON.parse(localStorage.getItem('koma_alarms') || '[]');
+    function renderAlarms() {
+        const list = document.getElementById('alarm-list');
+        if(!list) return;
+        list.innerHTML = alarms.map((a, i) => `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.04); padding:14px 16px; border-radius:14px; border:1px solid rgba(255,255,255,0.06);">
+                <div><span style="font-size:24px; font-weight:200;">${a.time}</span><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">${a.enabled ? 'Active' : 'Disabled'}</p></div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <input type="checkbox" ${a.enabled?'checked':''} onchange="toggleAlarm(${i})" style="width:18px; height:18px; accent-color:var(--accent); cursor:pointer;">
+                    <button onclick="removeAlarm(${i})" style="background:none; border:none; color:#ff5f56; cursor:pointer; font-size:16px;">✕</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function addAlarm() { const t = document.getElementById('alarm-time-input').value; if(!t) return; alarms.push({time:t, enabled:true}); localStorage.setItem('koma_alarms', JSON.stringify(alarms)); renderAlarms(); showNotification('Alarm', `Set for ${t}`); }
+    function toggleAlarm(i) { alarms[i].enabled = !alarms[i].enabled; localStorage.setItem('koma_alarms', JSON.stringify(alarms)); renderAlarms(); }
+    function removeAlarm(i) { alarms.splice(i, 1); localStorage.setItem('koma_alarms', JSON.stringify(alarms)); renderAlarms(); }
+    // Check alarms every minute
+    setInterval(() => {
+        const now = new Date(); const ct = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+        alarms.forEach(a => { if(a.enabled && a.time === ct && now.getSeconds() < 2) showNotification('⏰ Alarm', `It's ${a.time}!`); });
+    }, 1000);
+    document.addEventListener('DOMContentLoaded', renderAlarms);
+
+    // --- NOTES APP ---
+    let notesViewDate = new Date();
+    let notesSelectedDate = new Date().toISOString().split('T')[0];
+
+    function getAllNotes() { return JSON.parse(localStorage.getItem('koma_daily_notes') || '{}'); }
+    function saveAllNotes(notes) { localStorage.setItem('koma_daily_notes', JSON.stringify(notes)); }
+
+    function initNotesApp() {
+        renderNotesCalendar();
+        loadNoteForDate(notesSelectedDate);
+    }
+    function notesChangeMonth(dir) {
+        notesViewDate.setMonth(notesViewDate.getMonth() + dir);
+        renderNotesCalendar();
+    }
+    function renderNotesCalendar() {
+        const year = notesViewDate.getFullYear(), month = notesViewDate.getMonth();
+        document.getElementById('notes-month-label').textContent = new Date(year, month).toLocaleDateString('en-US', {month:'long', year:'numeric'});
+        const grid = document.getElementById('notes-calendar-grid');
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const notes = getAllNotes();
+        const today = new Date().toISOString().split('T')[0];
+        let html = '';
+        for(let i = 0; i < firstDay; i++) html += '<div></div>';
+        for(let d = 1; d <= daysInMonth; d++) {
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const hasNote = notes[dateStr] ? ' has-note' : '';
+            const selected = dateStr === notesSelectedDate ? ' selected' : '';
+            html += `<div class="notes-day${hasNote}${selected}" onclick="selectNoteDate('${dateStr}')">${d}</div>`;
+        }
+        grid.innerHTML = html;
+        renderRecentNotes();
+    }
+    function selectNoteDate(dateStr) {
+        notesSelectedDate = dateStr;
+        loadNoteForDate(dateStr);
+        renderNotesCalendar();
+    }
+    function loadNoteForDate(dateStr) {
+        const d = new Date(dateStr + 'T12:00:00');
+        document.getElementById('notes-current-date').textContent = d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+        document.getElementById('notes-current-weekday').textContent = d.toLocaleDateString('en-US', {weekday:'long'});
+        const notes = getAllNotes();
+        document.getElementById('notes-area').value = notes[dateStr] || '';
+    }
+    function autoSaveNote() {
+        const text = document.getElementById('notes-area').value;
+        const notes = getAllNotes();
+        if(text.trim()) notes[notesSelectedDate] = text;
+        else delete notes[notesSelectedDate];
+        saveAllNotes(notes);
+        renderNotesCalendar();
+    }
+    function deleteCurrentNote() {
+        const notes = getAllNotes();
+        delete notes[notesSelectedDate];
+        saveAllNotes(notes);
+        document.getElementById('notes-area').value = '';
+        renderNotesCalendar();
+        showNotification('Notes', 'Note deleted');
+    }
+    function renderRecentNotes() {
+        const notes = getAllNotes();
+        const list = document.getElementById('notes-recent-list');
+        if(!list) return;
+        const sorted = Object.entries(notes).sort((a,b) => b[0].localeCompare(a[0])).slice(0, 5);
+        list.innerHTML = sorted.map(([date, text]) => {
+            const d = new Date(date + 'T12:00:00');
+            const label = d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+            const preview = text.substring(0, 30) + (text.length > 30 ? '...' : '');
+            return `<div onclick="selectNoteDate('${date}')" style="padding:6px 8px; border-radius:8px; cursor:pointer; transition:0.2s; font-size:11px;" onmouseover="this.style.background='rgba(255,255,255,0.06)'" onmouseout="this.style.background='transparent'"><span style="opacity:0.4;">${label}</span> — ${preview}</div>`;
+        }).join('');
+    }
+    function addNoteWidget() {
+        const notes = getAllNotes();
+        const text = notes[notesSelectedDate];
+        if(!text) { showNotification('Notes', 'No note for this day'); return; }
+        const workspace = document.getElementById('workspace');
+        const widget = document.createElement('div');
+        widget.className = 'desktop-note-widget';
+        widget.style.top = (80 + Math.random()*200) + 'px';
+        widget.style.left = (100 + Math.random()*300) + 'px';
+        const d = new Date(notesSelectedDate + 'T12:00:00');
+        widget.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;"><span style="font-size:10px; opacity:0.5; font-weight:600;">${d.toLocaleDateString('en-US', {month:'short', day:'numeric'})}</span><span onclick="this.parentElement.parentElement.remove()" style="cursor:pointer; opacity:0.4; font-size:14px;">✕</span></div><p style="margin:0;">${text.substring(0,150)}</p>`;
+        // Make widget draggable
+        let wDrag = false, wDx = 0, wDy = 0;
+        widget.onmousedown = (e) => { if(e.target.tagName === 'SPAN') return; wDrag = true; wDx = e.clientX - widget.offsetLeft; wDy = e.clientY - widget.offsetTop; };
+        document.addEventListener('mousemove', (e) => { if(wDrag) { widget.style.left = (e.clientX - wDx)+'px'; widget.style.top = (e.clientY - wDy)+'px'; }});
+        document.addEventListener('mouseup', () => wDrag = false);
+        workspace.appendChild(widget);
+        showNotification('Notes', 'Widget added to desktop');
+    }
+
+    // Override openApp for notes
+    const origOpenWin = openWin;
+    function openWin(id) {
+        origOpenWin(id);
+        if(id === 'win-notes') initNotesApp();
+    }
+    function openApp(winId) { openWin(winId); }
+
+    // --- CALENDAR APP ---
+    let calViewDate = new Date();
+    function calChangeMonth(dir) { calViewDate.setMonth(calViewDate.getMonth() + dir); renderCalendar(); }
+    function renderCalendar() {
+        const year = calViewDate.getFullYear(), month = calViewDate.getMonth();
+        document.getElementById('cal-month-label').textContent = new Date(year, month).toLocaleDateString('en-US', {month:'long', year:'numeric'});
+        const grid = document.getElementById('cal-grid');
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+        const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+        const notes = getAllNotes();
+        let html = '';
+        for(let i = 0; i < firstDay; i++) html += '<div></div>';
+        for(let d = 1; d <= daysInMonth; d++) {
+            const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const isToday = dateStr === todayStr ? ' today' : '';
+            const hasNote = notes[dateStr] ? ' has-note' : '';
+            html += `<div class="cal-day${isToday}${hasNote}" onclick="calDayClick('${dateStr}')">${d}</div>`;
+        }
+        grid.innerHTML = html;
+        // Show today's notes
+        const todayNote = notes[todayStr];
+        document.getElementById('cal-events').innerHTML = todayNote ? `<p>📝 ${todayNote.substring(0,80)}...</p>` : '<p style="opacity:0.3;">No events or notes</p>';
+    }
+    function calDayClick(dateStr) {
+        notesSelectedDate = dateStr;
+        openWin('win-notes');
+        loadNoteForDate(dateStr);
+        renderNotesCalendar();
+    }
+    document.addEventListener('DOMContentLoaded', renderCalendar);
+
+    // --- STORE TABS ---
+    function switchStoreTab(tab, el) {
+        document.querySelectorAll('[id^="store-tab-"]').forEach(t => t.style.display = 'none');
+        document.getElementById('store-tab-' + tab).style.display = 'block';
+        document.querySelectorAll('.store-nav-item').forEach(n => n.classList.remove('active'));
+        if(el) el.classList.add('active');
+    }
 
     // --- PERSONALIZATION ---
     function setTransparentBG() { document.body.style.background = "transparent"; showNotification("Settings", "Transparent mode active."); }
