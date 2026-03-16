@@ -2093,6 +2093,36 @@
         setupLockUI();
     }
 
+    // --- LOCK SCREEN PERSONALIZATION ---
+    function saveLockMessage() {
+        const msg = document.getElementById('lock-msg-input').value.trim();
+        if(msg) { localStorage.setItem('koma_lock_msg', msg); showNotification('Lock Screen', 'Message saved'); applyLockPersonalization(); }
+    }
+    function setLockAvatar(emoji) {
+        localStorage.setItem('koma_lock_avatar', emoji);
+        showNotification('Lock Screen', 'Avatar updated');
+        applyLockPersonalization();
+    }
+    function saveLockWallpaper() {
+        const url = document.getElementById('lock-wall-input').value.trim();
+        if(url) { localStorage.setItem('koma_lock_wall', url); showNotification('Lock Screen', 'Wallpaper saved'); applyLockPersonalization(); }
+    }
+    function setLockWallPreset(url) {
+        localStorage.setItem('koma_lock_wall', url);
+        showNotification('Lock Screen', 'Wallpaper applied');
+        applyLockPersonalization();
+    }
+    function applyLockPersonalization() {
+        const avatar = localStorage.getItem('koma_lock_avatar');
+        const msg = localStorage.getItem('koma_lock_msg');
+        const wall = localStorage.getItem('koma_lock_wall');
+        const lockScreen = document.getElementById('lock-screen');
+        const avatarEl = document.querySelector('.lock-avatar');
+        if(avatar && avatarEl) avatarEl.textContent = avatar;
+        if(msg) { document.getElementById('user-display').textContent = msg; }
+        if(wall) { lockScreen.style.backgroundImage = `url('${wall}')`; lockScreen.style.backgroundSize = 'cover'; lockScreen.style.backgroundPosition = 'center'; }
+    }
+
     // --- RETURN TO LOCK ---
     function returnToLockScreen() {
         toggleCC();
