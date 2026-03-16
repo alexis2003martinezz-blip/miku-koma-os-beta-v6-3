@@ -512,6 +512,91 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
+        /* Clock tabs */
+        .clock-tab {
+            background: none; border: none; color: white; padding: 12px 18px;
+            font-size: 13px; cursor: pointer; opacity: 0.4; transition: 0.3s;
+            border-bottom: 2px solid transparent; font-weight: 500;
+        }
+        .clock-tab.active { opacity: 1; border-bottom-color: var(--accent); }
+        .clock-tab:hover { opacity: 0.8; }
+        .clock-panel { animation: fadeInPanel 0.3s ease; }
+        @keyframes fadeInPanel { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Store redesigned */
+        .store-nav-item {
+            padding: 10px 12px; border-radius: 10px; cursor: pointer; font-size: 13px;
+            color: rgba(255,255,255,0.5); transition: 0.2s; margin-bottom: 4px;
+        }
+        .store-nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
+        .store-nav-item.active { background: rgba(255,255,255,0.08); color: white; font-weight: 600; }
+        .store-card-new {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 14px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .store-card-new:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+        .store-wall-card {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px; padding: 12px; transition: 0.3s;
+        }
+        .store-wall-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+        .store-get-btn {
+            background: rgba(0,255,204,0.1); color: var(--accent); border: 1px solid rgba(0,255,204,0.2);
+            padding: 8px 18px; border-radius: 20px; font-weight: 700; font-size: 12px;
+            cursor: pointer; transition: 0.3s; white-space: nowrap; position: relative; overflow: hidden;
+        }
+        .store-get-btn:hover { background: rgba(0,255,204,0.2); }
+        .store-get-btn.downloading::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary); animation: prog 2s linear forwards; border-radius: 20px; }
+
+        /* Calendar redesigned */
+        .cal-nav-btn {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+            color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+            font-size: 14px; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .cal-nav-btn:hover { background: rgba(255,255,255,0.12); }
+        .cal-day-label { font-size: 11px; opacity: 0.3; text-align: center; padding: 4px; }
+        .cal-day {
+            aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            border-radius: 10px; font-size: 13px; cursor: pointer; transition: 0.2s;
+            background: rgba(255,255,255,0.02);
+        }
+        .cal-day:hover { background: rgba(255,255,255,0.08); }
+        .cal-day.today { background: var(--primary); color: white; font-weight: 700; box-shadow: 0 0 15px rgba(23,147,209,0.4); }
+        .cal-day.has-note { position: relative; }
+        .cal-day.has-note::after { content: ''; position: absolute; bottom: 4px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+
+        /* Notes calendar day */
+        .notes-day {
+            width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; font-size: 11px; cursor: pointer; transition: 0.2s;
+        }
+        .notes-day:hover { background: rgba(255,255,255,0.08); }
+        .notes-day.selected { background: var(--primary); color: white; font-weight: 700; }
+        .notes-day.has-note { position: relative; }
+        .notes-day.has-note::after { content: ''; position: absolute; bottom: 2px; width: 3px; height: 3px; border-radius: 50%; background: var(--accent); }
+
+        /* Note widget on desktop */
+        .desktop-note-widget {
+            position: absolute; width: 200px; min-height: 120px;
+            background: rgba(255,255,100,0.08); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,100,0.15); border-radius: 14px;
+            padding: 14px; font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.8);
+            cursor: move; z-index: 500; transition: box-shadow 0.3s;
+            animation: fadeInPanel 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .desktop-note-widget:hover { box-shadow: 0 8px 25px rgba(255,255,100,0.15); }
+
+        /* Lock screen personalization avatar */
+        .lock-avatar-custom {
+            width: 90px; height: 90px; border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.3); margin: 0 auto 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px; box-shadow: 0 0 40px rgba(23,147,209,0.3);
+            animation: avatarPulse 3s ease-in-out infinite;
+            background-size: cover; background-position: center;
+        }
         /* PIN Pad */
         .pin-dot {
             width: 14px; height: 14px; border-radius: 50%;
