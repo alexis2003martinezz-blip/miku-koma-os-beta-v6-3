@@ -684,7 +684,10 @@
                     <input type="range" class="cc-slider" value="80">
                 </div>
             </div>
-            <button class="koma-btn" style="width: 100%; background: linear-gradient(135deg, #ff5f56, #ff2d55);" onclick="location.reload()">⟲ Restart System</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="koma-btn" style="flex: 1; background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="returnToLockScreen()">🔒 Lock</button>
+                <button class="koma-btn" style="flex: 1; background: linear-gradient(135deg, #ff5f56, #ff2d55);" onclick="location.reload()">⟲ Restart</button>
+            </div>
         </div>
 
         <main id="workspace" style="width: 100%; flex-grow: 1; position: relative;">
