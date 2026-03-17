@@ -1205,7 +1205,7 @@
 
             <!-- FILES -->
             <div id="win-files" class="window hidden liquid-glass" style="width: 600px; height: 400px; top: 200px; left: 300px;">
-                <div class="win-header"><span>📁 File Explorer</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-files')"></div></div></div>
+                <div class="win-header"><span>📁 File Explorer</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-files')"></div><div class="win-btn max" onclick="maxWin('win-files')"></div><div class="win-btn close" onclick="closeWin('win-files')"></div></div></div>
                 <div class="win-body" style="padding: 20px;">
                     <button onclick="requestLocalFolder()" class="mac-get-btn" style="width: 100%;">📂 Select Local Folder</button>
                     <div id="real-file-grid" style="margin-top:20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap:15px;"></div>
