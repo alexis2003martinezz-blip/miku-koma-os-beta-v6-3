@@ -416,24 +416,67 @@
         .launch-icon:hover { transform: scale(1.1); }
         .launch-icon:hover img { box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
 
-        /* KOMAFY STYLES */
+        /* KOMAFY STYLES — REDESIGNED */
         .komafy-load {
-            position: absolute; inset: 0; background: #000; display: flex;
+            position: absolute; inset: 0; background: linear-gradient(135deg, #0a0a0a, #1a1a2e); display: flex;
             flex-direction: column; align-items: center; justify-content: center; z-index: 10;
         }
         .k-bar-container { display: flex; gap: 4px; height: 40px; align-items: flex-end; }
-        .k-bar { width: 6px; background: #1DB954; animation: k-bounce 1s infinite ease-in-out; }
+        .k-bar { width: 6px; background: #1DB954; animation: k-bounce 1s infinite ease-in-out; border-radius: 3px; }
         @keyframes k-bounce { 0%, 100% { height: 10px; } 50% { height: 40px; } }
-        .komafy-shell { display: flex; height: 100%; width: 100%; background: #000; }
-        .komafy-sidebar { width: 200px; background: #000; border-right: 1px solid rgba(255,255,255,0.1); padding: 15px; display: flex; flex-direction: column; gap: 10px; }
-        .komafy-nav-item { padding: 10px; border-radius: 8px; cursor: pointer; color: #b3b3b3; font-weight: bold; transition: 0.2s; }
-        .komafy-nav-item:hover { background: #282828; color: #fff; }
-        .komafy-nav-item.active { color: #fff; background: #282828; }
-        .komafy-main { flex: 1; padding: 20px; overflow-y: auto; background: linear-gradient(180deg, #1e1e1e 0%, #000 100%); }
+        .komafy-shell { display: flex; height: 100%; width: 100%; background: #0a0a0a; }
+        .komafy-sidebar {
+            width: 240px; background: linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
+            border-right: 1px solid rgba(255,255,255,0.06); padding: 20px 14px;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .komafy-sidebar-logo { font-size: 22px; font-weight: 800; color: #1DB954; margin-bottom: 25px; padding: 0 10px; letter-spacing: -0.5px; }
+        .komafy-nav-item {
+            padding: 10px 14px; border-radius: 10px; cursor: pointer; color: #a0a0a0;
+            font-weight: 500; transition: 0.2s; font-size: 13px; display: flex; align-items: center; gap: 10px;
+        }
+        .komafy-nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+        .komafy-nav-item.active { color: #fff; background: rgba(29,185,84,0.12); }
+        .komafy-main {
+            flex: 1; padding: 0; overflow-y: auto;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a0a 300px);
+        }
+        .komafy-now-playing {
+            height: 72px; background: linear-gradient(90deg, rgba(29,185,84,0.15), rgba(0,0,0,0.9));
+            border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center;
+            padding: 0 20px; gap: 14px; position: relative;
+        }
+        .komafy-now-playing .np-cover { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .komafy-now-playing .np-info { flex: 1; min-width: 0; }
+        .komafy-now-playing .np-title { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .komafy-now-playing .np-artist { font-size: 11px; opacity: 0.5; }
+        .komafy-now-playing .np-controls { display: flex; gap: 16px; align-items: center; }
+        .komafy-now-playing .np-btn { background: none; border: none; color: white; cursor: pointer; font-size: 18px; opacity: 0.7; transition: 0.2s; }
+        .komafy-now-playing .np-btn:hover { opacity: 1; transform: scale(1.15); }
+        .komafy-progress-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.06); }
+        .komafy-progress-bar .fill { height: 100%; background: #1DB954; width: 0%; transition: width 0.5s; border-radius: 2px; }
         .lyrics-panel { position: absolute; top: 0; right: -100%; width: 100%; height: 100%; background: rgba(0,0,0,0.95); transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); z-index: 5; padding: 40px; overflow-y: auto; }
         .lyrics-panel.show { right: 0; }
         .lyric-line { font-size: 28px; font-weight: 800; margin-bottom: 20px; opacity: 0.3; transition: 0.4s; }
         .lyric-line.active { opacity: 1; color: #1DB954; transform: scale(1.05); }
+
+        /* Battery SVG styles */
+        .battery-icon-wrap { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .battery-icon-wrap svg { width: 28px; height: 14px; }
+        .battery-pct { font-size: 10px; font-weight: 600; opacity: 0.8; }
+        .battery-charging-label { font-size: 9px; opacity: 0.5; letter-spacing: 0.5px; }
+        @keyframes chargePulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        .charging-bolt { animation: chargePulse 1.5s ease-in-out infinite; }
+
+        /* VPN panel */
+        .vpn-panel {
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px; padding: 14px; margin-top: 10px; font-size: 12px;
+        }
+        .vpn-panel .vpn-row { display: flex; justify-content: space-between; padding: 4px 0; opacity: 0.6; }
+        .vpn-status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        .vpn-status-dot.connected { background: #27c93f; box-shadow: 0 0 8px rgba(39,201,63,0.5); }
+        .vpn-status-dot.disconnected { background: #ff5f56; }
 
         /* CINEMA STYLES */
         .cinema-wrapper { display: flex; flex-direction: column; height: 100%; background: #141414; color: white; }
@@ -773,7 +816,16 @@
             </div>
             <div class="top-bar-right">
                 <div class="top-bar-pill" id="top-clock">00:00:00</div>
-                <div class="top-bar-pill" id="top-bat">🔋 100%</div>
+                <div class="top-bar-pill battery-icon-wrap" id="top-bat">
+                    <svg viewBox="0 0 28 14" fill="none">
+                        <rect x="0.5" y="0.5" width="23" height="13" rx="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <rect x="24" y="4" width="2.5" height="6" rx="1" fill="rgba(255,255,255,0.4)"/>
+                        <rect id="bat-fill" x="2" y="2" width="20" height="10" rx="1.5" fill="#27c93f"/>
+                        <text id="bat-bolt" x="12" y="10.5" text-anchor="middle" font-size="9" font-weight="bold" fill="white" class="charging-bolt" style="display:none;">⚡</text>
+                    </svg>
+                    <span class="battery-pct" id="bat-pct-text">100%</span>
+                    <span class="battery-charging-label" id="bat-charge-type"></span>
+                </div>
                 <div class="top-bar-cc" onclick="toggleCC()">⚙️</div>
             </div>
         </nav>
@@ -791,10 +843,21 @@
                     <div class="cc-tile" onclick="openWin('win-quickshare')">
                         <div class="cc-icon">📲</div>QuickShare
                     </div>
-                    <div class="cc-tile" onclick="document.body.style.filter='grayscale(1)'">
-                        <div class="cc-icon">✈️</div>Airplane
+                    <div class="cc-tile" id="vpn-tile" onclick="toggleVPN()">
+                        <div class="cc-icon">🛡️</div><span id="vpn-tile-label">VPN Off</span>
                     </div>
                 </div>
+            </div>
+            <div id="vpn-detail-panel" class="vpn-panel" style="display:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <strong style="font-size:13px;"><span class="vpn-status-dot disconnected" id="vpn-dot"></span>KomaOS VPN</strong>
+                    <button onclick="toggleVPN()" id="vpn-connect-btn" class="mac-get-btn" style="font-size:10px; padding:5px 12px;">Connect</button>
+                </div>
+                <div class="vpn-row"><span>Provider</span><span>L2TP-IPsec</span></div>
+                <div class="vpn-row"><span>Server</span><span>219.100.37.207</span></div>
+                <div class="vpn-row"><span>User</span><span>vpn</span></div>
+                <div class="vpn-row"><span>DNS 1</span><span>66.94.105.299</span></div>
+                <div class="vpn-row"><span>DNS 2</span><span>66.23.198.252</span></div>
             </div>
             <div class="cc-section">
                 <div class="cc-slider-wrap">
@@ -820,17 +883,17 @@
 
             <div id="notification-center" style="position: fixed; top: 50px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>
 
-            <!-- KOMAFY WINDOW -->
-            <div id="win-komafy" class="window hidden" style="width: 850px; height: 550px; top: 60px; left: 100px;">
-                <div class="win-header">
-                    <span>Komafy Music</span>
+            <!-- KOMAFY WINDOW — REDESIGNED -->
+            <div id="win-komafy" class="window hidden" style="width: 900px; height: 580px; top: 60px; left: 100px;">
+                <div class="win-header" style="background: rgba(0,0,0,0.4);">
+                    <span style="color: #1DB954; font-weight: 700;">Komafy</span>
                     <div class="win-btns">
                         <div class="win-btn min" onclick="minWin('win-komafy')"></div>
                         <div class="win-btn max" onclick="maxWin('win-komafy')"></div>
                         <div class="win-btn close" onclick="closeWin('win-komafy')"></div>
                     </div>
                 </div>
-                <div class="win-body">
+                <div class="win-body" style="display:flex; flex-direction:column; height:100%;">
                     <div id="komafy-loader" class="komafy-load">
                         <div class="k-bar-container">
                             <div class="k-bar" style="animation-delay: 0.1s"></div>
@@ -838,22 +901,38 @@
                             <div class="k-bar" style="animation-delay: 0.2s"></div>
                             <div class="k-bar" style="animation-delay: 0.4s"></div>
                         </div>
-                        <h2 style="color: #1DB954; margin-top: 15px;">Komafy</h2>
+                        <h2 style="color: #1DB954; margin-top: 15px; font-weight: 800; letter-spacing: -0.5px;">Komafy</h2>
                     </div>
-                    <div class="komafy-shell">
+                    <div class="komafy-shell" style="flex:1; min-height:0;">
                         <aside class="komafy-sidebar">
-                            <div class="komafy-nav-item active">🏠 Inicio</div>
-                            <div class="komafy-nav-item">🔍 Buscar</div>
-                            <div class="komafy-nav-item">❤️ Favoritos</div>
-                            <div class="komafy-nav-item">📈 Tendencias</div>
-                            <div style="margin-top: auto; padding: 10px; font-size: 12px; opacity: 0.5;">Koma Music Engine v2.0</div>
+                            <div class="komafy-sidebar-logo">🎵 Komafy</div>
+                            <div class="komafy-nav-item active">🏠 Home</div>
+                            <div class="komafy-nav-item">🔍 Search</div>
+                            <div class="komafy-nav-item">❤️ Favorites</div>
+                            <div class="komafy-nav-item">📈 Trending</div>
+                            <div class="komafy-nav-item" onclick="document.getElementById('lyrics-panel').classList.add('show')">📝 Lyrics</div>
+                            <div style="margin-top: auto; padding: 10px 14px; font-size: 11px; opacity: 0.3;">Koma Music v3.0</div>
                         </aside>
-                        <main class="komafy-main" id="komafy-content"></main>
+                        <main class="komafy-main" id="komafy-content" style="overflow-y:auto; padding: 25px;"></main>
+                    </div>
+                    <!-- Now Playing Bar -->
+                    <div class="komafy-now-playing" id="komafy-np" style="display:none;">
+                        <div class="komafy-progress-bar"><div class="fill" id="np-progress-fill"></div></div>
+                        <img class="np-cover" id="np-cover" src="">
+                        <div class="np-info">
+                            <div class="np-title" id="np-title">—</div>
+                            <div class="np-artist" id="np-artist">—</div>
+                        </div>
+                        <div class="np-controls">
+                            <button class="np-btn" onclick="if(currentAudio)currentAudio.currentTime=Math.max(0,currentAudio.currentTime-10)">⏮</button>
+                            <button class="np-btn" id="np-play-btn" onclick="togglePlayPause()" style="font-size:24px;">⏸</button>
+                            <button class="np-btn" onclick="if(currentAudio)currentAudio.currentTime=Math.min(currentAudio.duration,currentAudio.currentTime+10)">⏭</button>
+                        </div>
                     </div>
                     <div id="lyrics-panel" class="lyrics-panel">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-                            <h2 style="color: #1DB954;">Letras</h2>
-                            <button class="koma-btn" onclick="document.getElementById('lyrics-panel').classList.remove('show')">Cerrar</button>
+                            <h2 style="color: #1DB954;">Lyrics</h2>
+                            <button class="koma-btn" onclick="document.getElementById('lyrics-panel').classList.remove('show')">Close</button>
                         </div>
                         <div id="lyrics-render"></div>
                     </div>
@@ -864,7 +943,7 @@
             <div id="win-settings" class="window hidden liquid-glass" style="width: 520px; height: 580px; top: 50px; left: 50px;">
                 <div class="win-header">
                     <span>⚙️ Settings</span>
-                    <div class="win-btns"><div class="win-btn close" onclick="closeWin('win-settings')"></div></div>
+                    <div class="win-btns"><div class="win-btn min" onclick="minWin('win-settings')"></div><div class="win-btn max" onclick="maxWin('win-settings')"></div><div class="win-btn close" onclick="closeWin('win-settings')"></div></div>
                 </div>
                 <div class="win-body" style="padding: 25px; overflow-y: auto;">
                     <h3 style="margin-top:0; font-weight: 600;">Personalización Pro</h3>
@@ -1007,7 +1086,7 @@
 
             <!-- CALCULATOR -->
             <div id="win-calc" class="window hidden liquid-glass" style="width: 280px; height: 420px; top: 100px; left: 600px;">
-                <div class="win-header"><span>Calculator</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-calc')"></div></div></div>
+                <div class="win-header"><span>Calculator</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-calc')"></div><div class="win-btn max" onclick="maxWin('win-calc')"></div><div class="win-btn close" onclick="closeWin('win-calc')"></div></div></div>
                 <div class="win-body" style="padding: 15px;">
                     <input type="text" id="calc-display" readonly style="width: 100%; height: 55px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); color: white; text-align: right; font-size: 26px; padding: 10px; box-sizing: border-box; border-radius: 10px; margin-bottom: 12px; font-weight: 300;">
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
@@ -1126,7 +1205,7 @@
 
             <!-- FILES -->
             <div id="win-files" class="window hidden liquid-glass" style="width: 600px; height: 400px; top: 200px; left: 300px;">
-                <div class="win-header"><span>📁 File Explorer</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-files')"></div></div></div>
+                <div class="win-header"><span>📁 File Explorer</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-files')"></div><div class="win-btn max" onclick="maxWin('win-files')"></div><div class="win-btn close" onclick="closeWin('win-files')"></div></div></div>
                 <div class="win-body" style="padding: 20px;">
                     <button onclick="requestLocalFolder()" class="mac-get-btn" style="width: 100%;">📂 Select Local Folder</button>
                     <div id="real-file-grid" style="margin-top:20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap:15px;"></div>
@@ -1138,6 +1217,7 @@
                 <div class="win-header">
                     <span id="webview-title">Loading...</span>
                     <div class="win-btns">
+                        <div class="win-btn min" onclick="minWin('win-webview')"></div>
                         <div class="win-btn max" onclick="toggleFullScreenWebView()"></div>
                         <div class="win-btn close" onclick="closeWebView()"></div>
                     </div>
@@ -1227,6 +1307,17 @@
                                     </div>
                                     <button class="store-get-btn" onclick="animateMacDownload(this, 'nikehub', 'https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png', 'https://securly.pages.dev/')">GET</button>
                                 </div>
+                                <div class="store-card-new">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/718/718064.png" style="width:52px; height:52px; border-radius:14px;">
+                                    <div style="flex: 1; min-width: 0;">
+                                        <strong style="font-size: 14px;">Koma Browser</strong>
+                                        <p style="font-size:11px; margin:3px 0 0; opacity: 0.4;">Utilities • Web Browsing</p>
+                                        <div style="display: flex; gap: 3px; margin-top: 4px;">
+                                            <span style="color: #ffbd2e; font-size: 10px;">★★★★★</span>
+                                        </div>
+                                    </div>
+                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'Koma Browser', 'https://cdn-icons-png.flaticon.com/512/718/718064.png', 'https://www.google.com/webhp?igu=1')">GET</button>
+                                </div>
                             </div>
                         </div>
                         <div id="store-tab-walls" style="display: none;">
@@ -1277,6 +1368,7 @@
                 <div class="win-header">
                     <span style="color: #ff6400; font-weight: bold;">🎬 KOMA CINEMA PRO</span>
                     <div class="win-btns">
+                        <div class="win-btn min" onclick="minWin('win-cinema')"></div>
                         <div class="win-btn max" onclick="maxWin('win-cinema')"></div>
                         <div class="win-btn close" onclick="closeWin('win-cinema')"></div>
                     </div>
@@ -1324,7 +1416,7 @@
 
             <!-- QUICKSHARE -->
             <div id="win-quickshare" class="window hidden liquid-glass" style="width: 400px; height: 500px; top: 100px; left: 300px;">
-                <div class="win-header"><span>📲 QuickShare P2P</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-quickshare')"></div></div></div>
+                <div class="win-header"><span>📲 QuickShare P2P</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-quickshare')"></div><div class="win-btn max" onclick="maxWin('win-quickshare')"></div><div class="win-btn close" onclick="closeWin('win-quickshare')"></div></div></div>
                 <div class="win-body" style="padding: 20px;">
                     <p style="font-size: 13px; opacity: 0.6;">Your ID:</p>
                     <p id="my-peer-id" style="font-size: 18px; font-weight: bold; color: var(--accent); margin: 5px 0 15px;">Connecting...</p>
@@ -1346,7 +1438,7 @@
 
             <!-- TERMINAL -->
             <div id="win-terminal" class="window hidden" style="width: 600px; height: 400px; top: 80px; left: 200px; background: rgba(0,0,0,0.9) !important;">
-                <div class="win-header" style="background: rgba(0,0,0,0.8);"><span style="color: #0f0;">Terminal</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-terminal')"></div></div></div>
+                <div class="win-header" style="background: rgba(0,0,0,0.8);"><span style="color: #0f0;">Terminal</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-terminal')"></div><div class="win-btn max" onclick="maxWin('win-terminal')"></div><div class="win-btn close" onclick="closeWin('win-terminal')"></div></div></div>
                 <div class="win-body" id="term-body" style="padding: 15px; font-family: 'Courier New', monospace; font-size: 14px; color: #0f0; overflow-y: auto;">
                     <div id="term-output">KomaBash v1.0 — Type 'help' for commands<br></div>
                     <div style="display: flex; gap: 8px; margin-top: 10px;">
@@ -1382,7 +1474,7 @@
 
             <!-- WIKI -->
             <div id="win-wiki" class="window hidden liquid-glass" style="width: 500px; height: 400px; top: 80px; left: 250px;">
-                <div class="win-header"><span>📚 Wikipedia</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-wiki')"></div></div></div>
+                <div class="win-header"><span>📚 Wikipedia</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-wiki')"></div><div class="win-btn max" onclick="maxWin('win-wiki')"></div><div class="win-btn close" onclick="closeWin('win-wiki')"></div></div></div>
                 <div class="win-body" style="background: white; color: black;">
                     <iframe src="https://en.m.wikipedia.org" style="width: 100%; height: 100%; border: none;"></iframe>
                 </div>
@@ -1413,7 +1505,7 @@
 
             <!-- GAMES -->
             <div id="win-games" class="window hidden liquid-glass" style="width: 500px; height: 400px; top: 80px; left: 200px;">
-                <div class="win-header"><span>🎮 Games</span><div class="win-btns"><div class="win-btn close" onclick="closeWin('win-games')"></div></div></div>
+                <div class="win-header"><span>🎮 Games</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-games')"></div><div class="win-btn max" onclick="maxWin('win-games')"></div><div class="win-btn close" onclick="closeWin('win-games')"></div></div></div>
                 <div class="win-body" style="padding: 25px;">
                     <h3 style="margin-bottom: 20px;">Quick Games</h3>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -1463,6 +1555,7 @@
                 <div class="launch-icon" onclick="openApp('win-cinema')"><img src="https://cdn-icons-png.flaticon.com/512/2504/2504929.png"><span>Cinema</span></div>
                 <div class="launch-icon" onclick="openApp('win-games')"><img src="https://cdn-icons-png.flaticon.com/512/8293/8293566.png"><span>Games</span></div>
                 <div class="launch-icon" onclick="openApp('win-terminal')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/68/Terminalicon3.png"><span>Terminal</span></div>
+                <div class="launch-icon" onclick="openWebApp('Koma Browser', 'https://www.google.com/webhp?igu=1')"><img src="https://cdn-icons-png.flaticon.com/512/718/718064.png"><span>Browser</span></div>
             </div>
         </div>
 
@@ -1939,10 +2032,40 @@
         });
     }
 
+    function togglePlayPause() {
+        if(!currentAudio) return;
+        if(currentAudio.paused) { currentAudio.play(); document.getElementById('np-play-btn').textContent = '⏸'; }
+        else { currentAudio.pause(); document.getElementById('np-play-btn').textContent = '▶'; }
+    }
+
     function playSongWithLyrics(song) {
         if (currentAudio) currentAudio.pause();
         currentAudio = new Audio(song.file); currentAudio.play();
         document.getElementById('active-app').textContent = "🎵 " + song.title;
+
+        // Update now-playing bar
+        const np = document.getElementById('komafy-np');
+        if(np) {
+            np.style.display = 'flex';
+            document.getElementById('np-cover').src = song.cover;
+            document.getElementById('np-title').textContent = song.title;
+            document.getElementById('np-artist').textContent = song.artist;
+            document.getElementById('np-play-btn').textContent = '⏸';
+        }
+        // Progress bar
+        currentAudio.ontimeupdate = () => {
+            if(currentAudio.duration) {
+                const pct = (currentAudio.currentTime / currentAudio.duration) * 100;
+                const fill = document.getElementById('np-progress-fill');
+                if(fill) fill.style.width = pct + '%';
+            }
+        };
+        currentAudio.onended = () => {
+            document.getElementById('np-play-btn').textContent = '▶';
+            const fill = document.getElementById('np-progress-fill');
+            if(fill) fill.style.width = '0%';
+        };
+
         const panel = document.getElementById('lyrics-panel'); const render = document.getElementById('lyrics-render');
         if(song.lyrics && song.lyrics.length > 0) {
             panel.classList.add('show');
@@ -1999,8 +2122,53 @@
 
         if(typeof updateClock === "function") { updateClock(); setInterval(updateClock, 1000); }
 
-        // Battery
-        if(navigator.getBattery) { navigator.getBattery().then(bat => { const u = () => { const pct = Math.round(bat.level*100); const el = document.getElementById('lock-battery'); if(el) el.textContent = `🔋 ${pct}%`; const tb = document.getElementById('top-bat'); if(tb) tb.textContent = `🔋 ${pct}%`; }; u(); bat.addEventListener('levelchange', u); }); }
+        // Battery — SVG animated
+        if(navigator.getBattery) {
+            navigator.getBattery().then(bat => {
+                const updateBattery = () => {
+                    const pct = Math.round(bat.level * 100);
+                    const isCharging = bat.charging;
+                    // Lock screen
+                    const el = document.getElementById('lock-battery');
+                    if(el) el.textContent = `${isCharging ? '⚡' : '🔋'} ${pct}%`;
+                    // Top bar SVG
+                    const fill = document.getElementById('bat-fill');
+                    const bolt = document.getElementById('bat-bolt');
+                    const pctText = document.getElementById('bat-pct-text');
+                    const chargeType = document.getElementById('bat-charge-type');
+                    if(fill) {
+                        const w = (pct / 100) * 20;
+                        fill.setAttribute('width', String(w));
+                        // Color based on level
+                        if(pct <= 15) fill.setAttribute('fill', '#ff5f56');
+                        else if(pct <= 30) fill.setAttribute('fill', '#ffbd2e');
+                        else fill.setAttribute('fill', '#27c93f');
+                    }
+                    if(bolt) bolt.style.display = isCharging ? 'block' : 'none';
+                    if(pctText) pctText.textContent = pct + '%';
+                    if(chargeType) {
+                        if(isCharging) {
+                            // Determine charge speed from charging time
+                            const ct = bat.chargingTime;
+                            let speed = 'Charging';
+                            if(ct !== Infinity && ct > 0) {
+                                if(ct < 3600) speed = 'Super Fast';
+                                else if(ct < 7200) speed = 'Fast';
+                                else speed = 'Slow';
+                            }
+                            chargeType.textContent = speed;
+                            chargeType.style.color = '#27c93f';
+                        } else {
+                            chargeType.textContent = '';
+                        }
+                    }
+                };
+                updateBattery();
+                bat.addEventListener('levelchange', updateBattery);
+                bat.addEventListener('chargingchange', updateBattery);
+                bat.addEventListener('chargingtimechange', updateBattery);
+            });
+        }
 
         // Setup lock screen security display
         setupLockUI();
@@ -2201,6 +2369,37 @@
     }
     async function toggleBluetooth() { try { const d = await navigator.bluetooth.requestDevice({acceptAllDevices: true}); showNotification('Bluetooth', `Connected: ${d.name}`); } catch { showNotification('Bluetooth', 'Cancelled'); } }
     function checkInternet() { showNotification('Network', navigator.onLine ? "Connected" : "Offline"); }
+
+    // --- VPN ---
+    let vpnConnected = false;
+    function toggleVPN() {
+        vpnConnected = !vpnConnected;
+        const tile = document.getElementById('vpn-tile');
+        const label = document.getElementById('vpn-tile-label');
+        const dot = document.getElementById('vpn-dot');
+        const btn = document.getElementById('vpn-connect-btn');
+        const panel = document.getElementById('vpn-detail-panel');
+        panel.style.display = 'block';
+        if(vpnConnected) {
+            tile.style.background = 'rgba(0,255,204,0.15)';
+            tile.style.borderColor = 'rgba(0,255,204,0.3)';
+            label.textContent = 'VPN On';
+            dot.className = 'vpn-status-dot connected';
+            btn.textContent = 'Disconnect';
+            btn.style.color = '#ff5f56';
+            btn.style.borderColor = 'rgba(255,95,86,0.3)';
+            showNotification('VPN', 'Connected to KomaOS VPN (219.100.37.207)');
+        } else {
+            tile.style.background = '';
+            tile.style.borderColor = '';
+            label.textContent = 'VPN Off';
+            dot.className = 'vpn-status-dot disconnected';
+            btn.textContent = 'Connect';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+            showNotification('VPN', 'Disconnected from VPN');
+        }
+    }
     initQuickShare();
 
     // --- AI ---
