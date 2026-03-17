@@ -2031,10 +2031,40 @@
         });
     }
 
+    function togglePlayPause() {
+        if(!currentAudio) return;
+        if(currentAudio.paused) { currentAudio.play(); document.getElementById('np-play-btn').textContent = '⏸'; }
+        else { currentAudio.pause(); document.getElementById('np-play-btn').textContent = '▶'; }
+    }
+
     function playSongWithLyrics(song) {
         if (currentAudio) currentAudio.pause();
         currentAudio = new Audio(song.file); currentAudio.play();
         document.getElementById('active-app').textContent = "🎵 " + song.title;
+
+        // Update now-playing bar
+        const np = document.getElementById('komafy-np');
+        if(np) {
+            np.style.display = 'flex';
+            document.getElementById('np-cover').src = song.cover;
+            document.getElementById('np-title').textContent = song.title;
+            document.getElementById('np-artist').textContent = song.artist;
+            document.getElementById('np-play-btn').textContent = '⏸';
+        }
+        // Progress bar
+        currentAudio.ontimeupdate = () => {
+            if(currentAudio.duration) {
+                const pct = (currentAudio.currentTime / currentAudio.duration) * 100;
+                const fill = document.getElementById('np-progress-fill');
+                if(fill) fill.style.width = pct + '%';
+            }
+        };
+        currentAudio.onended = () => {
+            document.getElementById('np-play-btn').textContent = '▶';
+            const fill = document.getElementById('np-progress-fill');
+            if(fill) fill.style.width = '0%';
+        };
+
         const panel = document.getElementById('lyrics-panel'); const render = document.getElementById('lyrics-render');
         if(song.lyrics && song.lyrics.length > 0) {
             panel.classList.add('show');
