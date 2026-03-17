@@ -816,7 +816,16 @@
             </div>
             <div class="top-bar-right">
                 <div class="top-bar-pill" id="top-clock">00:00:00</div>
-                <div class="top-bar-pill" id="top-bat">🔋 100%</div>
+                <div class="top-bar-pill battery-icon-wrap" id="top-bat">
+                    <svg viewBox="0 0 28 14" fill="none">
+                        <rect x="0.5" y="0.5" width="23" height="13" rx="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
+                        <rect x="24" y="4" width="2.5" height="6" rx="1" fill="rgba(255,255,255,0.4)"/>
+                        <rect id="bat-fill" x="2" y="2" width="20" height="10" rx="1.5" fill="#27c93f"/>
+                        <text id="bat-bolt" x="12" y="10.5" text-anchor="middle" font-size="9" font-weight="bold" fill="white" class="charging-bolt" style="display:none;">⚡</text>
+                    </svg>
+                    <span class="battery-pct" id="bat-pct-text">100%</span>
+                    <span class="battery-charging-label" id="bat-charge-type"></span>
+                </div>
                 <div class="top-bar-cc" onclick="toggleCC()">⚙️</div>
             </div>
         </nav>
