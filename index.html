@@ -2091,8 +2091,53 @@
 
         if(typeof updateClock === "function") { updateClock(); setInterval(updateClock, 1000); }
 
-        // Battery
-        if(navigator.getBattery) { navigator.getBattery().then(bat => { const u = () => { const pct = Math.round(bat.level*100); const el = document.getElementById('lock-battery'); if(el) el.textContent = `🔋 ${pct}%`; const tb = document.getElementById('top-bat'); if(tb) tb.textContent = `🔋 ${pct}%`; }; u(); bat.addEventListener('levelchange', u); }); }
+        // Battery — SVG animated
+        if(navigator.getBattery) {
+            navigator.getBattery().then(bat => {
+                const updateBattery = () => {
+                    const pct = Math.round(bat.level * 100);
+                    const isCharging = bat.charging;
+                    // Lock screen
+                    const el = document.getElementById('lock-battery');
+                    if(el) el.textContent = `${isCharging ? '⚡' : '🔋'} ${pct}%`;
+                    // Top bar SVG
+                    const fill = document.getElementById('bat-fill');
+                    const bolt = document.getElementById('bat-bolt');
+                    const pctText = document.getElementById('bat-pct-text');
+                    const chargeType = document.getElementById('bat-charge-type');
+                    if(fill) {
+                        const w = (pct / 100) * 20;
+                        fill.setAttribute('width', String(w));
+                        // Color based on level
+                        if(pct <= 15) fill.setAttribute('fill', '#ff5f56');
+                        else if(pct <= 30) fill.setAttribute('fill', '#ffbd2e');
+                        else fill.setAttribute('fill', '#27c93f');
+                    }
+                    if(bolt) bolt.style.display = isCharging ? 'block' : 'none';
+                    if(pctText) pctText.textContent = pct + '%';
+                    if(chargeType) {
+                        if(isCharging) {
+                            // Determine charge speed from charging time
+                            const ct = bat.chargingTime;
+                            let speed = 'Charging';
+                            if(ct !== Infinity && ct > 0) {
+                                if(ct < 3600) speed = 'Super Fast';
+                                else if(ct < 7200) speed = 'Fast';
+                                else speed = 'Slow';
+                            }
+                            chargeType.textContent = speed;
+                            chargeType.style.color = '#27c93f';
+                        } else {
+                            chargeType.textContent = '';
+                        }
+                    }
+                };
+                updateBattery();
+                bat.addEventListener('levelchange', updateBattery);
+                bat.addEventListener('chargingchange', updateBattery);
+                bat.addEventListener('chargingtimechange', updateBattery);
+            });
+        }
 
         // Setup lock screen security display
         setupLockUI();
