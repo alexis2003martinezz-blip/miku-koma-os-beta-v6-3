@@ -2338,6 +2338,37 @@
     }
     async function toggleBluetooth() { try { const d = await navigator.bluetooth.requestDevice({acceptAllDevices: true}); showNotification('Bluetooth', `Connected: ${d.name}`); } catch { showNotification('Bluetooth', 'Cancelled'); } }
     function checkInternet() { showNotification('Network', navigator.onLine ? "Connected" : "Offline"); }
+
+    // --- VPN ---
+    let vpnConnected = false;
+    function toggleVPN() {
+        vpnConnected = !vpnConnected;
+        const tile = document.getElementById('vpn-tile');
+        const label = document.getElementById('vpn-tile-label');
+        const dot = document.getElementById('vpn-dot');
+        const btn = document.getElementById('vpn-connect-btn');
+        const panel = document.getElementById('vpn-detail-panel');
+        panel.style.display = 'block';
+        if(vpnConnected) {
+            tile.style.background = 'rgba(0,255,204,0.15)';
+            tile.style.borderColor = 'rgba(0,255,204,0.3)';
+            label.textContent = 'VPN On';
+            dot.className = 'vpn-status-dot connected';
+            btn.textContent = 'Disconnect';
+            btn.style.color = '#ff5f56';
+            btn.style.borderColor = 'rgba(255,95,86,0.3)';
+            showNotification('VPN', 'Connected to KomaOS VPN (219.100.37.207)');
+        } else {
+            tile.style.background = '';
+            tile.style.borderColor = '';
+            label.textContent = 'VPN Off';
+            dot.className = 'vpn-status-dot disconnected';
+            btn.textContent = 'Connect';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+            showNotification('VPN', 'Disconnected from VPN');
+        }
+    }
     initQuickShare();
 
     // --- AI ---
