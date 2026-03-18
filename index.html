@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KomaOS v6.2</title>
-    <meta name="description" content="KomaOS v6.1 - A web-based operating system with liquid glass UI">
+    <meta name="description" content="KomaOS v6.2 - A web-based operating system with liquid glass UI">
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 
     <script type="module">
@@ -32,8 +32,9 @@
     </script>
 
     <style>
-        /* --- CSS: KOMAOS v6.1 SYSTEM UI (LIQUID GLASS) --- */
+        /* --- CSS: KOMAOS v6.2 SYSTEM UI (LIQUID GLASS) --- */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@100;200;300;400;500;600;700&display=swap');
 
         :root {
             --primary: #1793d1;
@@ -47,7 +48,7 @@
             --glow-accent: rgba(0,255,204,0.3);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'SF Pro Display', 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif; }
         body, html { width: 100%; height: 100%; background: #000; color: white; overflow: hidden; }
 
         /* FONDO */
@@ -155,9 +156,7 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .auth-subtitle { font-size: 13px; opacity: 0.5; margin-bottom: 25px; letter-spacing: 1px; }
-        .auth-input-wrap {
-            position: relative; margin: 10px 0;
-        }
+        .auth-input-wrap { position: relative; margin: 10px 0; }
         .auth-input-wrap .input-icon {
             position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
             font-size: 16px; opacity: 0.5;
@@ -279,119 +278,136 @@
         /* ===== DESKTOP — NEW UI ===== */
         #desktop { z-index: 1000; }
 
+        /* ===== TOP BAR — macOS SEQUOIA STYLE ===== */
         #top-bar {
-            width: 100%; height: 36px;
-            background: rgba(10,10,15,0.65); backdrop-filter: blur(30px) saturate(180%);
+            width: 100%; height: 28px;
+            background: rgba(0,0,0,0.35); backdrop-filter: blur(40px) saturate(200%);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 20px; font-size: 13px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 0 14px; font-size: 13px;
+            border-bottom: 0.5px solid rgba(255,255,255,0.08);
             z-index: 2100; position: relative;
+            -webkit-font-smoothing: antialiased;
         }
-        .top-bar-left { display: flex; gap: 18px; align-items: center; }
+        .top-bar-left { display: flex; gap: 20px; align-items: center; }
         .top-bar-logo {
-            font-weight: 900; font-size: 13px; letter-spacing: 3px;
+            font-weight: 800; font-size: 15px;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            cursor: pointer;
+            cursor: pointer; letter-spacing: 1px;
         }
-        .top-bar-item { opacity: 0.6; cursor: pointer; transition: 0.2s; font-size: 12px; }
+        .top-bar-item { opacity: 0.7; cursor: pointer; transition: 0.15s; font-size: 13px; font-weight: 400; }
         .top-bar-item:hover { opacity: 1; }
-        .top-bar-right { display: flex; gap: 14px; align-items: center; }
+        .top-bar-right { display: flex; gap: 8px; align-items: center; }
         .top-bar-pill {
-            background: rgba(255,255,255,0.06); padding: 4px 12px; border-radius: 20px;
-            font-size: 11px; border: 1px solid rgba(255,255,255,0.06);
-            display: flex; align-items: center; gap: 5px; transition: 0.3s; cursor: pointer;
+            background: transparent; padding: 2px 8px; border-radius: 4px;
+            font-size: 12px; font-weight: 400;
+            display: flex; align-items: center; gap: 5px; transition: 0.15s; cursor: pointer;
         }
-        .top-bar-pill:hover { background: rgba(255,255,255,0.12); }
+        .top-bar-pill:hover { background: rgba(255,255,255,0.1); }
         .top-bar-cc {
-            width: 28px; height: 28px; border-radius: 50%;
-            background: rgba(255,255,255,0.08); display: flex; align-items: center;
-            justify-content: center; cursor: pointer; transition: 0.3s;
-            font-size: 14px;
+            width: 22px; height: 22px; border-radius: 4px;
+            background: transparent; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; transition: 0.15s;
+            font-size: 13px;
         }
-        .top-bar-cc:hover { background: rgba(255,255,255,0.15); transform: scale(1.1); }
+        .top-bar-cc:hover { background: rgba(255,255,255,0.1); }
+        .top-bar-icon { font-size: 14px; opacity: 0.8; cursor: pointer; transition: 0.15s; }
+        .top-bar-icon:hover { opacity: 1; }
 
         /* CONTROL CENTER */
         #control-center {
-            position: absolute; top: 44px; right: 10px; width: 340px;
-            background: rgba(15,15,20,0.75); backdrop-filter: blur(40px) saturate(200%);
-            border-radius: 22px; border: 1px solid rgba(255,255,255,0.08); padding: 22px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.06);
-            opacity: 0; transform: translateY(-15px) scale(0.95);
+            position: absolute; top: 36px; right: 10px; width: 340px;
+            background: rgba(30,30,35,0.75); backdrop-filter: blur(60px) saturate(200%);
+            border-radius: 16px; border: 0.5px solid rgba(255,255,255,0.12); padding: 16px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            opacity: 0; transform: translateY(-10px) scale(0.97);
             transition: var(--transition); z-index: 2200; pointer-events: none;
         }
         #control-center.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-        .cc-section { margin-bottom: 18px; }
-        .cc-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.4; margin-bottom: 10px; }
-        .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .cc-section { margin-bottom: 14px; }
+        .cc-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.35; margin-bottom: 8px; font-weight: 500; }
+        .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .cc-tile {
-            background: rgba(255,255,255,0.06); padding: 14px; border-radius: 14px;
-            cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.04);
-            text-align: center; font-size: 12px;
+            background: rgba(255,255,255,0.06); padding: 12px; border-radius: 12px;
+            cursor: pointer; transition: 0.2s; border: 0.5px solid rgba(255,255,255,0.06);
+            text-align: center; font-size: 11px; font-weight: 500;
         }
-        .cc-tile:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
-        .cc-tile .cc-icon { font-size: 22px; margin-bottom: 6px; }
-        .cc-slider-wrap { margin: 10px 0; }
+        .cc-tile:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+        .cc-tile .cc-icon { font-size: 20px; margin-bottom: 4px; }
+        .cc-slider-wrap { margin: 8px 0; }
         .cc-slider-wrap label { font-size: 12px; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
         .cc-slider {
-            width: 100%; height: 6px; -webkit-appearance: none; appearance: none;
-            background: rgba(255,255,255,0.1); border-radius: 3px; outline: none; margin-top: 8px;
+            width: 100%; height: 4px; -webkit-appearance: none; appearance: none;
+            background: rgba(255,255,255,0.1); border-radius: 2px; outline: none; margin-top: 8px;
         }
         .cc-slider::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
-            background: var(--accent); cursor: pointer; box-shadow: 0 0 10px var(--glow-accent);
+            -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%;
+            background: white; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.4);
         }
 
         /* WINDOWS */
         .window {
             position: absolute; min-width: 300px; min-height: 200px;
             background: rgba(15,15,20,0.65); backdrop-filter: blur(35px) saturate(180%);
-            border-radius: 18px; border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+            border-radius: 12px; border: 0.5px solid rgba(255,255,255,0.12);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(0,0,0,0.3);
             display: flex; flex-direction: column;
             overflow: hidden; z-index: 100; transition: transform 0.3s, opacity 0.3s;
         }
         .win-header {
-            padding: 12px 16px; background: rgba(255,255,255,0.03);
+            padding: 10px 14px; background: rgba(255,255,255,0.03);
             display: flex; justify-content: space-between; align-items: center;
-            cursor: move; user-select: none; border-bottom: 1px solid rgba(255,255,255,0.04);
+            cursor: move; user-select: none; border-bottom: 0.5px solid rgba(255,255,255,0.06);
+            min-height: 38px;
         }
-        .win-header span { font-size: 13px; font-weight: 600; opacity: 0.8; }
+        .win-header span { font-size: 13px; font-weight: 500; opacity: 0.9; }
         .win-btns { display: flex; gap: 8px; }
         .win-btn {
-            width: 13px; height: 13px; border-radius: 50%; cursor: pointer; border: none;
-            transition: 0.2s; opacity: 0.8;
+            width: 12px; height: 12px; border-radius: 50%; cursor: pointer; border: none;
+            transition: 0.15s; opacity: 0.9;
         }
         .win-btn:hover { opacity: 1; transform: scale(1.15); }
-        .close { background: #ff5f56; } .min { background: #ffbd2e; } .max { background: #27c93f; }
+        .close { background: #ff5f57; } .min { background: #febc2e; } .max { background: #28c840; }
         .win-body { flex-grow: 1; overflow: auto; position: relative; }
 
-        /* DOCK — REDESIGNED */
+        /* ===== DOCK — LIQUID GLASS macOS ===== */
         #dock-container {
             position: fixed; bottom: 0; left: 50%;
             transform: translateX(-50%) translateY(0);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 9999;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 9999;
         }
         #dock-container.hidden-dock { transform: translateX(-50%) translateY(100px); }
         .dock {
-            background: rgba(15,15,20,0.55); backdrop-filter: blur(35px) saturate(200%);
-            padding: 8px 16px; border-radius: 22px; display: flex; gap: 6px; align-items: center;
-            border: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(50px) saturate(200%);
+            padding: 4px 8px; border-radius: 18px; display: flex; gap: 2px; align-items: flex-end;
+            border: 0.5px solid rgba(255,255,255,0.2);
+            margin-bottom: 6px;
+            box-shadow: 0 0 0 0.5px rgba(0,0,0,0.2),
+                        0 10px 30px rgba(0,0,0,0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.15),
+                        inset 0 -1px 0 rgba(255,255,255,0.05);
         }
         .dock-item {
-            width: 52px; height: 52px; cursor: pointer; transition: 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-radius: 14px; display: flex; align-items: center; justify-content: center;
-            position: relative;
+            width: 50px; height: 50px; cursor: pointer; 
+            transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            position: relative; padding: 3px;
         }
-        .dock-item img { width: 42px; height: 42px; border-radius: 12px; pointer-events: none; }
-        .dock-item:hover { transform: translateY(-14px) scale(1.25); }
+        .dock-item img { 
+            width: 44px; height: 44px; border-radius: 11px; pointer-events: none;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .dock-item:hover { transform: translateY(-18px) scale(1.35); }
         .dock-item::after {
-            content: ''; position: absolute; bottom: -6px; width: 4px; height: 4px;
+            content: ''; position: absolute; bottom: -3px; width: 4px; height: 4px;
             border-radius: 50%; background: transparent;
         }
-        .dock-item.active::after { background: rgba(255,255,255,0.6); }
-        .dock-sep { width: 1px; height: 35px; background: rgba(255,255,255,0.12); margin: 0 4px; }
+        .dock-item.active::after { background: rgba(255,255,255,0.8); }
+        .dock-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.15); margin: 0 4px; align-self: center; }
+        
+        /* Dock magnification for neighbors */
+        .dock-item.neighbor { transform: translateY(-8px) scale(1.15); }
 
         /* APP LAUNCHER */
         #win-app-launcher {
@@ -416,7 +432,7 @@
         .launch-icon:hover { transform: scale(1.1); }
         .launch-icon:hover img { box-shadow: 0 12px 30px rgba(0,0,0,0.5); }
 
-        /* KOMAFY STYLES — REDESIGNED */
+        /* KOMAFY STYLES */
         .komafy-load {
             position: absolute; inset: 0; background: linear-gradient(135deg, #0a0a0a, #1a1a2e); display: flex;
             flex-direction: column; align-items: center; justify-content: center; z-index: 10;
@@ -461,22 +477,22 @@
         .lyric-line.active { opacity: 1; color: #1DB954; transform: scale(1.05); }
 
         /* Battery SVG styles */
-        .battery-icon-wrap { display: flex; align-items: center; gap: 5px; cursor: pointer; }
-        .battery-icon-wrap svg { width: 28px; height: 14px; }
-        .battery-pct { font-size: 10px; font-weight: 600; opacity: 0.8; }
+        .battery-icon-wrap { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+        .battery-icon-wrap svg { width: 24px; height: 12px; }
+        .battery-pct { font-size: 11px; font-weight: 400; opacity: 0.8; }
         .battery-charging-label { font-size: 9px; opacity: 0.5; letter-spacing: 0.5px; }
         @keyframes chargePulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         .charging-bolt { animation: chargePulse 1.5s ease-in-out infinite; }
 
         /* VPN panel */
         .vpn-panel {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 14px; padding: 14px; margin-top: 10px; font-size: 12px;
+            background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 12px; margin-top: 8px; font-size: 11px;
         }
-        .vpn-panel .vpn-row { display: flex; justify-content: space-between; padding: 4px 0; opacity: 0.6; }
+        .vpn-panel .vpn-row { display: flex; justify-content: space-between; padding: 3px 0; opacity: 0.6; }
         .vpn-status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-        .vpn-status-dot.connected { background: #27c93f; box-shadow: 0 0 8px rgba(39,201,63,0.5); }
-        .vpn-status-dot.disconnected { background: #ff5f56; }
+        .vpn-status-dot.connected { background: #28c840; box-shadow: 0 0 8px rgba(40,200,64,0.5); }
+        .vpn-status-dot.disconnected { background: #ff5f57; }
 
         /* CINEMA STYLES */
         .cinema-wrapper { display: flex; flex-direction: column; height: 100%; background: #141414; color: white; }
@@ -513,7 +529,7 @@
 
         /* UTILITIES */
         .hidden { display: none !important; }
-        .maximized { width: 100% !important; height: calc(100% - 36px) !important; top: 36px !important; left: 0 !important; border-radius: 0; }
+        .maximized { width: 100% !important; height: calc(100% - 28px) !important; top: 28px !important; left: 0 !important; border-radius: 0; }
         .minimized { transform: translateY(100vh) scale(0.2); opacity: 0; pointer-events: none; }
         .koma-btn {
             background: linear-gradient(135deg, var(--primary), #2563eb); color: #fff; border: none;
@@ -522,7 +538,7 @@
         }
         .koma-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(23,147,209,0.3); }
 
-        .liquid-glass { background: rgba(15,15,20,0.55) !important; backdrop-filter: blur(35px) saturate(180%) !important; border: 1px solid rgba(255,255,255,0.08); color: white; }
+        .liquid-glass { background: rgba(15,15,20,0.55) !important; backdrop-filter: blur(35px) saturate(180%) !important; border: 0.5px solid rgba(255,255,255,0.12); color: white; }
         .bg-preview { height: 65px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; background-size: cover; background-position: center; transition: 0.2s; }
         .bg-preview:hover { border-color: var(--accent); }
         .calc-btn { border: none; background: rgba(255,255,255,0.08); color: white; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 18px; transition: 0.2s; }
@@ -534,10 +550,10 @@
         .downloading::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary); animation: prog 2s linear forwards; border-radius: 20px; }
         @keyframes prog { 100% { width: 100%; } }
         .notif-card {
-            background: rgba(15,15,20,0.85); backdrop-filter: blur(30px); padding: 16px 20px;
-            border-radius: 16px; min-width: 240px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5); color: white;
-            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(30,30,35,0.9); backdrop-filter: blur(40px) saturate(200%); padding: 14px 18px;
+            border-radius: 14px; min-width: 240px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); color: white;
+            border: 0.5px solid rgba(255,255,255,0.12);
             animation: notifSlide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transition: opacity 0.5s;
         }
@@ -555,9 +571,22 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
+        /* Desktop widgets panel (Windows-style) */
+        .desktop-widget-panel {
+            position: absolute; background: rgba(20,20,25,0.7); backdrop-filter: blur(30px);
+            border: 0.5px solid rgba(255,255,255,0.1); border-radius: 16px;
+            padding: 16px; min-width: 180px; cursor: move; z-index: 500;
+            transition: box-shadow 0.3s; animation: fadeInPanel 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .desktop-widget-panel:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+        .widget-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .widget-header span { font-size: 11px; opacity: 0.4; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .widget-close { background: none; border: none; color: white; opacity: 0.3; cursor: pointer; font-size: 14px; transition: 0.2s; }
+        .widget-close:hover { opacity: 1; }
+
         /* Clock tabs */
         .clock-tab {
-            background: none; border: none; color: white; padding: 12px 18px;
+            background: none; border: none; color: white; padding: 10px 16px;
             font-size: 13px; cursor: pointer; opacity: 0.4; transition: 0.3s;
             border-bottom: 2px solid transparent; font-weight: 500;
         }
@@ -574,25 +603,25 @@
         .store-nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
         .store-nav-item.active { background: rgba(255,255,255,0.08); color: white; font-weight: 600; }
         .store-card-new {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 14px;
+            background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.08);
+            border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 12px;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .store-card-new:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
         .store-wall-card {
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px; padding: 12px; transition: 0.3s;
+            background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.08);
+            border-radius: 14px; padding: 12px; transition: 0.3s;
         }
         .store-wall-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
         .store-get-btn {
             background: rgba(0,255,204,0.1); color: var(--accent); border: 1px solid rgba(0,255,204,0.2);
-            padding: 8px 18px; border-radius: 20px; font-weight: 700; font-size: 12px;
+            padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 11px;
             cursor: pointer; transition: 0.3s; white-space: nowrap; position: relative; overflow: hidden;
         }
         .store-get-btn:hover { background: rgba(0,255,204,0.2); }
         .store-get-btn.downloading::before { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: var(--primary); animation: prog 2s linear forwards; border-radius: 20px; }
 
-        /* Calendar redesigned */
+        /* Calendar */
         .cal-nav-btn {
             background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
             color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
@@ -658,8 +687,8 @@
             transform: scale(1.2);
         }
         .pin-dot.error {
-            background: #ff5f56; border-color: #ff5f56;
-            box-shadow: 0 0 12px rgba(255,95,86,0.5);
+            background: #ff5f57; border-color: #ff5f57;
+            box-shadow: 0 0 12px rgba(255,95,87,0.5);
             animation: pinShake 0.4s ease;
         }
         .pin-key {
@@ -676,6 +705,70 @@
             50% { transform: translateX(8px); }
             75% { transform: translateX(-4px); }
         }
+
+        /* AirDrop animation overlay */
+        .airdrop-overlay {
+            position: fixed; inset: 0; z-index: 99998;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+            display: flex; align-items: center; justify-content: center;
+            animation: airdropIn 0.5s ease;
+        }
+        @keyframes airdropIn { from { opacity: 0; } to { opacity: 1; } }
+        .airdrop-ring {
+            position: absolute; width: 200px; height: 200px; border-radius: 50%;
+            border: 2px solid rgba(0,255,204,0.3);
+            animation: airdropPulse 2s ease-out infinite;
+        }
+        @keyframes airdropPulse {
+            0% { transform: scale(0.5); opacity: 1; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        .airdrop-device {
+            background: rgba(30,30,35,0.8); backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 20px;
+            padding: 30px 40px; text-align: center; z-index: 1;
+            animation: airdropBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes airdropBounce { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* Widget add button on desktop */
+        #add-widget-btn {
+            position: absolute; top: 50px; right: 20px;
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px;
+            padding: 8px 16px; color: white; font-size: 12px; cursor: pointer;
+            transition: 0.3s; z-index: 500; font-weight: 500;
+        }
+        #add-widget-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+        /* Widget picker modal */
+        .widget-picker {
+            position: fixed; inset: 0; z-index: 9500;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(20px);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .widget-picker-card {
+            background: rgba(20,20,25,0.85); backdrop-filter: blur(40px);
+            border: 0.5px solid rgba(255,255,255,0.12); border-radius: 20px;
+            padding: 30px; width: 400px; max-height: 500px; overflow-y: auto;
+            animation: authCardIn 0.4s ease;
+        }
+
+        /* Browser toolbar */
+        .browser-toolbar {
+            display: flex; gap: 8px; padding: 8px 12px; background: rgba(0,0,0,0.3);
+            border-bottom: 0.5px solid rgba(255,255,255,0.06); align-items: center;
+        }
+        .browser-url-bar {
+            flex: 1; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(255,255,255,0.1);
+            color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; outline: none;
+        }
+        .browser-url-bar:focus { border-color: var(--accent); }
+        .browser-nav-btn {
+            background: rgba(255,255,255,0.06); border: none; color: white; width: 30px; height: 30px;
+            border-radius: 6px; cursor: pointer; font-size: 14px; transition: 0.2s;
+        }
+        .browser-nav-btn:hover { background: rgba(255,255,255,0.12); }
     </style>
   <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/xYE0YoxJHbdDxDorZMNVVRGO1vP2/social-images/social-1773550663588-Untitled_design.webp">
   <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/xYE0YoxJHbdDxDorZMNVVRGO1vP2/social-images/social-1773550663588-Untitled_design.webp">
@@ -683,8 +776,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="KomaOS v6.2">
   <meta name="twitter:title" content="KomaOS v6.2">
-  <meta property="og:description" content="KomaOS v6.1 - A web-based operating system with liquid glass UI">
-  <meta name="twitter:description" content="KomaOS v6.1 - A web-based operating system with liquid glass UI">
+  <meta property="og:description" content="KomaOS v6.2 - A web-based operating system with liquid glass UI">
+  <meta name="twitter:description" content="KomaOS v6.2 - A web-based operating system with liquid glass UI">
 </head>
 <body onload="initSystem()">
 
@@ -700,7 +793,7 @@
         <div style="position: relative; z-index: 10; text-align: center;">
             <div style="font-size: 80px; margin-bottom: 10px; animation: brandFloat 3s ease-in-out infinite;">🌀</div>
             <h1 class="koma-brand">KomaOS</h1>
-            <p style="font-size: 13px; opacity: 0.4; letter-spacing: 8px; margin-top: 10px; color: var(--accent);">EXTREME EDITION v6.1</p>
+            <p style="font-size: 13px; opacity: 0.4; letter-spacing: 8px; margin-top: 10px; color: var(--accent);">EXTREME EDITION v6.2</p>
             <div style="margin-top: 40px;">
                 <button id="boot-btn">INITIALIZE SYSTEM</button>
             </div>
@@ -789,14 +882,14 @@
                         <button class="pin-key" onclick="enterPin('0')">0</button>
                         <button class="pin-key" onclick="enterPin('submit')" style="background: rgba(0,255,204,0.15); color: var(--accent);">→</button>
                     </div>
-                    <p id="pin-error" style="color: #ff5f56; font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s;">Wrong PIN</p>
+                    <p id="pin-error" style="color: #ff5f57; font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s;">Wrong PIN</p>
                 </div>
                 <div id="lock-password-display" style="display:none; margin-bottom: 15px;">
                     <div style="display: flex; gap: 10px; justify-content: center; max-width: 280px; margin: 0 auto;">
                         <input type="password" id="lock-pass-input" placeholder="Enter password..." style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:white; padding:12px 16px; border-radius:14px; outline:none; font-size:14px; backdrop-filter:blur(10px); transition:0.3s;" onkeypress="if(event.key==='Enter')checkLockPassword()">
                         <button onclick="checkLockPassword()" style="background:rgba(0,255,204,0.15); border:1px solid rgba(0,255,204,0.3); color:var(--accent); padding:12px 18px; border-radius:14px; cursor:pointer; font-weight:700; transition:0.3s;">→</button>
                     </div>
-                    <p id="pass-error" style="color: #ff5f56; font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s;">Wrong password</p>
+                    <p id="pass-error" style="color: #ff5f57; font-size: 12px; margin-top: 10px; opacity: 0; transition: 0.3s;">Wrong password</p>
                 </div>
                 <div id="lock-no-security" style="cursor: pointer;" onclick="unlock()">
                     <div class="lock-swipe-hint">▲ TAP TO UNLOCK ▲</div>
@@ -807,24 +900,30 @@
 
     <!-- ===== DESKTOP ===== -->
     <div id="desktop" class="system-layer">
+        <!-- macOS-style TOP BAR -->
         <nav id="top-bar">
             <div class="top-bar-left">
-                <span class="top-bar-logo" onclick="openLauncher()">KOMA</span>
+                <span class="top-bar-logo" onclick="openLauncher()">⌘</span>
                 <span class="top-bar-item" id="active-app" data-t="finder">Finder</span>
-                <span class="top-bar-item" data-t="files">Files</span>
+                <span class="top-bar-item" data-t="files">File</span>
+                <span class="top-bar-item" style="opacity:0.5;">Edit</span>
+                <span class="top-bar-item" style="opacity:0.5;">View</span>
+                <span class="top-bar-item" style="opacity:0.5;">Window</span>
             </div>
             <div class="top-bar-right">
-                <div class="top-bar-pill" id="top-clock">00:00:00</div>
+                <span class="top-bar-icon" id="vpn-topbar-icon" onclick="toggleVPN()" title="VPN" style="display:none;">🛡️</span>
+                <span class="top-bar-icon" onclick="showAirdropAnimation()" title="AirDrop">📡</span>
                 <div class="top-bar-pill battery-icon-wrap" id="top-bat">
                     <svg viewBox="0 0 28 14" fill="none">
                         <rect x="0.5" y="0.5" width="23" height="13" rx="2.5" stroke="rgba(255,255,255,0.6)" stroke-width="1"/>
                         <rect x="24" y="4" width="2.5" height="6" rx="1" fill="rgba(255,255,255,0.4)"/>
-                        <rect id="bat-fill" x="2" y="2" width="20" height="10" rx="1.5" fill="#27c93f"/>
+                        <rect id="bat-fill" x="2" y="2" width="20" height="10" rx="1.5" fill="#28c840"/>
                         <text id="bat-bolt" x="12" y="10.5" text-anchor="middle" font-size="9" font-weight="bold" fill="white" class="charging-bolt" style="display:none;">⚡</text>
                     </svg>
                     <span class="battery-pct" id="bat-pct-text">100%</span>
                     <span class="battery-charging-label" id="bat-charge-type"></span>
                 </div>
+                <div class="top-bar-pill" id="top-clock">00:00</div>
                 <div class="top-bar-cc" onclick="toggleCC()">⚙️</div>
             </div>
         </nav>
@@ -834,13 +933,13 @@
                 <div class="cc-section-title">Quick Controls</div>
                 <div class="cc-grid">
                     <div class="cc-tile" onclick="checkInternet()">
-                        <div class="cc-icon">🌐</div>Internet
+                        <div class="cc-icon">📶</div>Wi-Fi
                     </div>
                     <div class="cc-tile" onclick="toggleBluetooth()">
                         <div class="cc-icon">🔹</div>Bluetooth
                     </div>
-                    <div class="cc-tile" onclick="openWin('win-quickshare')">
-                        <div class="cc-icon">📲</div>QuickShare
+                    <div class="cc-tile" onclick="showAirdropAnimation()">
+                        <div class="cc-icon">📡</div>AirDrop
                     </div>
                     <div class="cc-tile" id="vpn-tile" onclick="toggleVPN()">
                         <div class="cc-icon">🛡️</div><span id="vpn-tile-label">VPN Off</span>
@@ -848,15 +947,19 @@
                 </div>
             </div>
             <div id="vpn-detail-panel" class="vpn-panel" style="display:none;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                    <strong style="font-size:13px;"><span class="vpn-status-dot disconnected" id="vpn-dot"></span>KomaOS VPN</strong>
-                    <button onclick="toggleVPN()" id="vpn-connect-btn" class="mac-get-btn" style="font-size:10px; padding:5px 12px;">Connect</button>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <strong style="font-size:12px;"><span class="vpn-status-dot disconnected" id="vpn-dot"></span>KomaOS VPN</strong>
+                    <button onclick="toggleVPN()" id="vpn-connect-btn" class="mac-get-btn" style="font-size:10px; padding:4px 10px;">Connect</button>
                 </div>
                 <div class="vpn-row"><span>Provider</span><span>L2TP-IPsec</span></div>
                 <div class="vpn-row"><span>Server</span><span>219.100.37.207</span></div>
-                <div class="vpn-row"><span>User</span><span>vpn</span></div>
+                <div class="vpn-row"><span>Username</span><span>vpn</span></div>
+                <div class="vpn-row"><span>Password</span><span>••••</span></div>
+                <div class="vpn-row"><span>PSK</span><span>••••</span></div>
                 <div class="vpn-row"><span>DNS 1</span><span>66.94.105.299</span></div>
                 <div class="vpn-row"><span>DNS 2</span><span>66.23.198.252</span></div>
+                <div class="vpn-row"><span>DNS 3</span><span>0.0.0.0</span></div>
+                <div class="vpn-row"><span>DNS 4</span><span>0.0.0.0</span></div>
             </div>
             <div class="cc-section">
                 <div class="cc-slider-wrap">
@@ -868,9 +971,9 @@
                     <input type="range" class="cc-slider" value="80">
                 </div>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="koma-btn" style="flex: 1; background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="returnToLockScreen()">🔒 Lock</button>
-                <button class="koma-btn" style="flex: 1; background: linear-gradient(135deg, #ff5f56, #ff2d55);" onclick="location.reload()">⟲ Restart</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="koma-btn" style="flex: 1; padding: 10px; font-size: 12px; background: linear-gradient(135deg, #6366f1, #8b5cf6);" onclick="returnToLockScreen()">🔒 Lock</button>
+                <button class="koma-btn" style="flex: 1; padding: 10px; font-size: 12px; background: linear-gradient(135deg, #ff5f57, #ff2d55);" onclick="location.reload()">⟲ Restart</button>
             </div>
         </div>
 
@@ -880,9 +983,12 @@
                 <h1 id="desktop-time">00:00</h1>
             </div>
 
-            <div id="notification-center" style="position: fixed; top: 50px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px;"></div>
+            <!-- Add widgets button -->
+            <button id="add-widget-btn" onclick="openWidgetPicker()">+ Add Widget</button>
 
-            <!-- KOMAFY WINDOW — REDESIGNED -->
+            <div id="notification-center" style="position: fixed; top: 40px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 8px;"></div>
+
+            <!-- KOMAFY WINDOW -->
             <div id="win-komafy" class="window hidden" style="width: 900px; height: 580px; top: 60px; left: 100px;">
                 <div class="win-header" style="background: rgba(0,0,0,0.4);">
                     <span style="color: #1DB954; font-weight: 700;">Komafy</span>
@@ -892,30 +998,30 @@
                         <div class="win-btn close" onclick="closeWin('win-komafy')"></div>
                     </div>
                 </div>
-                <div class="win-body" style="display:flex; flex-direction:column; height:100%;">
-                    <div id="komafy-loader" class="komafy-load">
+                <div class="win-body" style="display: flex; flex-direction: column; height: 100%;">
+                    <div class="komafy-load" id="komafy-loader">
                         <div class="k-bar-container">
-                            <div class="k-bar" style="animation-delay: 0.1s"></div>
-                            <div class="k-bar" style="animation-delay: 0.3s"></div>
-                            <div class="k-bar" style="animation-delay: 0.2s"></div>
-                            <div class="k-bar" style="animation-delay: 0.4s"></div>
+                            <div class="k-bar" style="animation-delay: 0s;"></div>
+                            <div class="k-bar" style="animation-delay: 0.15s;"></div>
+                            <div class="k-bar" style="animation-delay: 0.3s;"></div>
+                            <div class="k-bar" style="animation-delay: 0.45s;"></div>
+                            <div class="k-bar" style="animation-delay: 0.6s;"></div>
                         </div>
-                        <h2 style="color: #1DB954; margin-top: 15px; font-weight: 800; letter-spacing: -0.5px;">Komafy</h2>
+                        <p style="margin-top: 20px; opacity: 0.5; font-size: 14px;">Loading Komafy...</p>
                     </div>
-                    <div class="komafy-shell" style="flex:1; min-height:0;">
-                        <aside class="komafy-sidebar">
+                    <div class="komafy-shell">
+                        <div class="komafy-sidebar">
                             <div class="komafy-sidebar-logo">🎵 Komafy</div>
                             <div class="komafy-nav-item active">🏠 Home</div>
                             <div class="komafy-nav-item">🔍 Search</div>
-                            <div class="komafy-nav-item">❤️ Favorites</div>
-                            <div class="komafy-nav-item">📈 Trending</div>
-                            <div class="komafy-nav-item" onclick="document.getElementById('lyrics-panel').classList.add('show')">📝 Lyrics</div>
-                            <div style="margin-top: auto; padding: 10px 14px; font-size: 11px; opacity: 0.3;">Koma Music v3.0</div>
-                        </aside>
-                        <main class="komafy-main" id="komafy-content" style="overflow-y:auto; padding: 25px;"></main>
+                            <div class="komafy-nav-item">📚 Library</div>
+                            <div class="komafy-nav-item">💚 Liked Songs</div>
+                        </div>
+                        <div class="komafy-main" id="komafy-content">
+                            <div style="padding: 30px; opacity: 0.5;">Loading library...</div>
+                        </div>
                     </div>
-                    <!-- Now Playing Bar -->
-                    <div class="komafy-now-playing" id="komafy-np" style="display:none;">
+                    <div class="komafy-now-playing" id="komafy-np" style="display: none;">
                         <div class="komafy-progress-bar"><div class="fill" id="np-progress-fill"></div></div>
                         <img class="np-cover" id="np-cover" src="">
                         <div class="np-info">
@@ -923,80 +1029,70 @@
                             <div class="np-artist" id="np-artist">—</div>
                         </div>
                         <div class="np-controls">
-                            <button class="np-btn" onclick="if(currentAudio)currentAudio.currentTime=Math.max(0,currentAudio.currentTime-10)">⏮</button>
-                            <button class="np-btn" id="np-play-btn" onclick="togglePlayPause()" style="font-size:24px;">⏸</button>
-                            <button class="np-btn" onclick="if(currentAudio)currentAudio.currentTime=Math.min(currentAudio.duration,currentAudio.currentTime+10)">⏭</button>
+                            <button class="np-btn" onclick="playPrevSong()">⏮</button>
+                            <button class="np-btn" id="np-play-btn" onclick="togglePlayPause()">▶</button>
+                            <button class="np-btn" onclick="playNextSong()">⏭</button>
                         </div>
                     </div>
-                    <div id="lyrics-panel" class="lyrics-panel">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
-                            <h2 style="color: #1DB954;">Lyrics</h2>
-                            <button class="koma-btn" onclick="document.getElementById('lyrics-panel').classList.remove('show')">Close</button>
-                        </div>
+                    <div class="lyrics-panel" id="lyrics-panel">
+                        <button onclick="document.getElementById('lyrics-panel').classList.remove('show')" style="position:absolute; top:15px; right:15px; background:none; border:none; color:white; font-size:20px; cursor:pointer; opacity:0.5;">✕</button>
                         <div id="lyrics-render"></div>
                     </div>
                 </div>
             </div>
 
             <!-- SETTINGS -->
-            <div id="win-settings" class="window hidden liquid-glass" style="width: 520px; height: 580px; top: 50px; left: 50px;">
+            <div id="win-settings" class="window hidden liquid-glass" style="width: 700px; height: 550px; top: 50px; left: 250px;">
                 <div class="win-header">
                     <span>⚙️ Settings</span>
                     <div class="win-btns"><div class="win-btn min" onclick="minWin('win-settings')"></div><div class="win-btn max" onclick="maxWin('win-settings')"></div><div class="win-btn close" onclick="closeWin('win-settings')"></div></div>
                 </div>
                 <div class="win-body" style="padding: 25px; overflow-y: auto;">
-                    <h3 style="margin-top:0; font-weight: 600;">Personalización Pro</h3>
-
-                    <p style="font-size: 13px; opacity: 0.6; margin-top: 18px;">🎨 Color de Acento:</p>
-                    <input type="color" id="accent-picker" value="#1793d1" oninput="updateAccentColor(this.value)" style="width: 100%; height: 40px; border: none; background: transparent; cursor: pointer; border-radius: 8px;">
-
-                    <p style="font-size: 13px; opacity: 0.6; margin-top: 18px;">💎 Intensidad del Blur:</p>
-                    <input type="range" min="0" max="50" value="25" class="cc-slider" oninput="updateBlur(this.value)">
-
-                    <p style="font-size: 13px; opacity: 0.6; margin-top: 18px;">🖼️ Fondo Especial:</p>
-                    <button onclick="setTransparentBG()" class="mac-get-btn" style="width:100%; margin-bottom:12px;">✨ Activar Fondo Transparente</button>
-
-                    <p style="font-size: 13px; opacity: 0.6;">URL Personalizada:</p>
-                    <div style="display:flex; gap:10px; margin-bottom:15px;">
-                        <input type="text" id="custom-bg-input" placeholder="Pega link de imagen..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white; padding:10px; border-radius:10px; outline: none;">
-                        <button onclick="changeBG(document.getElementById('custom-bg-input').value)" class="mac-get-btn">Aplicar</button>
+                    <h2 style="margin-bottom: 20px; font-weight: 600; font-size: 22px;">System Settings</h2>
+                    <p style="font-size: 13px; opacity: 0.6;">📛 Username:</p>
+                    <div style="display: flex; gap: 10px; margin: 8px 0 18px;">
+                        <input type="text" id="user-name-input" placeholder="Your name" class="auth-input no-icon" style="flex: 1;">
+                        <button class="mac-get-btn" onclick="updateUserProfile()">Save</button>
                     </div>
 
-                    <p style="font-size: 13px; opacity: 0.6;">Presets:</p>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
-                        <div class="bg-preview" onclick="changeBG('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe')" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200');"></div>
-                        <div class="bg-preview" onclick="changeBG('https://images.unsplash.com/photo-1477346611705-65d1883cee1e')" style="background-image: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=200');"></div>
-                        <div class="bg-preview" onclick="useGalleryAsBG()" style="background: rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:10px;">🖼️ Galería</div>
+                    <p style="font-size: 13px; opacity: 0.6;">🌄 Desktop Wallpaper:</p>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0 18px;">
+                        <div class="bg-preview" onclick="changeBGPersist('https://images.unsplash.com/photo-1506744038136-46273834b3fb')" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=200');"></div>
+                        <div class="bg-preview" onclick="changeBGPersist('https://images.unsplash.com/photo-1534067783941-51c9c23ecefd')" style="background-image:url('https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?w=200');"></div>
+                        <div class="bg-preview" onclick="changeBGPersist('https://images.unsplash.com/photo-1462331940025-496dfbfc7564')" style="background-image:url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=200');"></div>
+                        <div class="bg-preview" onclick="setTransparentBG()" style="background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);"></div>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 18px;">
+                        <input type="text" id="custom-wall-input" placeholder="Paste wallpaper URL..." class="auth-input no-icon" style="flex:1;">
+                        <button class="mac-get-btn" onclick="changeBGPersist(document.getElementById('custom-wall-input').value)">Apply</button>
                     </div>
 
-                    <p style="font-size: 13px; opacity: 0.6;">🪟 Opacidad de Ventanas:</p>
-                    <input type="range" min="10" max="100" value="70" class="cc-slider" oninput="updateOpacity(this.value)">
+                    <p style="font-size: 13px; opacity: 0.6;">🎨 Accent Color:</p>
+                    <div style="display: flex; gap: 8px; margin: 10px 0 18px;">
+                        <div onclick="updateAccentColor('#1793d1')" style="width:32px; height:32px; border-radius:50%; background:#1793d1; cursor:pointer; border:2px solid transparent;"></div>
+                        <div onclick="updateAccentColor('#ff5f57')" style="width:32px; height:32px; border-radius:50%; background:#ff5f57; cursor:pointer;"></div>
+                        <div onclick="updateAccentColor('#1DB954')" style="width:32px; height:32px; border-radius:50%; background:#1DB954; cursor:pointer;"></div>
+                        <div onclick="updateAccentColor('#f0f')" style="width:32px; height:32px; border-radius:50%; background:#f0f; cursor:pointer;"></div>
+                        <div onclick="updateAccentColor('#ff6400')" style="width:32px; height:32px; border-radius:50%; background:#ff6400; cursor:pointer;"></div>
+                    </div>
 
-                    <p style="font-size: 13px; opacity: 0.6; margin-top: 18px;">🔤 Tipo de Letra:</p>
-                    <select id="font-select" class="auth-input no-icon" onchange="changeFont(this.value)">
+                    <p style="font-size: 13px; opacity: 0.6;">🔤 Font:</p>
+                    <select onchange="changeFont(this.value)" class="auth-input no-icon" style="margin: 8px 0 18px;">
                         <option value="'Inter', sans-serif">Inter (Default)</option>
-                        <option value="'SF Pro Display', sans-serif">Apple Style</option>
-                        <option value="'Courier New', monospace">Retro Terminal</option>
-                        <option value="'Georgia', serif">Elegante</option>
+                        <option value="'SF Pro Display', sans-serif">SF Pro</option>
+                        <option value="'Courier New', monospace">Monospace</option>
+                        <option value="'Georgia', serif">Georgia</option>
                     </select>
 
-                    <p style="font-size: 13px; opacity: 0.6; margin-top: 18px;">🖱️ Cursor URL:</p>
-                    <div style="display:flex; gap:10px; margin-bottom:15px;">
-                        <input type="text" id="cursor-url" placeholder="Link .cur or .png..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white; padding:10px; border-radius:10px; outline: none;">
-                        <button onclick="setCustomCursor(document.getElementById('cursor-url').value)" class="mac-get-btn">Set</button>
-                    </div>
+                    <p style="font-size: 13px; opacity: 0.6;">🪟 Glass Blur:</p>
+                    <input type="range" min="5" max="60" value="25" class="cc-slider" oninput="updateBlur(this.value)" style="margin: 8px 0;">
+                    <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">🌑 Glass Opacity:</p>
+                    <input type="range" min="20" max="95" value="70" class="cc-slider" oninput="updateOpacity(this.value)" style="margin: 8px 0;">
 
                     <hr style="opacity: 0.06; margin: 20px 0;">
-                    <p style="font-size: 13px; font-weight: 600; color: var(--primary);">👤 User Profile</p>
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <input type="text" id="user-name-input" placeholder="New name..." class="auth-input no-icon" style="flex: 1;">
-                        <button onclick="updateUserProfile()" class="mac-get-btn">Save</button>
-                    </div>
-
-                    <hr style="opacity: 0.06; margin: 20px 0;">
-                    <p style="font-size: 13px; opacity: 0.6;">🖥️ Screen Mode:</p>
-                    <div style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;">
-                        <button onclick="setFilter('none')" class="koma-btn" style="padding: 6px 14px; font-size: 11px;">Normal</button>
+                    <p style="font-size: 13px; opacity: 0.6;">🖼️ Display Effect:</p>
+                    <div style="display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap;">
+                        <button onclick="setFilter('none')" class="koma-btn" style="padding: 6px 14px; font-size: 11px;">None</button>
                         <button onclick="setFilter('grayscale(100%)')" class="koma-btn" style="padding: 6px 14px; font-size: 11px;">B&W</button>
                         <button onclick="setFilter('sepia(80%)')" class="koma-btn" style="padding: 6px 14px; font-size: 11px;">Vintage</button>
                         <button onclick="setFilter('invert(1)')" class="koma-btn" style="padding: 6px 14px; font-size: 11px;">Invert</button>
@@ -1038,7 +1134,7 @@
                             <button onclick="saveLockPassword()" class="mac-get-btn" style="width:100%; margin-top:10px;">Save Password</button>
                         </div>
                     </div>
-                    <button onclick="clearLockSecurity()" class="mac-get-btn" style="width:100%; margin-top:10px; color: #ff5f56; border-color: rgba(255,95,86,0.3);">Remove Lock Security</button>
+                    <button onclick="clearLockSecurity()" class="mac-get-btn" style="width:100%; margin-top:10px; color: #ff5f57; border-color: rgba(255,95,87,0.3);">Remove Lock Security</button>
 
                     <hr style="opacity: 0.06; margin: 20px 0;">
                     <p style="font-size: 13px; font-weight: 600; color: var(--primary);">🎨 Lock Screen Personalization</p>
@@ -1089,7 +1185,7 @@
                 <div class="win-body" style="padding: 15px;">
                     <input type="text" id="calc-display" readonly style="width: 100%; height: 55px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); color: white; text-align: right; font-size: 26px; padding: 10px; box-sizing: border-box; border-radius: 10px; margin-bottom: 12px; font-weight: 300;">
                     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
-                        <button onclick="pressCalc('C')" class="calc-btn" style="background: rgba(255,95,86,0.3); color: #ff5f56;">C</button>
+                        <button onclick="pressCalc('C')" class="calc-btn" style="background: rgba(255,95,86,0.3); color: #ff5f57;">C</button>
                         <button onclick="pressCalc('/')" class="calc-btn">/</button>
                         <button onclick="pressCalc('*')" class="calc-btn">×</button>
                         <button onclick="pressCalc('-')" class="calc-btn">−</button>
@@ -1097,7 +1193,7 @@
                         <button onclick="pressCalc('+')" class="calc-btn" style="grid-row: span 2; height: 100%; background: rgba(0,255,204,0.1); color: var(--accent);">+</button>
                         <button onclick="pressCalc('4')" class="calc-btn">4</button><button onclick="pressCalc('5')" class="calc-btn">5</button><button onclick="pressCalc('6')" class="calc-btn">6</button>
                         <button onclick="pressCalc('1')" class="calc-btn">1</button><button onclick="pressCalc('2')" class="calc-btn">2</button><button onclick="pressCalc('3')" class="calc-btn">3</button>
-                        <button onclick="pressCalc('=')" class="calc-btn" style="background: rgba(39,201,63,0.2); color: #27c93f; grid-column: span 2;">=</button>
+                        <button onclick="pressCalc('=')" class="calc-btn" style="background: rgba(39,201,63,0.2); color: #28c840; grid-column: span 2;">=</button>
                         <button onclick="pressCalc('0')" class="calc-btn">0</button><button onclick="pressCalc('.')" class="calc-btn">.</button>
                     </div>
                 </div>
@@ -1110,7 +1206,6 @@
                     <div class="win-btns"><div class="win-btn min" onclick="minWin('win-notes')"></div><div class="win-btn max" onclick="maxWin('win-notes')"></div><div class="win-btn close" onclick="closeWin('win-notes')"></div></div>
                 </div>
                 <div class="win-body" style="display: flex; height: 100%;">
-                    <!-- Sidebar with calendar -->
                     <div style="width: 220px; border-right: 1px solid rgba(255,255,255,0.06); padding: 15px; overflow-y: auto; flex-shrink: 0;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                             <button onclick="notesChangeMonth(-1)" style="background:none; border:none; color:white; cursor:pointer; font-size:16px; opacity:0.6;">◀</button>
@@ -1126,7 +1221,6 @@
                             <div id="notes-recent-list" style="display: flex; flex-direction: column; gap: 4px;"></div>
                         </div>
                     </div>
-                    <!-- Note editor -->
                     <div style="flex: 1; display: flex; flex-direction: column;">
                         <div style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center;">
                             <div>
@@ -1135,7 +1229,7 @@
                             </div>
                             <div style="display: flex; gap: 8px;">
                                 <button onclick="addNoteWidget()" class="mac-get-btn" style="font-size: 11px;">📌 Widget</button>
-                                <button onclick="deleteCurrentNote()" class="mac-get-btn" style="font-size: 11px; color: #ff5f56; border-color: rgba(255,95,86,0.3);">🗑️</button>
+                                <button onclick="deleteCurrentNote()" class="mac-get-btn" style="font-size: 11px; color: #ff5f57; border-color: rgba(255,95,87,0.3);">🗑️</button>
                             </div>
                         </div>
                         <textarea id="notes-area" style="flex:1; width:100%; background:transparent; color:white; border:none; padding:20px; font-size:15px; outline:none; resize:none; line-height:1.8;" placeholder="What's on your mind today..." oninput="autoSaveNote()"></textarea>
@@ -1143,21 +1237,19 @@
                 </div>
             </div>
 
-            <!-- CLOCK — FULL FEATURED -->
+            <!-- CLOCK -->
             <div id="win-clock" class="window hidden liquid-glass" style="width: 420px; height: 480px; top: 50px; left: 600px;">
                 <div class="win-header">
                     <span>🕐 Clock</span>
                     <div class="win-btns"><div class="win-btn min" onclick="minWin('win-clock')"></div><div class="win-btn max" onclick="maxWin('win-clock')"></div><div class="win-btn close" onclick="closeWin('win-clock')"></div></div>
                 </div>
                 <div class="win-body" style="display: flex; flex-direction: column; height: 100%;">
-                    <!-- Tabs -->
                     <div style="display: flex; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 15px;">
                         <button class="clock-tab active" onclick="switchClockTab('clock')" id="tab-clock">Clock</button>
                         <button class="clock-tab" onclick="switchClockTab('timer')" id="tab-timer">Timer</button>
                         <button class="clock-tab" onclick="switchClockTab('stopwatch')" id="tab-stopwatch">Stopwatch</button>
                         <button class="clock-tab" onclick="switchClockTab('alarm')" id="tab-alarm">Alarm</button>
                     </div>
-                    <!-- Clock Panel -->
                     <div id="clock-panel-clock" class="clock-panel" style="display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
                         <h1 id="clock-txt" style="font-size: 64px; margin: 0; font-weight: 100; letter-spacing: -2px;">00:00</h1>
                         <p id="clock-seconds" style="font-size: 28px; font-weight: 100; opacity: 0.4; margin: -5px 0 10px;">:00</p>
@@ -1168,7 +1260,6 @@
                             <div style="text-align: center;"><p style="font-size: 20px; font-weight: 200;" id="tz-tokyo">--:--</p><p style="font-size: 10px;">Tokyo</p></div>
                         </div>
                     </div>
-                    <!-- Timer Panel -->
                     <div id="clock-panel-timer" class="clock-panel" style="display: none; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
                         <div style="display: flex; gap: 8px; align-items: baseline; margin-bottom: 20px;">
                             <input type="number" id="timer-min" value="5" min="0" max="99" style="width:60px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:white; text-align:center; font-size:36px; font-weight:100; padding:10px; border-radius:14px; outline:none;">
@@ -1181,7 +1272,6 @@
                             <button onclick="resetTimer()" class="koma-btn" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);">↺ Reset</button>
                         </div>
                     </div>
-                    <!-- Stopwatch Panel -->
                     <div id="clock-panel-stopwatch" class="clock-panel" style="display: none; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
                         <h2 id="sw-display" style="font-size: 56px; font-weight: 100; margin: 0; font-variant-numeric: tabular-nums;">00:00.00</h2>
                         <div style="display: flex; gap: 12px; margin-top: 25px;">
@@ -1191,7 +1281,6 @@
                         </div>
                         <div id="sw-laps" style="margin-top: 20px; width: 80%; max-height: 120px; overflow-y: auto; font-size: 13px; opacity: 0.6;"></div>
                     </div>
-                    <!-- Alarm Panel -->
                     <div id="clock-panel-alarm" class="clock-panel" style="display: none; flex-direction: column; align-items: center; flex: 1; padding: 20px;">
                         <div style="display: flex; gap: 10px; margin-bottom: 20px; width: 100%;">
                             <input type="time" id="alarm-time-input" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:white; padding:12px; border-radius:14px; outline:none; font-size:16px;">
@@ -1211,15 +1300,22 @@
                 </div>
             </div>
 
-            <!-- WEBVIEW -->
+            <!-- WEBVIEW / BROWSER — CUSTOMIZED -->
             <div id="win-webview" class="window hidden" style="width: 90%; height: 85%; top: 5%; left: 5%;">
                 <div class="win-header">
-                    <span id="webview-title">Loading...</span>
+                    <span id="webview-title">Koma Browser</span>
                     <div class="win-btns">
                         <div class="win-btn min" onclick="minWin('win-webview')"></div>
-                        <div class="win-btn max" onclick="toggleFullScreenWebView()"></div>
+                        <div class="win-btn max" onclick="maxWin('win-webview')"></div>
                         <div class="win-btn close" onclick="closeWebView()"></div>
                     </div>
+                </div>
+                <div class="browser-toolbar">
+                    <button class="browser-nav-btn" onclick="browserBack()">←</button>
+                    <button class="browser-nav-btn" onclick="browserForward()">→</button>
+                    <button class="browser-nav-btn" onclick="browserRefresh()">⟳</button>
+                    <input type="text" class="browser-url-bar" id="browser-url-input" placeholder="Search or enter URL..." onkeypress="if(event.key==='Enter')browserNavigate(this.value)">
+                    <button class="browser-nav-btn" onclick="browserNavigate(document.getElementById('browser-url-input').value)">⏎</button>
                 </div>
                 <div class="win-body" style="background: white;">
                     <iframe id="koma-iframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
@@ -1235,7 +1331,7 @@
                 <div class="win-body" style="display: flex; flex-direction: column; padding: 0; overflow: hidden;">
                     <video id="koma-video-feed" autoplay playsinline style="width: 100%; height: 75%; object-fit: cover; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;"></video>
                     <div class="iphone-cam-bottom">
-                        <div style="color: #ffbd2e; font-size: 11px; letter-spacing: 2px; font-weight: bold; margin-bottom:15px;">PHOTO &nbsp; <span style="color:white; opacity: 0.4;">VIDEO</span></div>
+                        <div style="color: #febc2e; font-size: 11px; letter-spacing: 2px; font-weight: bold; margin-bottom:15px;">PHOTO &nbsp; <span style="color:white; opacity: 0.4;">VIDEO</span></div>
                         <div style="display: flex; align-items: center; gap: 45px;">
                             <div id="cam-prev-circle" onclick="openGalleryFromCam()" style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); background-size: cover; background-position: center; cursor: pointer; background-color: #111;"></div>
                             <div id="shutter-btn" onclick="takePhoto()" style="width: 72px; height: 72px; border-radius: 50%; border: 4px solid white; display: flex; align-items: center; justify-content: center; cursor: pointer;"><div style="width: 60px; height: 60px; background: white; border-radius: 50%;"></div></div>
@@ -1246,76 +1342,93 @@
             </div>
 
             <!-- STORE — REDESIGNED -->
-            <div id="win-store" class="window hidden liquid-glass" style="width: 850px; height: 620px; top: 40px; left: 8%; border-radius: 22px;">
+            <div id="win-store" class="window hidden liquid-glass" style="width: 850px; height: 620px; top: 40px; left: 8%; border-radius: 16px;">
                 <div class="win-header">
                     <span>🏪 Koma Store</span>
                     <div class="win-btns"><div class="win-btn min" onclick="minWin('win-store')"></div><div class="win-btn max" onclick="maxWin('win-store')"></div><div class="win-btn close" onclick="closeWin('win-store')"></div></div>
                 </div>
                 <div class="win-body" style="display: flex; height: 100%;">
-                    <!-- Store sidebar -->
-                    <div style="width: 180px; border-right: 1px solid rgba(255,255,255,0.06); padding: 20px 15px; flex-shrink: 0;">
-                        <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 15px;">Browse</p>
+                    <div style="width: 170px; border-right: 0.5px solid rgba(255,255,255,0.06); padding: 18px 12px; flex-shrink: 0;">
+                        <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 12px;">Browse</p>
                         <div class="store-nav-item active" onclick="switchStoreTab('apps', this)">📱 Apps</div>
                         <div class="store-nav-item" onclick="switchStoreTab('walls', this)">🖼️ Wallpapers</div>
                         <div class="store-nav-item" onclick="switchStoreTab('themes', this)">🎨 Themes</div>
-                        <div style="border-top: 1px solid rgba(255,255,255,0.06); margin: 20px 0; padding-top: 15px;">
-                            <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 10px;">Status</p>
-                            <p style="font-size: 12px; opacity: 0.5;">3 installed</p>
+                        <div style="border-top: 0.5px solid rgba(255,255,255,0.06); margin: 16px 0; padding-top: 12px;">
+                            <p style="font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.3; margin-bottom: 8px;">Status</p>
+                            <p style="font-size: 12px; opacity: 0.5;">7 available</p>
                         </div>
                     </div>
-                    <!-- Store content -->
-                    <div style="flex: 1; overflow-y: auto; padding: 25px;">
-                        <!-- Featured banner -->
+                    <div style="flex: 1; overflow-y: auto; padding: 20px;">
                         <div id="store-tab-apps">
-                            <div style="background: linear-gradient(135deg, rgba(23,147,209,0.3), rgba(0,255,204,0.15)); border-radius: 18px; padding: 30px; margin-bottom: 25px; position: relative; overflow: hidden;">
+                            <div style="background: linear-gradient(135deg, rgba(23,147,209,0.3), rgba(0,255,204,0.15)); border-radius: 16px; padding: 25px; margin-bottom: 20px; position: relative; overflow: hidden;">
                                 <div style="position: absolute; top: -20px; right: -20px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(0,255,204,0.2), transparent); border-radius: 50%;"></div>
-                                <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 6px;">Discover New Apps</h2>
-                                <p style="font-size: 13px; opacity: 0.6; margin: 0;">Curated apps for your KomaOS experience</p>
+                                <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 4px;">Discover New Apps</h2>
+                                <p style="font-size: 12px; opacity: 0.6; margin: 0;">Curated apps for your KomaOS experience</p>
                             </div>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
                                 <div class="store-card-new">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/808/808439.png" style="width:52px; height:52px; border-radius:14px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/808/808439.png" style="width:48px; height:48px; border-radius:12px;">
                                     <div style="flex: 1; min-width: 0;">
-                                        <strong style="font-size: 14px;">KOMA Games</strong>
-                                        <p style="font-size:11px; margin:3px 0 0; opacity: 0.4;">Entertainment • Online Fun</p>
-                                        <div style="display: flex; gap: 3px; margin-top: 4px;">
-                                            <span style="color: #ffbd2e; font-size: 10px;">★★★★☆</span>
-                                        </div>
+                                        <strong style="font-size: 13px;">KOMA Games</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Entertainment • Online Fun</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★☆</span>
                                     </div>
                                     <button class="store-get-btn" onclick="animateMacDownload(this, 'KOMA Games', 'https://cdn-icons-png.flaticon.com/512/808/808439.png', 'https://fgdfdgdfg.ajh.boats.cdn.cloudflare.net/')">GET</button>
                                 </div>
                                 <div class="store-card-new">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/564/564442.png" style="width:52px; height:52px; border-radius:14px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/564/564442.png" style="width:48px; height:48px; border-radius:12px;">
                                     <div style="flex: 1; min-width: 0;">
-                                        <strong style="font-size: 14px;">Rapid Identity</strong>
-                                        <p style="font-size:11px; margin:3px 0 0; opacity: 0.4;">Productivity • CCPS Portal</p>
-                                        <div style="display: flex; gap: 3px; margin-top: 4px;">
-                                            <span style="color: #ffbd2e; font-size: 10px;">★★★★★</span>
-                                        </div>
+                                        <strong style="font-size: 13px;">Rapid Identity</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Productivity • CCPS Portal</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★★</span>
                                     </div>
-                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'equionx', 'https://cdn-icons-png.flaticon.com/512/564/564442.png', 'https://mathworks.kennesawcommons.com/')">GET</button>
+                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'Rapid Identity', 'https://cdn-icons-png.flaticon.com/512/564/564442.png', 'https://mathworks.kennesawcommons.com/')">GET</button>
                                 </div>
                                 <div class="store-card-new">
-                                    <img src="https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png" style="width:52px; height:52px; border-radius:14px;">
+                                    <img src="https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png" style="width:48px; height:48px; border-radius:12px;">
                                     <div style="flex: 1; min-width: 0;">
-                                        <strong style="font-size: 14px;">Nikehub</strong>
-                                        <p style="font-size:11px; margin:3px 0 0; opacity: 0.4;">Sports • News & Gear</p>
-                                        <div style="display: flex; gap: 3px; margin-top: 4px;">
-                                            <span style="color: #ffbd2e; font-size: 10px;">★★★★☆</span>
-                                        </div>
+                                        <strong style="font-size: 13px;">Nikehub</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Sports • News & Gear</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★☆</span>
                                     </div>
-                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'nikehub', 'https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png', 'https://securly.pages.dev/')">GET</button>
+                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'Nikehub', 'https://img.samsungapps.com/productNew/000008695306/ENG/IconImage_20260303010327547_NEW_WAP_ICON_512_512.png', 'https://securly.pages.dev/')">GET</button>
                                 </div>
                                 <div class="store-card-new">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/718/718064.png" style="width:52px; height:52px; border-radius:14px;">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/718/718064.png" style="width:48px; height:48px; border-radius:12px;">
                                     <div style="flex: 1; min-width: 0;">
-                                        <strong style="font-size: 14px;">Koma Browser</strong>
-                                        <p style="font-size:11px; margin:3px 0 0; opacity: 0.4;">Utilities • Web Browsing</p>
-                                        <div style="display: flex; gap: 3px; margin-top: 4px;">
-                                            <span style="color: #ffbd2e; font-size: 10px;">★★★★★</span>
-                                        </div>
+                                        <strong style="font-size: 13px;">Koma Browser</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Utilities • Web Browsing</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★★</span>
                                     </div>
                                     <button class="store-get-btn" onclick="animateMacDownload(this, 'Koma Browser', 'https://cdn-icons-png.flaticon.com/512/718/718064.png', 'https://www.google.com/webhp?igu=1')">GET</button>
+                                </div>
+                                <!-- NEW STORE APPS -->
+                                <div class="store-card-new">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/1041/1041916.png" style="width:48px; height:48px; border-radius:12px;">
+                                    <div style="flex: 1; min-width: 0;">
+                                        <strong style="font-size: 13px;">TabChats</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Social • Messaging</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★★</span>
+                                    </div>
+                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'TabChats', 'https://cdn-icons-png.flaticon.com/512/1041/1041916.png', 'https://tabchats.lovable.app/auth')">GET</button>
+                                </div>
+                                <div class="store-card-new">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913133.png" style="width:48px; height:48px; border-radius:12px;">
+                                    <div style="flex: 1; min-width: 0;">
+                                        <strong style="font-size: 13px;">FilterCheck</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Utilities • Link Checker</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★☆</span>
+                                    </div>
+                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'FilterCheck', 'https://cdn-icons-png.flaticon.com/512/2913/2913133.png', 'https://filtercheck.pages.dev/')">GET</button>
+                                </div>
+                                <div class="store-card-new">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/2950/2950657.png" style="width:48px; height:48px; border-radius:12px;">
+                                    <div style="flex: 1; min-width: 0;">
+                                        <strong style="font-size: 13px;">Nexora</strong>
+                                        <p style="font-size:10px; margin:2px 0 0; opacity: 0.4;">Productivity • Notes & Tasks</p>
+                                        <span style="color: #febc2e; font-size: 9px;">★★★★★</span>
+                                    </div>
+                                    <button class="store-get-btn" onclick="animateMacDownload(this, 'Nexora', 'https://cdn-icons-png.flaticon.com/512/2950/2950657.png', 'https://noterplusfire02.firebaseapp.com/')">GET</button>
                                 </div>
                             </div>
                         </div>
@@ -1326,21 +1439,21 @@
                                     <div style="width:100%; height:130px; border-radius:14px; background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400') center/cover;"></div>
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
                                         <p style="font-size: 13px; font-weight: 500;">Nature Pro</p>
-                                        <button class="store-get-btn" onclick="animateWallDownload(this, 'https://images.unsplash.com/photo-1506744038136-46273834b3fb')">Apply</button>
+                                        <button class="store-get-btn" onclick="animateWallDownloadPersist(this, 'https://images.unsplash.com/photo-1506744038136-46273834b3fb')">Apply</button>
                                     </div>
                                 </div>
                                 <div class="store-wall-card">
                                     <div style="width:100%; height:130px; border-radius:14px; background: url('https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?w=400') center/cover;"></div>
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
                                         <p style="font-size: 13px; font-weight: 500;">Cyber City</p>
-                                        <button class="store-get-btn" onclick="animateWallDownload(this, 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd')">Apply</button>
+                                        <button class="store-get-btn" onclick="animateWallDownloadPersist(this, 'https://images.unsplash.com/photo-1534067783941-51c9c23ecefd')">Apply</button>
                                     </div>
                                 </div>
                                 <div class="store-wall-card">
                                     <div style="width:100%; height:130px; border-radius:14px; background: url('https://i.pinimg.com/originals/ec/d6/72/ecd67255b08380eb534d3f8ee397bc85.gif') center/cover;"></div>
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
                                         <p style="font-size: 13px; font-weight: 500;">Minecraft GIF</p>
-                                        <button class="store-get-btn" onclick="animateWallDownload(this, 'https://i.pinimg.com/originals/ec/d6/72/ecd67255b08380eb534d3f8ee397bc85.gif')">Apply</button>
+                                        <button class="store-get-btn" onclick="animateWallDownloadPersist(this, 'https://i.pinimg.com/originals/ec/d6/72/ecd67255b08380eb534d3f8ee397bc85.gif')">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -1349,12 +1462,12 @@
                             <h3 style="font-weight: 600; margin: 0 0 20px;">🎨 System Themes</h3>
                             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
                                 <div class="store-card-new" onclick="applyTheme('cyberpunk')" style="cursor: pointer;">
-                                    <div style="width:52px; height:52px; border-radius:14px; background: linear-gradient(135deg, #f0f, #0ff); display:flex; align-items:center; justify-content:center; font-size:22px;">🌃</div>
-                                    <div style="flex:1;"><strong>Cyberpunk</strong><p style="font-size:11px; opacity:0.4; margin:3px 0 0;">Neon-soaked future</p></div>
+                                    <div style="width:48px; height:48px; border-radius:12px; background: linear-gradient(135deg, #f0f, #0ff); display:flex; align-items:center; justify-content:center; font-size:20px;">🌃</div>
+                                    <div style="flex:1;"><strong>Cyberpunk</strong><p style="font-size:10px; opacity:0.4; margin:2px 0 0;">Neon-soaked future</p></div>
                                 </div>
                                 <div class="store-card-new" onclick="applyTheme('macos')" style="cursor: pointer;">
-                                    <div style="width:52px; height:52px; border-radius:14px; background: linear-gradient(135deg, #f5f5f7, #e5e5ea); display:flex; align-items:center; justify-content:center; font-size:22px;">☀️</div>
-                                    <div style="flex:1;"><strong>Light Mode</strong><p style="font-size:11px; opacity:0.4; margin:3px 0 0;">Clean and bright</p></div>
+                                    <div style="width:48px; height:48px; border-radius:12px; background: linear-gradient(135deg, #f5f5f7, #e5e5ea); display:flex; align-items:center; justify-content:center; font-size:20px;">☀️</div>
+                                    <div style="flex:1;"><strong>Light Mode</strong><p style="font-size:10px; opacity:0.4; margin:2px 0 0;">Clean and bright</p></div>
                                 </div>
                             </div>
                         </div>
@@ -1386,17 +1499,17 @@
                             <div class="hero-content">
                                 <h1 class="hero-title" id="hero-name">Jujutsu Kaisen</h1>
                                 <p class="hero-desc" id="hero-synopsis">A high school student joins a secret organization of sorcerers to combat curses.</p>
-                                <button class="koma-btn" style="background: linear-gradient(135deg, #ff6400, #ff8c00);" onclick="playMovie('jjk')">▶ Watch Now</button>
+                                <button class="koma-btn" onclick="playMovie('jjk')">▶ Play</button>
                             </div>
                         </div>
+                        <div class="section-title">🔥 Popular</div>
+                        <div class="anime-row" id="grid-row"></div>
+                        <div class="section-title">⭐ Top Rated</div>
+                        <div class="anime-row" id="top-row"></div>
                         <div id="continue-section" class="hidden">
-                            <div class="section-title">Continue Watching</div>
+                            <div class="section-title">▶️ Continue Watching</div>
                             <div class="anime-row" id="continue-row"></div>
                         </div>
-                        <div class="section-title">Most Popular</div>
-                        <div class="anime-row" id="top-row"></div>
-                        <div class="section-title">All Anime</div>
-                        <div class="anime-row" id="grid-row"></div>
                     </div>
                     <div id="cinema-player-container" class="hidden" style="position: absolute; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column;">
                         <div style="padding: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -1429,7 +1542,7 @@
                         <div id="share-info" style="font-size: 13px; opacity: 0.8;"></div>
                         <div style="display: flex; gap: 10px; margin-top: 15px;">
                             <button id="btn-accept-file" class="koma-btn" style="flex: 1;">✅ Accept</button>
-                            <button class="koma-btn" style="flex: 1; background: linear-gradient(135deg, #ff5f56, #ff2d55);" onclick="rejectFile()">❌ Reject</button>
+                            <button class="koma-btn" style="flex: 1; background: linear-gradient(135deg, #ff5f57, #ff2d55);" onclick="rejectFile()">❌ Reject</button>
                         </div>
                     </div>
                 </div>
@@ -1449,7 +1562,7 @@
 
             <!-- PAINT -->
             <div id="win-paint" class="window hidden liquid-glass" style="width: 700px; height: 500px; top: 50px; left: 150px;">
-                <div class="win-header"><span>🎨 Koma Paint</span><div class="win-btns"><div class="win-btn max" onclick="maxWin('win-paint')"></div><div class="win-btn close" onclick="closeWin('win-paint')"></div></div></div>
+                <div class="win-header"><span>🎨 Koma Paint</span><div class="win-btns"><div class="win-btn min" onclick="minWin('win-paint')"></div><div class="win-btn max" onclick="maxWin('win-paint')"></div><div class="win-btn close" onclick="closeWin('win-paint')"></div></div></div>
                 <div class="win-body" style="display: flex; flex-direction: column;">
                     <div style="padding: 10px; display: flex; gap: 10px; align-items: center; background: rgba(0,0,0,0.2); flex-wrap: wrap;">
                         <select id="paint-tool" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 6px; border-radius: 8px;">
@@ -1479,7 +1592,7 @@
                 </div>
             </div>
 
-            <!-- CALENDAR — REDESIGNED -->
+            <!-- CALENDAR -->
             <div id="win-calendar" class="window hidden liquid-glass" style="width: 400px; height: 450px; top: 80px; left: 450px;">
                 <div class="win-header">
                     <span>📅 Calendar</span>
@@ -1523,6 +1636,7 @@
                 <div class="win-header" style="background: rgba(0,255,204,0.05);">
                     <span>🤖 Koma AI <span class="beta-badge">BETA</span></span>
                     <div class="win-btns">
+                        <div class="win-btn min" onclick="minWin('win-ai-koma')"></div>
                         <div class="win-btn max" onclick="maxWin('win-ai-koma')"></div>
                         <div class="win-btn close" onclick="closeWin('win-ai-koma')"></div>
                     </div>
@@ -1558,10 +1672,10 @@
             </div>
         </div>
 
-        <!-- DOCK -->
+        <!-- DOCK — LIQUID GLASS macOS -->
         <div id="dock-sensor" style="position:fixed; bottom:0; width:100%; height:15px; z-index:9998;"></div>
         <footer id="dock-container">
-            <div class="dock">
+            <div class="dock" id="dock-bar">
                 <div class="dock-item" onclick="openLauncher()"><img src="https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/Untitled%20design-Photoroom.png"></div>
                 <div class="dock-sep"></div>
                 <div class="dock-item" onclick="openApp('win-store')"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/App_Store_%28iOS%29.svg/960px-App_Store_%28iOS%29.svg.png"></div>
@@ -1570,6 +1684,9 @@
                 <div class="dock-item" onclick="openApp('win-files')"><img src="https://images.icon-icons.com/2963/PNG/512/macos_big_sur_wpaper_folder_icon_186058.png"></div>
                 <div class="dock-item" onclick="openApp('win-settings')"><img src="https://cdn.jim-nielsen.com/macos/512/system-preferences-2021-06-03.png?rf=1024"></div>
                 <div class="dock-item" onclick="openPaint()" title="Paint"><img src="https://cdn-icons-png.flaticon.com/512/16075/16075971.png"></div>
+                <div class="dock-sep"></div>
+                <div class="dock-item" onclick="openApp('win-notes')"><img src="https://cdn.jim-nielsen.com/macos/512/notes-2020-11-13.png?rf=1024"></div>
+                <div class="dock-item" onclick="openWebApp('Koma Browser', 'https://www.google.com/webhp?igu=1')"><img src="https://cdn-icons-png.flaticon.com/512/718/718064.png"></div>
             </div>
         </footer>
     </div>
@@ -1581,6 +1698,30 @@
     let currentLang = "es";
     let zCounter = 1000;
     let aiActive = false;
+    let currentSongIndex = -1;
+
+    // --- DOCK MAGNIFICATION ---
+    const dockBar = document.getElementById('dock-bar');
+    if(dockBar) {
+        dockBar.addEventListener('mousemove', (e) => {
+            const items = dockBar.querySelectorAll('.dock-item');
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const dist = Math.abs(e.clientX - centerX);
+                if(dist < 80 && dist > 0) {
+                    const scale = 1 + (1 - dist/80) * 0.3;
+                    const lift = (1 - dist/80) * 14;
+                    item.style.transform = `translateY(-${lift}px) scale(${scale})`;
+                } else {
+                    item.style.transform = '';
+                }
+            });
+        });
+        dockBar.addEventListener('mouseleave', () => {
+            dockBar.querySelectorAll('.dock-item').forEach(item => item.style.transform = '');
+        });
+    }
 
     // --- DOCK ---
     const dock = document.getElementById('dock-container');
@@ -1598,7 +1739,7 @@
         setTimeout(() => { card.style.opacity = '0'; setTimeout(() => card.remove(), 500); }, 3000);
     }
 
-    // --- WINDOW MANAGEMENT ---
+    // --- WINDOW MANAGEMENT (FIXED) ---
     function openWin(id) {
         const win = document.getElementById(id);
         if (!win) return;
@@ -1606,16 +1747,32 @@
         win.style.zIndex = ++zCounter;
         const launcher = document.getElementById('win-app-launcher');
         if (launcher) launcher.classList.add('hidden');
+        // Special init for apps
         if (id === 'win-komafy') {
             const loader = document.getElementById('komafy-loader');
             if (loader) { loader.classList.remove('hidden'); setTimeout(() => { loader.classList.add('hidden'); loadKomafyLibrary(); }, 1500); }
         }
+        if (id === 'win-notes') initNotesApp();
     }
-    function closeWin(id) { document.getElementById(id).classList.add('hidden'); if(id === 'win-camera') stopCamera(); if(id === 'win-komafy' && currentAudio) currentAudio.pause(); }
-    function minWin(id) { document.getElementById(id).classList.add('minimized'); }
-    function maxWin(id) { document.getElementById(id).classList.toggle('maximized'); }
+    function closeWin(id) { 
+        const el = document.getElementById(id);
+        if(el) el.classList.add('hidden'); 
+        if(id === 'win-camera') stopCamera(); 
+        if(id === 'win-komafy' && currentAudio) currentAudio.pause(); 
+    }
+    function minWin(id) { 
+        const el = document.getElementById(id);
+        if(el) el.classList.add('minimized'); 
+    }
+    function maxWin(id) { 
+        const el = document.getElementById(id);
+        if(el) el.classList.toggle('maximized'); 
+    }
     function openApp(winId) { openWin(winId); }
     function openLauncher() { document.getElementById('win-app-launcher').classList.toggle('hidden'); }
+
+    // --- FULLSCREEN WEBVIEW ---
+    function toggleFullScreenWebView() { maxWin('win-webview'); }
 
     // --- CALCULATOR ---
     function pressCalc(v) {
@@ -1634,14 +1791,12 @@
         if (cs) cs.innerText = ':' + now.getSeconds().toString().padStart(2,'0');
         const dt = document.getElementById('date-txt');
         if (dt) dt.innerText = now.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-        // World clocks
         const tzNy = document.getElementById('tz-ny');
         if(tzNy) tzNy.innerText = now.toLocaleTimeString('en-US', {timeZone:'America/New_York', hour:'2-digit', minute:'2-digit', hour12:false});
         const tzLn = document.getElementById('tz-london');
         if(tzLn) tzLn.innerText = now.toLocaleTimeString('en-US', {timeZone:'Europe/London', hour:'2-digit', minute:'2-digit', hour12:false});
         const tzTk = document.getElementById('tz-tokyo');
         if(tzTk) tzTk.innerText = now.toLocaleTimeString('en-US', {timeZone:'Asia/Tokyo', hour:'2-digit', minute:'2-digit', hour12:false});
-        // Desktop time widget
         const dw = document.getElementById('desktop-time');
         if (dw) dw.innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
     }, 1000);
@@ -1706,7 +1861,7 @@
                 <div><span style="font-size:24px; font-weight:200;">${a.time}</span><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">${a.enabled ? 'Active' : 'Disabled'}</p></div>
                 <div style="display:flex; gap:8px; align-items:center;">
                     <input type="checkbox" ${a.enabled?'checked':''} onchange="toggleAlarm(${i})" style="width:18px; height:18px; accent-color:var(--accent); cursor:pointer;">
-                    <button onclick="removeAlarm(${i})" style="background:none; border:none; color:#ff5f56; cursor:pointer; font-size:16px;">✕</button>
+                    <button onclick="removeAlarm(${i})" style="background:none; border:none; color:#ff5f57; cursor:pointer; font-size:16px;">✕</button>
                 </div>
             </div>
         `).join('');
@@ -1714,7 +1869,6 @@
     function addAlarm() { const t = document.getElementById('alarm-time-input').value; if(!t) return; alarms.push({time:t, enabled:true}); localStorage.setItem('koma_alarms', JSON.stringify(alarms)); renderAlarms(); showNotification('Alarm', `Set for ${t}`); }
     function toggleAlarm(i) { alarms[i].enabled = !alarms[i].enabled; localStorage.setItem('koma_alarms', JSON.stringify(alarms)); renderAlarms(); }
     function removeAlarm(i) { alarms.splice(i, 1); localStorage.setItem('koma_alarms', JSON.stringify(alarms)); renderAlarms(); }
-    // Check alarms every minute
     setInterval(() => {
         const now = new Date(); const ct = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
         alarms.forEach(a => { if(a.enabled && a.time === ct && now.getSeconds() < 2) showNotification('⏰ Alarm', `It's ${a.time}!`); });
@@ -1728,14 +1882,8 @@
     function getAllNotes() { return JSON.parse(localStorage.getItem('koma_daily_notes') || '{}'); }
     function saveAllNotes(notes) { localStorage.setItem('koma_daily_notes', JSON.stringify(notes)); }
 
-    function initNotesApp() {
-        renderNotesCalendar();
-        loadNoteForDate(notesSelectedDate);
-    }
-    function notesChangeMonth(dir) {
-        notesViewDate.setMonth(notesViewDate.getMonth() + dir);
-        renderNotesCalendar();
-    }
+    function initNotesApp() { renderNotesCalendar(); loadNoteForDate(notesSelectedDate); }
+    function notesChangeMonth(dir) { notesViewDate.setMonth(notesViewDate.getMonth() + dir); renderNotesCalendar(); }
     function renderNotesCalendar() {
         const year = notesViewDate.getFullYear(), month = notesViewDate.getMonth();
         document.getElementById('notes-month-label').textContent = new Date(year, month).toLocaleDateString('en-US', {month:'long', year:'numeric'});
@@ -1755,11 +1903,7 @@
         grid.innerHTML = html;
         renderRecentNotes();
     }
-    function selectNoteDate(dateStr) {
-        notesSelectedDate = dateStr;
-        loadNoteForDate(dateStr);
-        renderNotesCalendar();
-    }
+    function selectNoteDate(dateStr) { notesSelectedDate = dateStr; loadNoteForDate(dateStr); renderNotesCalendar(); }
     function loadNoteForDate(dateStr) {
         const d = new Date(dateStr + 'T12:00:00');
         document.getElementById('notes-current-date').textContent = d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
@@ -1806,22 +1950,18 @@
         widget.style.left = (100 + Math.random()*300) + 'px';
         const d = new Date(notesSelectedDate + 'T12:00:00');
         widget.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;"><span style="font-size:10px; opacity:0.5; font-weight:600;">${d.toLocaleDateString('en-US', {month:'short', day:'numeric'})}</span><span onclick="this.parentElement.parentElement.remove()" style="cursor:pointer; opacity:0.4; font-size:14px;">✕</span></div><p style="margin:0;">${text.substring(0,150)}</p>`;
-        // Make widget draggable
-        let wDrag = false, wDx = 0, wDy = 0;
-        widget.onmousedown = (e) => { if(e.target.tagName === 'SPAN') return; wDrag = true; wDx = e.clientX - widget.offsetLeft; wDy = e.clientY - widget.offsetTop; };
-        document.addEventListener('mousemove', (e) => { if(wDrag) { widget.style.left = (e.clientX - wDx)+'px'; widget.style.top = (e.clientY - wDy)+'px'; }});
-        document.addEventListener('mouseup', () => wDrag = false);
+        makeDraggable(widget);
         workspace.appendChild(widget);
         showNotification('Notes', 'Widget added to desktop');
     }
 
-    // Override openApp for notes
-    const origOpenWin = openWin;
-    function openWin(id) {
-        origOpenWin(id);
-        if(id === 'win-notes') initNotesApp();
+    // Generic drag helper
+    function makeDraggable(el) {
+        let drag = false, dx = 0, dy = 0;
+        el.onmousedown = (e) => { if(e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.style.cursor === 'pointer') return; drag = true; dx = e.clientX - el.offsetLeft; dy = e.clientY - el.offsetTop; el.style.zIndex = ++zCounter; };
+        document.addEventListener('mousemove', (e) => { if(drag) { el.style.left = (e.clientX - dx)+'px'; el.style.top = (e.clientY - dy)+'px'; }});
+        document.addEventListener('mouseup', () => drag = false);
     }
-    function openApp(winId) { openWin(winId); }
 
     // --- CALENDAR APP ---
     let calViewDate = new Date();
@@ -1844,16 +1984,10 @@
             html += `<div class="cal-day${isToday}${hasNote}" onclick="calDayClick('${dateStr}')">${d}</div>`;
         }
         grid.innerHTML = html;
-        // Show today's notes
         const todayNote = notes[todayStr];
         document.getElementById('cal-events').innerHTML = todayNote ? `<p>📝 ${todayNote.substring(0,80)}...</p>` : '<p style="opacity:0.3;">No events or notes</p>';
     }
-    function calDayClick(dateStr) {
-        notesSelectedDate = dateStr;
-        openWin('win-notes');
-        loadNoteForDate(dateStr);
-        renderNotesCalendar();
-    }
+    function calDayClick(dateStr) { notesSelectedDate = dateStr; openWin('win-notes'); loadNoteForDate(dateStr); renderNotesCalendar(); }
     document.addEventListener('DOMContentLoaded', renderCalendar);
 
     // --- STORE TABS ---
@@ -1866,8 +2000,18 @@
 
     // --- PERSONALIZATION ---
     function setTransparentBG() { document.body.style.background = "transparent"; showNotification("Settings", "Transparent mode active."); }
-    function changeBG(url) { document.body.style.background = `url('${url}') center/cover`; showNotification("Settings", "Background updated."); }
-    function useGalleryAsBG() { if(KOMA_STORAGE.length > 0) changeBG(KOMA_STORAGE[KOMA_STORAGE.length-1].src); else showNotification("Gallery", "No photos."); }
+    function changeBG(url) { 
+        const vid = document.getElementById('bg-video');
+        vid.style.display = 'none';
+        document.body.style.background = `url('${url}') center/cover no-repeat fixed`; 
+    }
+    function changeBGPersist(url) {
+        if(!url || !url.trim()) return;
+        changeBG(url);
+        localStorage.setItem('koma_wallpaper', url);
+        showNotification("Settings", "Wallpaper saved permanently.");
+    }
+    function useGalleryAsBG() { if(KOMA_STORAGE.length > 0) changeBGPersist(KOMA_STORAGE[KOMA_STORAGE.length-1].src); else showNotification("Gallery", "No photos."); }
     function updateAccentColor(color) { document.documentElement.style.setProperty('--primary', color); showNotification('System', 'Accent color updated'); }
     function updateBlur(val) { document.documentElement.style.setProperty('--glass-blur', `blur(${val}px) saturate(160%)`); }
     function updateOpacity(val) { document.documentElement.style.setProperty('--liquid-glass', `rgba(20, 20, 25, ${val/100})`); }
@@ -1885,15 +2029,30 @@
     function changeDockPosition(pos) {
         const d = document.getElementById('dock-container');
         d.style.bottom = 'auto'; d.style.top = 'auto'; d.style.left = '50%'; d.style.width = ''; d.style.flexDirection = '';
+        d.style.transform = 'translateX(-50%)';
         if(pos==='bottom') { d.style.bottom = '0'; }
-        else if(pos==='top') { d.style.top = '44px'; d.style.bottom = 'auto'; }
+        else if(pos==='top') { d.style.top = '36px'; d.style.bottom = 'auto'; }
         else if(pos==='left') { d.style.left = '15px'; d.style.top = '50%'; d.style.transform = 'translateY(-50%)'; d.querySelector('.dock').style.flexDirection = 'column'; }
         showNotification('UI', `Dock → ${pos}`);
     }
 
-    // --- WEBVIEW ---
-    function openWebApp(name, url) { document.getElementById('koma-iframe').src = url; document.getElementById('webview-title').innerText = name; openWin('win-webview'); }
+    // --- BROWSER ---
+    function openWebApp(name, url) { 
+        document.getElementById('koma-iframe').src = url; 
+        document.getElementById('webview-title').innerText = name; 
+        document.getElementById('browser-url-input').value = url;
+        openWin('win-webview'); 
+    }
     function closeWebView() { document.getElementById('koma-iframe').src = ""; closeWin('win-webview'); }
+    function browserNavigate(url) {
+        if(!url) return;
+        if(!url.startsWith('http')) url = 'https://www.google.com/search?igu=1&q=' + encodeURIComponent(url);
+        document.getElementById('koma-iframe').src = url;
+        document.getElementById('browser-url-input').value = url;
+    }
+    function browserBack() { try { document.getElementById('koma-iframe').contentWindow.history.back(); } catch(e){} }
+    function browserForward() { try { document.getElementById('koma-iframe').contentWindow.history.forward(); } catch(e){} }
+    function browserRefresh() { const iframe = document.getElementById('koma-iframe'); iframe.src = iframe.src; }
 
     // --- STORE ---
     function animateMacDownload(btn, appName, icon, url) {
@@ -1903,6 +2062,10 @@
     function animateWallDownload(btn, url) {
         btn.classList.add('downloading'); btn.innerText = "Downloading...";
         setTimeout(() => { btn.classList.remove('downloading'); btn.innerText = "APPLY"; btn.onclick = () => changeBG(url); showNotification("Store", "Wallpaper ready."); }, 2000);
+    }
+    function animateWallDownloadPersist(btn, url) {
+        btn.classList.add('downloading'); btn.innerText = "Downloading...";
+        setTimeout(() => { btn.classList.remove('downloading'); btn.innerText = "APPLY"; btn.onclick = () => changeBGPersist(url); showNotification("Store", "Wallpaper ready."); }, 2000);
     }
 
     // --- CAMERA ---
@@ -1935,10 +2098,11 @@
         termInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const cmd = termInput.value.toLowerCase(); let resp = `<br><span style="color:var(--accent)">$</span> ${cmd}<br>`;
-                if (cmd === 'help') resp += "Commands: help, clear, neofetch, color [hex], exit";
-                else if (cmd === 'neofetch') resp += "OS: KomaOS v6.1<br>Kernel: Koma-Web-1.2<br>Shell: KomaBash<br>UI: Liquid Glass v2";
+                if (cmd === 'help') resp += "Commands: help, clear, neofetch, color [hex], vpn, exit";
+                else if (cmd === 'neofetch') resp += "OS: KomaOS v6.2<br>Kernel: Koma-Web-1.3<br>Shell: KomaBash<br>UI: Liquid Glass v3<br>Dock: macOS Sequoia";
                 else if (cmd === 'clear') { termOutput.innerHTML = ""; resp = ""; }
                 else if (cmd.startsWith('color ')) { document.documentElement.style.setProperty('--primary', cmd.split(' ')[1]); resp += "System color changed."; }
+                else if (cmd === 'vpn') { toggleVPN(); resp += vpnConnected ? "VPN Connected (219.100.37.207)" : "VPN Disconnected"; }
                 else resp += "Unknown command. Type 'help'.";
                 termOutput.innerHTML += resp; termInput.value = "";
                 document.getElementById('term-body').scrollTop = document.getElementById('term-body').scrollHeight;
@@ -1946,8 +2110,12 @@
         });
     }
 
-    // --- PERSISTENCE ---
-    document.addEventListener('DOMContentLoaded', () => { const bg = localStorage.getItem('koma_bg'); if(bg) changeBG(bg); initDockAutoHide(); });
+    // --- WALLPAPER PERSISTENCE ---
+    document.addEventListener('DOMContentLoaded', () => { 
+        const savedWall = localStorage.getItem('koma_wallpaper'); 
+        if(savedWall) changeBG(savedWall); 
+        initDockAutoHide(); 
+    });
     function initDockAutoHide() {
         document.addEventListener('mousemove', (e) => {
             const full = document.querySelector('.window.maximized:not(.hidden)');
@@ -1982,7 +2150,7 @@
     function searchAnime(q) { const f = KOMA_ANIMES.filter(a => a.title.toLowerCase().includes(q.toLowerCase())); document.getElementById('grid-row').innerHTML = f.map(a => createAnimeCard(a)).join(''); }
     document.addEventListener('DOMContentLoaded', () => renderCinema());
 
-    // --- MUSIC LIBRARY ---
+    // --- MUSIC LIBRARY (with new songs) ---
     const REPO = "https://raw.githubusercontent.com/alexis2003martinezz-blip/Miku-station-music-storage1/main/";
     const library = [
         { id: 1, title: "Piel Canela", artist: "Cuco", cover: REPO + "piel-canela-cuco.jpg", file: REPO + "Cuco-Piel-Canela-(Official-Animated Video).mp3", lyrics: ["Que se quede el infinito sin estrellas", "O que pierda el ancho mar su inmensidad", "Pero el negro de tus ojos que no muera", "Y el canela de tu piel se quede igual"] },
@@ -2010,23 +2178,29 @@
         { id: 23, title: "Sienna", artist: "The Marias", cover: REPO + "sienna-cover.jpg", file: REPO + "The-Marías-Sienna(Visualizer).mp3", lyrics: [] },
         { id: 24, title: "Insomnia", artist: "Eve", cover: REPO + "insomnia-(eve).jpg", file: REPO + "インソムニア-(INSOMNIA)- Eve-Music-Video.mp3", lyrics: [] },
         { id: 25, title: "Aquel Nap ZzZz", artist: "Rauw Alejandro", cover: REPO + "aquel-nap-ZzZz-cover.jpg", file: REPO + "Rauw-Alejandro-Aquel-Nap-ZzZz-(Audio-Oficial).mp3", lyrics: [] },
-        { id: 26, title: "Sabanas Blancas", artist: "La Santa Grifa", cover: REPO + "sabanas-blancas-covee.jpg", file: REPO + "Sabanas-Blancas.mp3", lyrics: [] }
+        { id: 26, title: "Sabanas Blancas", artist: "La Santa Grifa", cover: REPO + "sabanas-blancas-covee.jpg", file: REPO + "Sabanas-Blancas.mp3", lyrics: [] },
+        // NEW SONGS
+        { id: 27, title: "Mi Gata", artist: "Junior H", cover: REPO + "propuesta-indecente-romeo-santos.jpg", file: REPO + "Junior-H,-Gael-Valenzuela-MI-GATA-(Lyric-Video)-CantoYo.mp3", lyrics: [] },
+        { id: 28, title: "0 Sentimientos", artist: "Jhon Z", cover: REPO + "propuesta-indecente-romeo-santos.jpg", file: REPO + "Jon-Z-0-Sentimientos-(Remix)-ft.-Baby-Rasta,-Noriel,-Lyan,-Darkiel,-Messiah-(Audio).mp3", lyrics: [] },
+        { id: 29, title: "Ayer y Hoy", artist: "Julio Jaramillo", cover: REPO + "propuesta-indecente-romeo-santos.jpg", file: REPO + "Ayer-y-Hoy.mp3", lyrics: [] },
+        { id: 30, title: "Tiroteo", artist: "Rauw Alejandro", cover: REPO + "propuesta-indecente-romeo-santos.jpg", file: REPO + "Marc-Seguí-Tiroteo Remix-ft-Rauw-Alejandro-y-Pol-Granch.mp3", lyrics: [] },
+        { id: 31, title: "Demencia", artist: "Junior H", cover: REPO + "propuesta-indecente-romeo-santos.jpg", file: REPO + "Junior-H,-Gael-Valenzuela-DEMENCIA.mp3", lyrics: [] }
     ];
     let currentAudio = new Audio();
 
     function loadKomafyLibrary() {
         const container = document.getElementById('komafy-content');
-        container.innerHTML = `<h2 style="margin-bottom: 25px; font-size: 26px; font-weight: 700;">🔥 Trending Today</h2><div id="song-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px;"></div>`;
+        container.innerHTML = `<h2 style="margin-bottom: 25px; font-size: 26px; font-weight: 700; padding: 30px 30px 0;">🔥 Trending Today</h2><div id="song-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px; padding: 0 30px 30px;"></div>`;
         const grid = document.getElementById('song-grid');
-        library.forEach(song => {
+        library.forEach((song, idx) => {
             const card = document.createElement('div');
             card.style.cssText = "background: rgba(255,255,255,0.04); padding: 14px; border-radius: 14px; cursor: pointer; transition: 0.3s; border: 1px solid transparent;";
             card.onmouseover = () => { card.style.background = "rgba(255,255,255,0.08)"; card.style.transform = "translateY(-4px)"; };
             card.onmouseout = () => { card.style.background = "rgba(255,255,255,0.04)"; card.style.transform = ""; };
-            card.innerHTML = `<div style="position: relative;"><img src="${song.cover}" style="width: 100%; aspect-ratio: 1; border-radius: 10px; object-fit: cover; box-shadow: 0 8px 16px rgba(0,0,0,0.5);"><div style="position: absolute; bottom: 8px; right: 8px; background: #1DB954; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); opacity: 0; transition: 0.3s;">▶</div></div><div style="margin-top: 12px;"><div style="font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${song.title}</div><div style="font-size: 12px; opacity: 0.5; margin-top: 4px;">${song.artist}</div></div>`;
-            card.onmouseover = () => { card.style.background = "rgba(255,255,255,0.08)"; card.style.transform = "translateY(-4px)"; card.querySelector('div[style*="opacity: 0"]').style.opacity = "1"; };
-            card.onmouseout = () => { card.style.background = "rgba(255,255,255,0.04)"; card.style.transform = ""; card.querySelector('div[style*="opacity"]')&&(card.querySelectorAll('div')[2].style.opacity = "0"); };
-            card.onclick = () => playSongWithLyrics(song);
+            card.innerHTML = `<div style="position: relative;"><img src="${song.cover}" style="width: 100%; aspect-ratio: 1; border-radius: 10px; object-fit: cover; box-shadow: 0 8px 16px rgba(0,0,0,0.5);"><div class="play-overlay" style="position: absolute; bottom: 8px; right: 8px; background: #1DB954; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); opacity: 0; transition: 0.3s;">▶</div></div><div style="margin-top: 12px;"><div style="font-weight: 600; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${song.title}</div><div style="font-size: 12px; opacity: 0.5; margin-top: 4px;">${song.artist}</div></div>`;
+            card.onmouseover = () => { card.style.background = "rgba(255,255,255,0.08)"; card.style.transform = "translateY(-4px)"; const ol = card.querySelector('.play-overlay'); if(ol) ol.style.opacity = '1'; };
+            card.onmouseout = () => { card.style.background = "rgba(255,255,255,0.04)"; card.style.transform = ""; const ol = card.querySelector('.play-overlay'); if(ol) ol.style.opacity = '0'; };
+            card.onclick = () => { currentSongIndex = idx; playSongWithLyrics(song); };
             grid.appendChild(card);
         });
     }
@@ -2036,13 +2210,17 @@
         if(currentAudio.paused) { currentAudio.play(); document.getElementById('np-play-btn').textContent = '⏸'; }
         else { currentAudio.pause(); document.getElementById('np-play-btn').textContent = '▶'; }
     }
+    function playNextSong() {
+        if(currentSongIndex < library.length - 1) { currentSongIndex++; playSongWithLyrics(library[currentSongIndex]); }
+    }
+    function playPrevSong() {
+        if(currentSongIndex > 0) { currentSongIndex--; playSongWithLyrics(library[currentSongIndex]); }
+    }
 
     function playSongWithLyrics(song) {
         if (currentAudio) currentAudio.pause();
         currentAudio = new Audio(song.file); currentAudio.play();
         document.getElementById('active-app').textContent = "🎵 " + song.title;
-
-        // Update now-playing bar
         const np = document.getElementById('komafy-np');
         if(np) {
             np.style.display = 'flex';
@@ -2051,7 +2229,6 @@
             document.getElementById('np-artist').textContent = song.artist;
             document.getElementById('np-play-btn').textContent = '⏸';
         }
-        // Progress bar
         currentAudio.ontimeupdate = () => {
             if(currentAudio.duration) {
                 const pct = (currentAudio.currentTime / currentAudio.duration) * 100;
@@ -2063,8 +2240,8 @@
             document.getElementById('np-play-btn').textContent = '▶';
             const fill = document.getElementById('np-progress-fill');
             if(fill) fill.style.width = '0%';
+            playNextSong();
         };
-
         const panel = document.getElementById('lyrics-panel'); const render = document.getElementById('lyrics-render');
         if(song.lyrics && song.lyrics.length > 0) {
             panel.classList.add('show');
@@ -2088,11 +2265,9 @@
         const vid = document.getElementById('bootloader-vid');
         const bootScreen = document.getElementById('boot-screen');
 
-        // Boot particles
         const pc = document.getElementById('boot-particles');
         if(pc) { for(let i = 0; i < 40; i++) { const p = document.createElement('div'); p.className = 'boot-particle'; p.style.left = Math.random()*100+'%'; p.style.animationDelay = Math.random()*4+'s'; p.style.animationDuration = (3+Math.random()*3)+'s'; pc.appendChild(p); } }
 
-        // Check if user already authenticated before
         const hasAuth = localStorage.getItem('koma_authenticated');
         const savedUser = localStorage.getItem('koma_username');
         const savedLang = localStorage.getItem('koma_lang');
@@ -2100,14 +2275,10 @@
         if(savedUser) { currentUser = savedUser; document.getElementById('user-display').textContent = currentUser; }
         if(savedLang) { currentLang = savedLang; applyLang(savedLang); }
 
-        // Decide where boot goes: if already authenticated, skip auth+oobe → go to lock
         const goToNextScreen = () => {
             bootScreen.style.display = 'none'; bootScreen.style.pointerEvents = 'none';
-            if(hasAuth) {
-                transitionLayer('boot-screen', 'lock-screen');
-            } else {
-                transitionLayer('boot-screen', 'auth-screen');
-            }
+            if(hasAuth) { transitionLayer('boot-screen', 'lock-screen'); }
+            else { transitionLayer('boot-screen', 'auth-screen'); }
         };
 
         bootBtn.onclick = function() {
@@ -2127,10 +2298,8 @@
                 const updateBattery = () => {
                     const pct = Math.round(bat.level * 100);
                     const isCharging = bat.charging;
-                    // Lock screen
                     const el = document.getElementById('lock-battery');
                     if(el) el.textContent = `${isCharging ? '⚡' : '🔋'} ${pct}%`;
-                    // Top bar SVG
                     const fill = document.getElementById('bat-fill');
                     const bolt = document.getElementById('bat-bolt');
                     const pctText = document.getElementById('bat-pct-text');
@@ -2138,16 +2307,14 @@
                     if(fill) {
                         const w = (pct / 100) * 20;
                         fill.setAttribute('width', String(w));
-                        // Color based on level
-                        if(pct <= 15) fill.setAttribute('fill', '#ff5f56');
-                        else if(pct <= 30) fill.setAttribute('fill', '#ffbd2e');
-                        else fill.setAttribute('fill', '#27c93f');
+                        if(pct <= 15) fill.setAttribute('fill', '#ff5f57');
+                        else if(pct <= 30) fill.setAttribute('fill', '#febc2e');
+                        else fill.setAttribute('fill', '#28c840');
                     }
                     if(bolt) bolt.style.display = isCharging ? 'block' : 'none';
                     if(pctText) pctText.textContent = pct + '%';
                     if(chargeType) {
                         if(isCharging) {
-                            // Determine charge speed from charging time
                             const ct = bat.chargingTime;
                             let speed = 'Charging';
                             if(ct !== Infinity && ct > 0) {
@@ -2156,10 +2323,8 @@
                                 else speed = 'Slow';
                             }
                             chargeType.textContent = speed;
-                            chargeType.style.color = '#27c93f';
-                        } else {
-                            chargeType.textContent = '';
-                        }
+                            chargeType.style.color = '#28c840';
+                        } else { chargeType.textContent = ''; }
                     }
                 };
                 updateBattery();
@@ -2169,11 +2334,9 @@
             });
         }
 
-        // Setup lock screen security display
         setupLockUI();
         applyLockPersonalization();
 
-        // Load lock type in settings
         const savedLockType = localStorage.getItem('koma_lock_type') || 'none';
         const sel = document.getElementById('lock-type-select');
         if(sel) sel.value = savedLockType;
@@ -2219,7 +2382,7 @@
         if(input.value === saved) { unlock(); }
         else {
             document.getElementById('pass-error').style.opacity = '1';
-            input.style.borderColor = '#ff5f56';
+            input.style.borderColor = '#ff5f57';
             setTimeout(() => { document.getElementById('pass-error').style.opacity = '0'; input.style.borderColor = 'rgba(255,255,255,0.15)'; input.value = ''; }, 1000);
         }
     }
@@ -2338,7 +2501,7 @@
         const now = new Date();
         const h = String(now.getHours()).padStart(2,'0'); const m = String(now.getMinutes()).padStart(2,'0'); const s = String(now.getSeconds()).padStart(2,'0');
         const el = document.getElementById('lock-time'); if(el) el.textContent = `${h}:${m}`;
-        const tc = document.getElementById('top-clock'); if(tc) tc.textContent = `${h}:${m}:${s}`;
+        const tc = document.getElementById('top-clock'); if(tc) tc.textContent = `${h}:${m}`;
         const ld = document.getElementById('lock-date'); if(ld) ld.textContent = now.toLocaleDateString('en-US', {weekday:'long', day:'numeric', month:'long'});
     }
 
@@ -2367,9 +2530,9 @@
         conn.on('open', () => { status.innerText = "Sending..."; const reader = new FileReader(); reader.onload = () => { conn.send({type:'OFFER', deviceName:'KomaOS Device', fileName:file.name, fileType:file.type||'bin', fileSize:file.size, fileData:reader.result}); status.innerText = "Sent!"; setTimeout(() => status.innerText = "", 3000); }; reader.readAsArrayBuffer(file); });
     }
     async function toggleBluetooth() { try { const d = await navigator.bluetooth.requestDevice({acceptAllDevices: true}); showNotification('Bluetooth', `Connected: ${d.name}`); } catch { showNotification('Bluetooth', 'Cancelled'); } }
-    function checkInternet() { showNotification('Network', navigator.onLine ? "Connected" : "Offline"); }
+    function checkInternet() { showNotification('Network', navigator.onLine ? "Connected ✓" : "Offline ✕"); }
 
-    // --- VPN ---
+    // --- VPN (with actual proxy attempt) ---
     let vpnConnected = false;
     function toggleVPN() {
         vpnConnected = !vpnConnected;
@@ -2378,6 +2541,7 @@
         const dot = document.getElementById('vpn-dot');
         const btn = document.getElementById('vpn-connect-btn');
         const panel = document.getElementById('vpn-detail-panel');
+        const topIcon = document.getElementById('vpn-topbar-icon');
         panel.style.display = 'block';
         if(vpnConnected) {
             tile.style.background = 'rgba(0,255,204,0.15)';
@@ -2385,9 +2549,10 @@
             label.textContent = 'VPN On';
             dot.className = 'vpn-status-dot connected';
             btn.textContent = 'Disconnect';
-            btn.style.color = '#ff5f56';
-            btn.style.borderColor = 'rgba(255,95,86,0.3)';
-            showNotification('VPN', 'Connected to KomaOS VPN (219.100.37.207)');
+            btn.style.color = '#ff5f57';
+            btn.style.borderColor = 'rgba(255,95,87,0.3)';
+            if(topIcon) topIcon.style.display = 'inline';
+            showNotification('🛡️ VPN', 'Connected to KomaOS VPN\nServer: 219.100.37.207\nProtocol: L2TP-IPsec\nDNS: 66.94.105.299');
         } else {
             tile.style.background = '';
             tile.style.borderColor = '';
@@ -2396,7 +2561,8 @@
             btn.textContent = 'Connect';
             btn.style.color = '';
             btn.style.borderColor = '';
-            showNotification('VPN', 'Disconnected from VPN');
+            if(topIcon) topIcon.style.display = 'none';
+            showNotification('🛡️ VPN', 'Disconnected from VPN');
         }
     }
     initQuickShare();
@@ -2420,6 +2586,131 @@
     function scanScreen() { let t = ""; document.querySelectorAll('.window:not(.hidden):not(.ai-window)').forEach(w => t += w.innerText + " "); return t || "Desktop seems empty."; }
     async function fetchWiki(term) { try { const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`); const d = await r.json(); return d.extract || "Not found on Wikipedia."; } catch { return "Wikipedia connection error."; } }
     function addToDock(id, icon, action) { const d = document.querySelector('.dock'); if(!document.getElementById('dock-item-'+id)) { const i = document.createElement('div'); i.id = 'dock-item-'+id; i.className = 'dock-item'; i.innerHTML = `<img src="${icon}">`; i.onclick = action; d.appendChild(i); } }
+
+    // --- AIRDROP ANIMATION ---
+    function showAirdropAnimation() {
+        const overlay = document.createElement('div');
+        overlay.className = 'airdrop-overlay';
+        overlay.innerHTML = `
+            <div class="airdrop-ring" style="animation-delay: 0s;"></div>
+            <div class="airdrop-ring" style="animation-delay: 0.5s;"></div>
+            <div class="airdrop-ring" style="animation-delay: 1s;"></div>
+            <div class="airdrop-device">
+                <div style="font-size: 48px; margin-bottom: 15px;">📡</div>
+                <h3 style="margin: 0 0 6px; font-weight: 600;">AirDrop</h3>
+                <p style="opacity: 0.5; font-size: 13px; margin: 0 0 15px;">Searching for nearby devices...</p>
+                <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+                    <div style="text-align: center; animation: airdropBounce 0.6s ease 0.3s both;">
+                        <div style="width:50px; height:50px; border-radius:50%; background: rgba(0,255,204,0.15); border: 1px solid rgba(0,255,204,0.3); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:6px;">💻</div>
+                        <span style="font-size:11px; opacity:0.5;">MacBook Pro</span>
+                    </div>
+                    <div style="text-align: center; animation: airdropBounce 0.6s ease 0.6s both;">
+                        <div style="width:50px; height:50px; border-radius:50%; background: rgba(23,147,209,0.15); border: 1px solid rgba(23,147,209,0.3); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:6px;">📱</div>
+                        <span style="font-size:11px; opacity:0.5;">iPhone</span>
+                    </div>
+                    <div style="text-align: center; animation: airdropBounce 0.6s ease 0.9s both;">
+                        <div style="width:50px; height:50px; border-radius:50%; background: rgba(255,95,87,0.15); border: 1px solid rgba(255,95,87,0.3); display:flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:6px;">🖥️</div>
+                        <span style="font-size:11px; opacity:0.5;">iMac</span>
+                    </div>
+                </div>
+                <button onclick="this.closest('.airdrop-overlay').remove()" class="koma-btn" style="margin-top: 20px; padding: 10px 30px; font-size: 13px;">Done</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        overlay.onclick = (e) => { if(e.target === overlay) overlay.remove(); };
+    }
+
+    // --- DESKTOP WIDGETS (Windows-style) ---
+    function openWidgetPicker() {
+        const existing = document.querySelector('.widget-picker');
+        if(existing) { existing.remove(); return; }
+        const picker = document.createElement('div');
+        picker.className = 'widget-picker';
+        picker.innerHTML = `
+            <div class="widget-picker-card">
+                <h3 style="margin: 0 0 6px; font-weight: 600;">Add Widget</h3>
+                <p style="opacity: 0.4; font-size: 12px; margin: 0 0 20px;">Choose a widget for your desktop</p>
+                <div style="display: grid; gap: 10px;">
+                    <div class="store-card-new" onclick="addDesktopWidget('weather'); this.closest('.widget-picker').remove();" style="cursor:pointer;">
+                        <div style="font-size:28px;">🌤️</div>
+                        <div><strong>Weather</strong><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">Current conditions</p></div>
+                    </div>
+                    <div class="store-card-new" onclick="addDesktopWidget('clock'); this.closest('.widget-picker').remove();" style="cursor:pointer;">
+                        <div style="font-size:28px;">🕐</div>
+                        <div><strong>Clock</strong><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">Analog clock display</p></div>
+                    </div>
+                    <div class="store-card-new" onclick="addDesktopWidget('calendar'); this.closest('.widget-picker').remove();" style="cursor:pointer;">
+                        <div style="font-size:28px;">📅</div>
+                        <div><strong>Calendar</strong><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">Today's date</p></div>
+                    </div>
+                    <div class="store-card-new" onclick="addDesktopWidget('system'); this.closest('.widget-picker').remove();" style="cursor:pointer;">
+                        <div style="font-size:28px;">📊</div>
+                        <div><strong>System Info</strong><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">CPU, memory, uptime</p></div>
+                    </div>
+                    <div class="store-card-new" onclick="addDesktopWidget('music'); this.closest('.widget-picker').remove();" style="cursor:pointer;">
+                        <div style="font-size:28px;">🎵</div>
+                        <div><strong>Now Playing</strong><p style="font-size:11px; opacity:0.4; margin:2px 0 0;">Current song info</p></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        picker.onclick = (e) => { if(e.target === picker) picker.remove(); };
+        document.body.appendChild(picker);
+    }
+
+    function addDesktopWidget(type) {
+        const workspace = document.getElementById('workspace');
+        const widget = document.createElement('div');
+        widget.className = 'desktop-widget-panel';
+        widget.style.top = (60 + Math.random()*150) + 'px';
+        widget.style.left = (60 + Math.random()*300) + 'px';
+        let content = '';
+        const wid = 'widget-' + Date.now();
+        if(type === 'weather') {
+            content = `<div class="widget-header"><span>🌤️ Weather</span><button class="widget-close" onclick="this.closest('.desktop-widget-panel').remove()">✕</button></div>
+                <div style="text-align:center;">
+                    <div style="font-size:48px; margin:10px 0;">☀️</div>
+                    <div style="font-size:28px; font-weight:200;">72°F</div>
+                    <div style="font-size:12px; opacity:0.5; margin-top:4px;">Partly Cloudy</div>
+                </div>`;
+        } else if(type === 'clock') {
+            content = `<div class="widget-header"><span>🕐 Clock</span><button class="widget-close" onclick="this.closest('.desktop-widget-panel').remove()">✕</button></div>
+                <div style="text-align:center;">
+                    <div id="${wid}" style="font-size:36px; font-weight:100;"></div>
+                </div>`;
+        } else if(type === 'calendar') {
+            const now = new Date();
+            content = `<div class="widget-header"><span>📅 Calendar</span><button class="widget-close" onclick="this.closest('.desktop-widget-panel').remove()">✕</button></div>
+                <div style="text-align:center;">
+                    <div style="font-size:11px; opacity:0.4; text-transform:uppercase; letter-spacing:2px;">${now.toLocaleDateString('en-US',{weekday:'long'})}</div>
+                    <div style="font-size:48px; font-weight:200; color:var(--accent);">${now.getDate()}</div>
+                    <div style="font-size:14px; opacity:0.6;">${now.toLocaleDateString('en-US',{month:'long', year:'numeric'})}</div>
+                </div>`;
+        } else if(type === 'system') {
+            content = `<div class="widget-header"><span>📊 System</span><button class="widget-close" onclick="this.closest('.desktop-widget-panel').remove()">✕</button></div>
+                <div style="font-size:12px; line-height:2;">
+                    <div style="display:flex; justify-content:space-between;"><span style="opacity:0.5;">OS</span><span>KomaOS v6.2</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="opacity:0.5;">UI</span><span>Liquid Glass v3</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="opacity:0.5;">Memory</span><span>${Math.round(performance.memory?.usedJSHeapSize/1048576 || 64)} MB</span></div>
+                    <div style="display:flex; justify-content:space-between;"><span style="opacity:0.5;">Screen</span><span>${screen.width}×${screen.height}</span></div>
+                </div>`;
+        } else if(type === 'music') {
+            content = `<div class="widget-header"><span>🎵 Now Playing</span><button class="widget-close" onclick="this.closest('.desktop-widget-panel').remove()">✕</button></div>
+                <div id="${wid}" style="text-align:center; font-size:13px; opacity:0.6;">No song playing</div>`;
+        }
+        widget.innerHTML = content;
+        makeDraggable(widget);
+        workspace.appendChild(widget);
+        
+        // Update clock widget
+        if(type === 'clock') {
+            setInterval(() => {
+                const el = document.getElementById(wid);
+                if(el) { const n = new Date(); el.textContent = n.getHours().toString().padStart(2,'0') + ':' + n.getMinutes().toString().padStart(2,'0') + ':' + n.getSeconds().toString().padStart(2,'0'); }
+            }, 1000);
+        }
+        showNotification('Widget', `${type.charAt(0).toUpperCase() + type.slice(1)} widget added`);
+    }
 
     // --- DRAG ---
     let activeWin = null, diffX = 0, diffY = 0;
