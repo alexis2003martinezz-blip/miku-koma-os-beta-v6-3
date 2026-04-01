@@ -9627,5 +9627,1031 @@
 
     </script>
 
+<!-- ============================================================ -->
+<!-- KOMAOS v6.3 MEGA UPDATE: All New Features                   -->
+<!-- ============================================================ -->
+<style>
+/* SECRET WALLPAPER CODE INPUT */
+#secret-wallpaper-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.7); backdrop-filter:blur(30px);
+    z-index:99000; display:none; align-items:center; justify-content:center;
+    animation: fadeInPanel 0.3s ease;
+}
+#secret-wallpaper-overlay.active { display:flex !important; }
+.secret-wp-card {
+    background:rgba(15,15,20,0.8); backdrop-filter:blur(40px); border-radius:24px;
+    padding:40px; width:380px; border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 30px 80px rgba(0,0,0,0.6); text-align:center;
+}
+.secret-wp-input {
+    width:100%; padding:14px 20px; border-radius:14px; background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1); color:white; font-size:24px; text-align:center;
+    letter-spacing:8px; outline:none; font-family:'Inter',monospace; transition:0.3s;
+}
+.secret-wp-input:focus { border-color:var(--accent); box-shadow:0 0 20px rgba(0,255,204,0.2); }
+
+/* DESKTOP CONTEXT MENU ENHANCED */
+.desktop-bg-ctx-menu {
+    position:fixed; background:rgba(30,30,35,0.85); backdrop-filter:blur(40px) saturate(200%);
+    border-radius:14px; padding:6px; min-width:220px; z-index:50000;
+    border:0.5px solid rgba(255,255,255,0.12); box-shadow:0 20px 50px rgba(0,0,0,0.6);
+    animation:fadeInPanel 0.2s ease;
+}
+.bg-ctx-item {
+    padding:8px 14px; border-radius:8px; cursor:pointer; font-size:13px;
+    display:flex; align-items:center; gap:10px; transition:0.15s; color:white;
+}
+.bg-ctx-item:hover { background:rgba(255,255,255,0.1); }
+.bg-ctx-item svg { opacity:0.6; }
+.bg-ctx-sep { height:1px; background:rgba(255,255,255,0.08); margin:4px 8px; }
+
+/* CHARGING ANIMATION */
+#charging-overlay {
+    position:fixed; inset:0; z-index:100000; display:none; pointer-events:none;
+    animation: chargeFadeIn 0.5s ease;
+}
+#charging-overlay.active { display:block !important; }
+@keyframes chargeFadeIn { from{opacity:0} to{opacity:1} }
+.charge-center {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    text-align:center; pointer-events:none;
+}
+.charge-pct-big {
+    font-size:120px; font-weight:100; color:white;
+    text-shadow:0 0 60px rgba(0,255,204,0.5);
+}
+.charge-label { font-size:18px; opacity:0.6; letter-spacing:4px; margin-top:10px; }
+.edge-glow {
+    position:absolute; inset:0; pointer-events:none;
+    box-shadow:inset 0 0 80px 20px rgba(0,255,204,0.3),
+               inset 0 0 120px 40px rgba(0,255,204,0.1);
+    animation:edgeGlowPulse 2s ease-in-out infinite;
+}
+@keyframes edgeGlowPulse {
+    0%,100% { box-shadow:inset 0 0 80px 20px rgba(0,255,204,0.3); }
+    50% { box-shadow:inset 0 0 120px 40px rgba(0,255,204,0.5); }
+}
+.dock-glow-green { box-shadow:0 0 30px rgba(40,200,64,0.5), 0 10px 30px rgba(0,0,0,0.3) !important; }
+.dock-glow-red { box-shadow:0 0 30px rgba(255,95,87,0.5), 0 10px 30px rgba(0,0,0,0.3) !important; }
+
+/* KOMACALL & CONTACTS */
+.call-notification {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:rgba(15,15,20,0.9); backdrop-filter:blur(50px); border-radius:30px;
+    padding:40px; width:320px; text-align:center; z-index:99999;
+    border:1px solid rgba(255,255,255,0.1); box-shadow:0 30px 80px rgba(0,0,0,0.7);
+    animation:fadeInPanel 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.call-avatar-ring {
+    width:100px; height:100px; border-radius:50%; margin:0 auto 15px;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    display:flex; align-items:center; justify-content:center; font-size:40px;
+    animation:avatarPulse 1.5s ease-in-out infinite;
+}
+.call-btn-row { display:flex; gap:20px; justify-content:center; margin-top:25px; }
+.call-accept { width:60px; height:60px; border-radius:50%; background:#28c840; border:none; cursor:pointer; font-size:24px; transition:0.3s; }
+.call-reject { width:60px; height:60px; border-radius:50%; background:#ff5f57; border:none; cursor:pointer; font-size:24px; transition:0.3s; }
+.call-accept:hover,.call-reject:hover { transform:scale(1.1); }
+
+/* MULTI-USER SWITCHER */
+#user-switcher-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(40px);
+    z-index:99000; display:none; align-items:center; justify-content:center;
+}
+#user-switcher-overlay.active { display:flex !important; }
+.user-grid { display:flex; gap:30px; flex-wrap:wrap; justify-content:center; }
+.user-card {
+    background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); border-radius:20px;
+    padding:30px; text-align:center; cursor:pointer; transition:0.3s; width:160px;
+    border:1px solid rgba(255,255,255,0.08);
+}
+.user-card:hover { background:rgba(255,255,255,0.12); transform:translateY(-4px); }
+.user-card-avatar { font-size:50px; margin-bottom:12px; }
+
+/* EMERGENCY SCREEN (Restricted Access) */
+#emergency-screen {
+    position:fixed; inset:0; z-index:999999; display:none; flex-direction:column;
+    align-items:center; justify-content:center; background:#3d3f47; color:white;
+}
+#emergency-screen.active { display:flex !important; }
+.restricted-icon { width:80px; height:80px; margin-bottom:15px; }
+.restricted-orange-bar {
+    width:100%; padding:30px; background:#f7941d; text-align:center; margin-top:30px;
+}
+.restricted-footer {
+    position:absolute; bottom:20px; font-size:12px; opacity:0.4;
+}
+
+/* MASCOT */
+.mascot-pet {
+    position:fixed; z-index:99998; cursor:grab; user-select:none;
+    transition:none; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+.mascot-pet:active { cursor:grabbing; }
+
+/* PS5 EMULATOR */
+.ps5-ui { background:linear-gradient(135deg,#0a0a1a,#1a1a3e); height:100%; display:flex; flex-direction:column; }
+.ps5-nav { display:flex; align-items:center; justify-content:space-between; padding:16px 24px; }
+.ps5-content { flex:1; display:flex; align-items:center; justify-content:center; gap:20px; padding:20px; overflow-x:auto; }
+.ps5-game-card {
+    width:180px; height:240px; border-radius:16px; background:rgba(255,255,255,0.06);
+    border:2px solid transparent; cursor:pointer; transition:0.3s; overflow:hidden;
+    flex-shrink:0; position:relative;
+}
+.ps5-game-card:hover,.ps5-game-card.selected { border-color:#0070d1; transform:scale(1.05); box-shadow:0 0 30px rgba(0,112,209,0.4); }
+.ps5-game-card img { width:100%; height:100%; object-fit:cover; }
+.ps5-bottom-bar { padding:16px 24px; background:rgba(0,0,0,0.3); display:flex; align-items:center; gap:16px; font-size:12px; opacity:0.5; }
+
+/* WIDGET PICKER PANEL */
+#widget-picker-panel {
+    position:fixed; right:20px; top:40px; width:300px; max-height:80vh;
+    background:rgba(20,20,25,0.85); backdrop-filter:blur(40px); border-radius:16px;
+    border:0.5px solid rgba(255,255,255,0.1); z-index:8000; padding:20px;
+    overflow-y:auto; display:none; animation:fadeInPanel 0.3s ease;
+}
+#widget-picker-panel.active { display:block !important; }
+.widget-pick-item {
+    background:rgba(255,255,255,0.04); border-radius:12px; padding:14px; margin-bottom:8px;
+    cursor:pointer; transition:0.2s; border:1px solid rgba(255,255,255,0.06);
+}
+.widget-pick-item:hover { background:rgba(255,255,255,0.08); transform:translateY(-2px); }
+
+/* CALCULATOR LIQUID GLASS REDESIGN */
+.calc-glass-grid {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:12px;
+}
+.calc-glass-btn {
+    padding:18px; border:none; border-radius:14px; cursor:pointer; font-size:20px;
+    font-weight:500; transition:0.2s; backdrop-filter:blur(10px);
+    background:rgba(255,255,255,0.06); color:white;
+    border:0.5px solid rgba(255,255,255,0.08);
+}
+.calc-glass-btn:hover { background:rgba(255,255,255,0.12); transform:scale(1.05); }
+.calc-glass-btn.op { background:rgba(0,255,204,0.1); color:var(--accent); }
+.calc-glass-btn.eq { background:linear-gradient(135deg,var(--primary),#2563eb); color:white; font-weight:700; }
+.calc-glass-btn.clear { background:rgba(255,95,87,0.15); color:#ff5f57; }
+</style>
+
+<!-- CHARGING OVERLAY -->
+<div id="charging-overlay">
+    <div class="edge-glow"></div>
+    <div class="charge-center">
+        <div class="charge-pct-big" id="charge-pct-display">0%</div>
+        <div class="charge-label" id="charge-speed-label">CHARGING</div>
+    </div>
+</div>
+
+<!-- SECRET WALLPAPER CODE INPUT -->
+<div id="secret-wallpaper-overlay">
+    <div class="secret-wp-card">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" style="margin-bottom:15px;">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <h3 style="font-size:18px; font-weight:600; margin-bottom:5px;">Secret Wallpaper</h3>
+        <p style="font-size:12px; opacity:0.4; margin-bottom:20px;">Enter wallpaper code</p>
+        <input type="text" class="secret-wp-input" id="secret-wp-code" maxlength="5" placeholder="_ _ _ _ _" onkeypress="if(event.key==='Enter')applySecretWallpaper()">
+        <div style="display:flex; gap:10px; margin-top:20px;">
+            <button class="koma-btn" style="flex:1;" onclick="applySecretWallpaper()">Apply</button>
+            <button class="koma-btn" style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1);" onclick="document.getElementById('secret-wallpaper-overlay').classList.remove('active')">Cancel</button>
+        </div>
+        <p id="secret-wp-error" style="color:#ff5f57; font-size:12px; margin-top:10px; opacity:0; transition:0.3s;">Invalid code</p>
+    </div>
+</div>
+
+<!-- USER SWITCHER -->
+<div id="user-switcher-overlay">
+    <div style="text-align:center;">
+        <h2 style="font-size:24px; font-weight:600; margin-bottom:30px;">Switch User</h2>
+        <div class="user-grid" id="user-grid"></div>
+        <button class="koma-btn" style="margin-top:30px;" onclick="showCreateUserDialog()">+ Add User</button>
+        <button style="background:none; border:none; color:white; opacity:0.4; cursor:pointer; margin-top:15px; font-size:13px;" onclick="document.getElementById('user-switcher-overlay').classList.remove('active')">Cancel</button>
+    </div>
+</div>
+
+<!-- EMERGENCY RESTRICTED ACCESS SCREEN -->
+<div id="emergency-screen">
+    <svg class="restricted-icon" viewBox="0 0 80 80" fill="none" stroke="#f7941d" stroke-width="2">
+        <circle cx="40" cy="30" r="14"/><path d="M20 65c0-11 9-20 20-20s20 9 20 20"/>
+        <rect x="48" y="22" width="10" height="10" rx="2" fill="none" stroke="#f7941d"/>
+    </svg>
+    <h2 style="font-size:18px; font-weight:500; letter-spacing:1px;">Restricted Access Network</h2>
+    <div class="restricted-orange-bar">
+        <p style="font-size:14px; opacity:0.8;">Oops,</p>
+        <h1 id="restricted-site-name" style="font-size:28px; font-weight:600; margin:8px 0;">restricted-site.com</h1>
+        <p style="font-size:14px; opacity:0.8;">is not available because it is categorized as Mature - Games.</p>
+    </div>
+    <p style="margin-top:20px; color:#f7941d; font-size:13px;">You are logged in as student@district.edu (IP address: 10.0.0.5).</p>
+    <p style="font-size:13px; opacity:0.7; margin-top:8px;">If you feel this site has been restricted in error, please contact your network administrator.</p>
+    <div class="restricted-footer">Administrator Console Access v4.2</div>
+</div>
+
+<!-- KOMACALL WINDOW -->
+<div id="win-komacall" class="window hidden liquid-glass" style="width:380px; height:600px; top:40px; left:200px;">
+    <div class="win-header">
+        <span style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#28c840" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            KomaCall
+        </span>
+        <div class="win-btns"><div class="win-btn min" onclick="minWin('win-komacall')"></div><div class="win-btn max" onclick="maxWin('win-komacall')"></div><div class="win-btn close" onclick="closeWin('win-komacall')"></div></div>
+    </div>
+    <div class="win-body" style="padding:20px; display:flex; flex-direction:column; gap:12px;" id="komacall-body">
+        <div style="text-align:center; padding:20px 0;">
+            <h3 style="font-size:18px; font-weight:600; margin-bottom:4px;">KomaCall</h3>
+            <p style="font-size:11px; opacity:0.4;">WebRTC Video & Voice Calls</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+            <select id="call-country-prefix" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:white; padding:12px; border-radius:14px; outline:none; font-size:14px;">
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+52">🇲🇽 +52</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+81">🇯🇵 +81</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+34">🇪🇸 +34</option>
+                <option value="+55">🇧🇷 +55</option>
+                <option value="+91">🇮🇳 +91</option>
+            </select>
+            <input type="tel" id="call-number-input" placeholder="Phone number..." style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:white; padding:12px; border-radius:14px; outline:none; font-size:16px;">
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+            <button class="calc-glass-btn" onclick="dialNum('1')">1</button>
+            <button class="calc-glass-btn" onclick="dialNum('2')">2</button>
+            <button class="calc-glass-btn" onclick="dialNum('3')">3</button>
+            <button class="calc-glass-btn" onclick="dialNum('4')">4</button>
+            <button class="calc-glass-btn" onclick="dialNum('5')">5</button>
+            <button class="calc-glass-btn" onclick="dialNum('6')">6</button>
+            <button class="calc-glass-btn" onclick="dialNum('7')">7</button>
+            <button class="calc-glass-btn" onclick="dialNum('8')">8</button>
+            <button class="calc-glass-btn" onclick="dialNum('9')">9</button>
+            <button class="calc-glass-btn" onclick="dialNum('*')">*</button>
+            <button class="calc-glass-btn" onclick="dialNum('0')">0</button>
+            <button class="calc-glass-btn" onclick="dialNum('#')">#</button>
+        </div>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:10px;">
+            <button onclick="startKomaCall()" style="width:60px; height:60px; border-radius:50%; background:#28c840; border:none; cursor:pointer; font-size:24px; color:white; transition:0.3s;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </button>
+            <button onclick="startKomaVideoCall()" style="width:60px; height:60px; border-radius:50%; background:var(--primary); border:none; cursor:pointer; font-size:24px; color:white; transition:0.3s;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </button>
+        </div>
+        <button onclick="generatePhoneNumber()" class="koma-btn" style="font-size:12px; padding:10px;">Generate Random Number</button>
+    </div>
+</div>
+
+<!-- CONTACTS WINDOW -->
+<div id="win-contacts" class="window hidden liquid-glass" style="width:350px; height:500px; top:60px; left:300px;">
+    <div class="win-header">
+        <span style="display:flex;align-items:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Contacts
+        </span>
+        <div class="win-btns"><div class="win-btn min" onclick="minWin('win-contacts')"></div><div class="win-btn max" onclick="maxWin('win-contacts')"></div><div class="win-btn close" onclick="closeWin('win-contacts')"></div></div>
+    </div>
+    <div class="win-body" style="padding:15px;" id="contacts-body">
+        <div style="display:flex; gap:8px; margin-bottom:15px;">
+            <input type="text" id="contact-name-input" placeholder="Name" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:white; padding:10px; border-radius:10px; outline:none; font-size:13px;">
+            <input type="tel" id="contact-phone-input" placeholder="Phone" style="flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:white; padding:10px; border-radius:10px; outline:none; font-size:13px;">
+            <button onclick="addContact()" class="koma-btn" style="padding:10px 14px; font-size:12px;">+</button>
+        </div>
+        <div id="contacts-list" style="display:flex; flex-direction:column; gap:6px; overflow-y:auto; max-height:380px;"></div>
+    </div>
+</div>
+
+<!-- PS5 EMULATOR WINDOW -->
+<div id="win-ps5" class="window hidden" style="width:90%; height:85%; top:5%; left:5%;">
+    <div class="win-header" style="background:rgba(0,0,0,0.6);">
+        <span style="display:flex;align-items:center;gap:8px;font-weight:700;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0070d1" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="17" cy="10" r="1"/><circle cx="19" cy="13" r="1"/></svg>
+            PS5 Emulator
+        </span>
+        <div class="win-btns"><div class="win-btn min" onclick="minWin('win-ps5')"></div><div class="win-btn max" onclick="maxWin('win-ps5')"></div><div class="win-btn close" onclick="closeWin('win-ps5')"></div></div>
+    </div>
+    <div class="win-body ps5-ui" id="ps5-body">
+        <div class="ps5-nav">
+            <div style="font-size:20px; font-weight:700; color:#0070d1;">PlayStation</div>
+            <div style="display:flex; gap:15px; opacity:0.5; font-size:13px;">
+                <span>Games</span><span>Media</span><span>Store</span>
+            </div>
+        </div>
+        <div class="ps5-content" id="ps5-games-row"></div>
+        <div class="ps5-bottom-bar">
+            <span>△ Options</span><span>○ Back</span><span>✕ Select</span><span>□ Menu</span>
+        </div>
+    </div>
+</div>
+
+<!-- KOMAHUB STORE WINDOW -->
+<div id="win-komahub" class="window hidden liquid-glass" style="width:700px; height:500px; top:50px; left:150px;">
+    <div class="win-header">
+        <span style="display:flex;align-items:center;gap:6px;font-weight:700;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            KomaHub
+        </span>
+        <div class="win-btns"><div class="win-btn min" onclick="minWin('win-komahub')"></div><div class="win-btn max" onclick="maxWin('win-komahub')"></div><div class="win-btn close" onclick="closeWin('win-komahub')"></div></div>
+    </div>
+    <div class="win-body" style="padding:20px; overflow-y:auto;" id="komahub-body">
+        <div style="background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(236,72,153,0.2)); border-radius:16px; padding:25px; margin-bottom:20px;">
+            <h2 style="font-size:20px; font-weight:700; margin:0 0 4px;">KomaHub Community</h2>
+            <p style="font-size:12px; opacity:0.6;">Themes, Icon Packs & Customizations</p>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;" id="komahub-items"></div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// FEATURE 1: DESKTOP RIGHT-CLICK CONTEXT MENU (ON BACKGROUND)
+// ============================================================
+(function() {
+    const workspace = document.getElementById('workspace');
+    if(!workspace) return;
+    
+    workspace.addEventListener('contextmenu', function(e) {
+        // Only show on empty desktop area (not on windows/icons)
+        if(e.target.closest('.window') || e.target.closest('.dock-item') || 
+           e.target.closest('.desktop-app-icon') || e.target.closest('.desktop-widget-panel') ||
+           e.target.closest('.desktop-note-widget')) return;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Remove any existing menu
+        const old = document.getElementById('bg-ctx-menu');
+        if(old) old.remove();
+        
+        const menu = document.createElement('div');
+        menu.className = 'desktop-bg-ctx-menu';
+        menu.id = 'bg-ctx-menu';
+        menu.innerHTML = `
+            <div class="bg-ctx-item" onclick="openSecretWallpaperInput()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Change Wallpaper (Code)
+            </div>
+            <div class="bg-ctx-item" onclick="openWidgetPickerPanel()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Add Widgets
+            </div>
+            <div class="bg-ctx-sep"></div>
+            <div class="bg-ctx-item" onclick="toggleMascotPet()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                Toggle Mascot
+            </div>
+            <div class="bg-ctx-item" onclick="openUserSwitcher()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Switch User
+            </div>
+            <div class="bg-ctx-sep"></div>
+            <div class="bg-ctx-item" onclick="openApp('win-settings')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                Display Settings
+            </div>
+        `;
+        menu.style.left = Math.min(e.clientX, window.innerWidth - 240) + 'px';
+        menu.style.top = Math.min(e.clientY, window.innerHeight - 260) + 'px';
+        document.body.appendChild(menu);
+        
+        const closeMenu = (ev) => {
+            if(!ev.target.closest('.desktop-bg-ctx-menu')) {
+                menu.remove();
+                document.removeEventListener('click', closeMenu);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeMenu), 10);
+    });
+})();
+
+function openSecretWallpaperInput() {
+    const old = document.getElementById('bg-ctx-menu');
+    if(old) old.remove();
+    document.getElementById('secret-wallpaper-overlay').classList.add('active');
+    document.getElementById('secret-wp-code').value = '';
+    document.getElementById('secret-wp-code').focus();
+}
+
+// ============================================================
+// FEATURE 2: SECRET WALLPAPER DATABASE (Code Only)
+// ============================================================
+const SECRET_WALLPAPERS = {
+    '98626': { type:'video', url:'https://cdn.pixabay.com/video/2020/02/07/32070-390408709_large.mp4', name:'Black Hole' },
+    '57297': { type:'image', url:'https://media1.tenor.com/m/BPg6YFk6BP0AAAAC/minecraft-fox.gif', name:'Minecraft Fox' },
+    '89013': { type:'video', url:'https://cdn.pixabay.com/video/2021/01/01/60813-497828908_large.mp4', name:'Death Roots' },
+    '98106': { type:'image', url:'https://media1.tenor.com/m/sWZVTkDxFYMAAAAC/hollow-knight.gif', name:'Hollow Knight' },
+    '67429': { type:'video', url:'https://cdn.pixabay.com/video/2022/08/19/128406-740680399_large.mp4', name:'Arknights' },
+    '78000': { type:'video', url:'https://cdn.pixabay.com/video/2021/08/20/85869-592113498_large.mp4', name:'Death Note' },
+    '36148': { type:'video', url:'https://cdn.pixabay.com/video/2020/10/30/54289-475879457_large.mp4', name:'Supra Edit' },
+    '24317': { type:'video', url:'https://cdn.pixabay.com/video/2022/06/20/121329-723027893_large.mp4', name:'Mazda RX-7' },
+    '09162': { type:'video', url:'https://cdn.pixabay.com/video/2021/04/28/72821-545421038_large.mp4', name:'Super Cars' }
+};
+
+function applySecretWallpaper() {
+    const code = document.getElementById('secret-wp-code').value.trim();
+    const wp = SECRET_WALLPAPERS[code];
+    if(!wp) {
+        document.getElementById('secret-wp-error').style.opacity = '1';
+        setTimeout(() => document.getElementById('secret-wp-error').style.opacity = '0', 2000);
+        return;
+    }
+    
+    const vid = document.getElementById('bg-video');
+    if(wp.type === 'video') {
+        vid.style.display = 'block';
+        vid.src = wp.url;
+        vid.loop = true;
+        vid.muted = true;
+        vid.play().catch(()=>{});
+        document.body.style.background = '#000';
+    } else {
+        vid.style.display = 'none';
+        document.body.style.background = `url('${wp.url}') center/cover no-repeat fixed`;
+    }
+    
+    localStorage.setItem('koma_wallpaper', JSON.stringify({ code: code, type: wp.type, url: wp.url }));
+    document.getElementById('secret-wallpaper-overlay').classList.remove('active');
+    showNotification('Wallpaper', `"${wp.name}" applied via code ${code}`);
+}
+
+// Restore secret wallpaper on load
+(function restoreSecretWallpaper() {
+    try {
+        const saved = localStorage.getItem('koma_wallpaper');
+        if(saved && saved.startsWith('{')) {
+            const data = JSON.parse(saved);
+            if(data.code && data.url) {
+                const vid = document.getElementById('bg-video');
+                if(data.type === 'video') {
+                    vid.style.display = 'block';
+                    vid.src = data.url; vid.loop = true; vid.muted = true;
+                    vid.play().catch(()=>{});
+                } else {
+                    vid.style.display = 'none';
+                    document.body.style.background = `url('${data.url}') center/cover no-repeat fixed`;
+                }
+            }
+        }
+    } catch(e) {}
+})();
+
+// ============================================================
+// FEATURE 3: CHARGING ANIMATION WITH EDGE GLOW & DOCK GLOW
+// ============================================================
+let lastChargingState = false;
+(function initChargingAnimation() {
+    if(!navigator.getBattery) return;
+    navigator.getBattery().then(bat => {
+        const checkCharging = () => {
+            const dock = document.querySelector('.dock');
+            const pct = Math.round(bat.level * 100);
+            
+            // Dock glow based on battery
+            if(dock) {
+                dock.classList.remove('dock-glow-green', 'dock-glow-red');
+                if(pct >= 100) dock.classList.add('dock-glow-green');
+                else if(pct <= 15) dock.classList.add('dock-glow-red');
+            }
+            
+            // Show charging animation when newly plugged in
+            if(bat.charging && !lastChargingState) {
+                const overlay = document.getElementById('charging-overlay');
+                const pctEl = document.getElementById('charge-pct-display');
+                const speedEl = document.getElementById('charge-speed-label');
+                if(overlay && pctEl) {
+                    pctEl.textContent = pct + '%';
+                    const ct = bat.chargingTime;
+                    let speed = 'CHARGING';
+                    if(ct !== Infinity && ct > 0) {
+                        if(ct < 3600) speed = 'SUPER FAST CHARGING';
+                        else if(ct < 7200) speed = 'FAST CHARGING';
+                        else speed = 'SLOW CHARGING';
+                    }
+                    speedEl.textContent = speed;
+                    overlay.classList.add('active');
+                    // Update percentage during animation
+                    const updateInterval = setInterval(() => {
+                        pctEl.textContent = Math.round(bat.level * 100) + '%';
+                    }, 1000);
+                    setTimeout(() => { overlay.classList.remove('active'); clearInterval(updateInterval); }, 5000);
+                }
+            }
+            lastChargingState = bat.charging;
+        };
+        checkCharging();
+        bat.addEventListener('chargingchange', checkCharging);
+        bat.addEventListener('levelchange', checkCharging);
+    });
+})();
+
+// ============================================================
+// FEATURE 4: KOMACALL & CONTACTS (WebRTC)
+// ============================================================
+let komaContacts = JSON.parse(localStorage.getItem('koma_contacts') || '[]');
+let komaPeer = null;
+let komaActiveCall = null;
+
+function initKomaPeer() {
+    if(komaPeer) return;
+    try {
+        komaPeer = new Peer(undefined, { debug: 0 });
+        komaPeer.on('open', (id) => { console.log('KomaCall Peer ID:', id); });
+        komaPeer.on('call', (call) => { showIncomingCall(call); });
+    } catch(e) { console.warn('PeerJS unavailable'); }
+}
+
+function dialNum(n) {
+    const input = document.getElementById('call-number-input');
+    if(input) input.value += n;
+}
+
+function generatePhoneNumber() {
+    const prefix = document.getElementById('call-country-prefix').value;
+    const formats = { '+1':'##########', '+52':'##########', '+44':'##########', '+81':'##########', '+49':'###########', '+34':'#########', '+55':'###########', '+91':'##########' };
+    const fmt = formats[prefix] || '##########';
+    const num = fmt.replace(/#/g, () => Math.floor(Math.random()*10));
+    document.getElementById('call-number-input').value = num;
+    showNotification('KomaCall', `Generated: ${prefix} ${num}`);
+}
+
+function startKomaCall() {
+    initKomaPeer();
+    const num = document.getElementById('call-number-input').value;
+    if(!num) return showNotification('KomaCall', 'Enter a number first');
+    showNotification('KomaCall', `Calling ${num}...`);
+    // Simulate outgoing call UI
+    navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {
+        showNotification('KomaCall', 'Audio connected');
+    }).catch(() => showNotification('KomaCall', 'Microphone unavailable'));
+}
+
+function startKomaVideoCall() {
+    initKomaPeer();
+    const num = document.getElementById('call-number-input').value;
+    if(!num) return showNotification('KomaCall', 'Enter a number first');
+    showNotification('KomaCall', `Video calling ${num}...`);
+    navigator.mediaDevices.getUserMedia({video:true,audio:true}).then(stream => {
+        showNotification('KomaCall', 'Video call connected');
+    }).catch(() => showNotification('KomaCall', 'Camera unavailable'));
+}
+
+function showIncomingCall(call) {
+    const notif = document.createElement('div');
+    notif.className = 'call-notification';
+    notif.innerHTML = `
+        <div class="call-avatar-ring">📞</div>
+        <h3 style="font-size:18px; margin:10px 0 4px;">Incoming Call</h3>
+        <p style="font-size:13px; opacity:0.5;">Unknown Number</p>
+        <div class="call-btn-row">
+            <button class="call-reject" onclick="rejectCall(this)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72"/></svg>
+            </button>
+            <button class="call-accept" onclick="acceptCall(this)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </button>
+        </div>
+    `;
+    document.body.appendChild(notif);
+    notif._call = call;
+}
+
+function acceptCall(btn) {
+    const notif = btn.closest('.call-notification');
+    if(notif._call) {
+        navigator.mediaDevices.getUserMedia({audio:true,video:true}).then(stream => {
+            notif._call.answer(stream);
+            showNotification('KomaCall', 'Call accepted');
+        }).catch(() => showNotification('KomaCall', 'Media unavailable'));
+    }
+    notif.remove();
+}
+
+function rejectCall(btn) {
+    const notif = btn.closest('.call-notification');
+    if(notif._call) notif._call.close();
+    notif.remove();
+    showNotification('KomaCall', 'Call rejected');
+}
+
+// CONTACTS
+function renderContacts() {
+    const list = document.getElementById('contacts-list');
+    if(!list) return;
+    list.innerHTML = komaContacts.map((c,i) => `
+        <div style="display:flex; align-items:center; gap:12px; padding:10px; background:rgba(255,255,255,0.04); border-radius:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;">${c.name.charAt(0).toUpperCase()}</div>
+            <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;font-weight:600;">${c.name}</div>
+                <div style="font-size:11px;opacity:0.4;">${c.phone}</div>
+            </div>
+            <button onclick="callContact(${i})" style="background:rgba(40,200,64,0.15);border:none;color:#28c840;cursor:pointer;padding:6px 10px;border-radius:8px;font-size:11px;">Call</button>
+            <button onclick="deleteContact(${i})" style="background:none;border:none;color:#ff5f57;cursor:pointer;font-size:14px;opacity:0.5;">✕</button>
+        </div>
+    `).join('');
+}
+
+function addContact() {
+    const name = document.getElementById('contact-name-input').value.trim();
+    const phone = document.getElementById('contact-phone-input').value.trim();
+    if(!name || !phone) return showNotification('Contacts', 'Fill in both fields');
+    komaContacts.push({name, phone});
+    localStorage.setItem('koma_contacts', JSON.stringify(komaContacts));
+    document.getElementById('contact-name-input').value = '';
+    document.getElementById('contact-phone-input').value = '';
+    renderContacts();
+    showNotification('Contacts', `${name} added`);
+}
+
+function deleteContact(i) {
+    komaContacts.splice(i, 1);
+    localStorage.setItem('koma_contacts', JSON.stringify(komaContacts));
+    renderContacts();
+}
+
+function callContact(i) {
+    const c = komaContacts[i];
+    document.getElementById('call-number-input').value = c.phone;
+    openApp('win-komacall');
+    startKomaCall();
+}
+
+// ============================================================
+// FEATURE 5: MULTI-USER SYSTEM (Chromebook-style)
+// ============================================================
+let komaUsers = JSON.parse(localStorage.getItem('koma_users') || '[]');
+let currentKomaUser = localStorage.getItem('koma_active_user') || 'Guest';
+
+function openUserSwitcher() {
+    const old = document.getElementById('bg-ctx-menu');
+    if(old) old.remove();
+    renderUserGrid();
+    document.getElementById('user-switcher-overlay').classList.add('active');
+}
+
+function renderUserGrid() {
+    const grid = document.getElementById('user-grid');
+    const allUsers = [{name:'Guest', avatar:'👤', pin:''}].concat(komaUsers);
+    grid.innerHTML = allUsers.map(u => `
+        <div class="user-card" onclick="switchToUser('${u.name}')">
+            <div class="user-card-avatar">${u.avatar || '👤'}</div>
+            <div style="font-size:14px; font-weight:600;">${u.name}</div>
+            <div style="font-size:11px; opacity:0.4;">${u.name === currentKomaUser ? 'Active' : ''}</div>
+        </div>
+    `).join('');
+}
+
+function switchToUser(name) {
+    // Save current user state
+    saveCurrentUserState();
+    currentKomaUser = name;
+    localStorage.setItem('koma_active_user', name);
+    // Load new user state
+    loadUserState(name);
+    document.getElementById('user-switcher-overlay').classList.remove('active');
+    document.getElementById('user-display').textContent = name;
+    showNotification('System', `Switched to ${name}`);
+}
+
+function saveCurrentUserState() {
+    const state = {
+        wallpaper: localStorage.getItem('koma_wallpaper'),
+        username: localStorage.getItem('koma_username'),
+        notes: localStorage.getItem('koma_daily_notes'),
+        lockType: localStorage.getItem('koma_lock_type'),
+        lockPin: localStorage.getItem('koma_lock_pin'),
+        lockPass: localStorage.getItem('koma_lock_password'),
+        contacts: localStorage.getItem('koma_contacts')
+    };
+    localStorage.setItem('koma_user_state_' + currentKomaUser, JSON.stringify(state));
+}
+
+function loadUserState(name) {
+    const saved = localStorage.getItem('koma_user_state_' + name);
+    if(saved) {
+        const state = JSON.parse(saved);
+        if(state.wallpaper) { localStorage.setItem('koma_wallpaper', state.wallpaper); try { const wp = JSON.parse(state.wallpaper); if(wp.url) { const vid = document.getElementById('bg-video'); if(wp.type==='video'){vid.style.display='block';vid.src=wp.url;vid.loop=true;vid.muted=true;vid.play().catch(()=>{});}else{vid.style.display='none';document.body.style.background=`url('${wp.url}') center/cover no-repeat fixed`;} } } catch(e) { changeBG(state.wallpaper); } }
+        if(state.username) localStorage.setItem('koma_username', state.username);
+        if(state.notes) localStorage.setItem('koma_daily_notes', state.notes);
+        if(state.contacts) { localStorage.setItem('koma_contacts', state.contacts); komaContacts = JSON.parse(state.contacts); }
+    }
+}
+
+function showCreateUserDialog() {
+    const name = prompt('Enter username:');
+    if(!name || !name.trim()) return;
+    const pin = prompt('Set a 4-digit PIN (optional):') || '';
+    const avatars = ['👤','🧑','👩','🧑‍💻','👨‍🎨','🦊','🐱','🤖'];
+    const avatar = avatars[Math.floor(Math.random()*avatars.length)];
+    komaUsers.push({name:name.trim(), avatar, pin});
+    localStorage.setItem('koma_users', JSON.stringify(komaUsers));
+    renderUserGrid();
+    showNotification('System', `User "${name.trim()}" created`);
+}
+
+// ============================================================
+// FEATURE 6: EMERGENCY SCREEN (Keyboard Sequence)
+// ============================================================
+let emergencyBuffer = [];
+const EMERGENCY_SEQ_1 = ['ArrowUp','ArrowDown','ArrowUp','ArrowDown'];
+const EMERGENCY_SEQ_2 = ['ArrowLeft','ArrowUp','ArrowDown','ArrowUp','ArrowDown'];
+
+document.addEventListener('keydown', function(e) {
+    emergencyBuffer.push(e.key);
+    if(emergencyBuffer.length > 5) emergencyBuffer.shift();
+    
+    const buf4 = emergencyBuffer.slice(-4).join(',');
+    const buf5 = emergencyBuffer.slice(-5).join(',');
+    
+    if(buf4 === EMERGENCY_SEQ_1.join(',') || buf5 === EMERGENCY_SEQ_2.join(',')) {
+        showEmergencyScreen();
+        emergencyBuffer = [];
+    }
+});
+
+function showEmergencyScreen() {
+    document.getElementById('emergency-screen').classList.add('active');
+    // Press Escape to dismiss
+    const dismiss = (e) => {
+        if(e.key === 'Escape') {
+            document.getElementById('emergency-screen').classList.remove('active');
+            document.removeEventListener('keydown', dismiss);
+        }
+    };
+    document.addEventListener('keydown', dismiss);
+}
+
+// ============================================================
+// FEATURE 7: MASCOT / VIRTUAL PET
+// ============================================================
+let mascotActive = false;
+let mascotEl = null;
+const DEFAULT_MASCOT = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
+
+function toggleMascotPet() {
+    const old = document.getElementById('bg-ctx-menu');
+    if(old) old.remove();
+    
+    if(mascotActive && mascotEl) {
+        mascotEl.remove(); mascotEl = null; mascotActive = false;
+        showNotification('Mascot', 'Pet removed');
+        return;
+    }
+    
+    // Check for custom mascot
+    const custom = localStorage.getItem('koma_mascot_url');
+    const url = custom || DEFAULT_MASCOT;
+    
+    mascotEl = document.createElement('img');
+    mascotEl.className = 'mascot-pet';
+    mascotEl.src = url;
+    mascotEl.style.width = '80px';
+    mascotEl.style.height = '80px';
+    mascotEl.style.bottom = '80px';
+    mascotEl.style.right = '30px';
+    mascotEl.draggable = false;
+    document.body.appendChild(mascotEl);
+    
+    // Make draggable
+    let isDragging = false, offsetX, offsetY;
+    mascotEl.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - mascotEl.getBoundingClientRect().left;
+        offsetY = e.clientY - mascotEl.getBoundingClientRect().top;
+        mascotEl.style.transition = 'none';
+    });
+    document.addEventListener('mousemove', (e) => {
+        if(!isDragging) return;
+        mascotEl.style.left = (e.clientX - offsetX) + 'px';
+        mascotEl.style.top = (e.clientY - offsetY) + 'px';
+        mascotEl.style.right = 'auto';
+        mascotEl.style.bottom = 'auto';
+    });
+    document.addEventListener('mouseup', () => isDragging = false);
+    
+    // Double-click to upload custom PNG
+    mascotEl.addEventListener('dblclick', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/png';
+        input.onchange = (ev) => {
+            const file = ev.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = (re) => {
+                mascotEl.src = re.target.result;
+                localStorage.setItem('koma_mascot_url', re.target.result);
+                showNotification('Mascot', 'Custom pet uploaded!');
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    });
+    
+    mascotActive = true;
+    showNotification('Mascot', 'Pet activated! Double-click to change PNG');
+}
+
+// ============================================================
+// FEATURE 8: PS5 EMULATOR
+// ============================================================
+const PS5_GAMES = [
+    { name:'2048', icon:'https://play-lh.googleusercontent.com/Eg-dwShJ2MHOq-5t0g2T0Z-FGHK9rGz3K_XO3fwVG2d4x1-k3IqnA5jYz4w5W5uMw=w240-h480', url:'https://play2048.co/' },
+    { name:'Wordle', icon:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Wordle_196_Hard_Mode_4_steep.svg/800px-Wordle_196_Hard_Mode_4_steep.svg.png', url:'https://www.nytimes.com/games/wordle/index.html' },
+    { name:'Snake', icon:'https://cdn-icons-png.flaticon.com/512/1752/1752640.png', url:'https://playsnake.org/' },
+    { name:'Pac-Man', icon:'https://cdn-icons-png.flaticon.com/512/8576/8576404.png', url:'https://www.google.com/logos/2010/pacman10-i.html' },
+    { name:'Tetris', icon:'https://cdn-icons-png.flaticon.com/512/4295/4295897.png', url:'https://tetris.com/play-tetris' }
+];
+
+function renderPS5() {
+    const row = document.getElementById('ps5-games-row');
+    if(!row) return;
+    row.innerHTML = PS5_GAMES.map((g,i) => `
+        <div class="ps5-game-card" onclick="launchPS5Game(${i})" tabindex="0">
+            <img src="${g.icon}" alt="${g.name}">
+            <div style="position:absolute;bottom:0;width:100%;padding:10px;background:linear-gradient(transparent,rgba(0,0,0,0.8));">
+                <div style="font-size:13px;font-weight:700;">${g.name}</div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Arrow key navigation
+    let selectedIdx = 0;
+    const cards = row.querySelectorAll('.ps5-game-card');
+    const updateSelection = () => cards.forEach((c,i) => c.classList.toggle('selected', i===selectedIdx));
+    updateSelection();
+    
+    document.getElementById('win-ps5').addEventListener('keydown', (e) => {
+        if(e.key==='ArrowRight' && selectedIdx < cards.length-1) { selectedIdx++; updateSelection(); }
+        if(e.key==='ArrowLeft' && selectedIdx > 0) { selectedIdx--; updateSelection(); }
+        if(e.key==='Enter') launchPS5Game(selectedIdx);
+    });
+}
+
+function launchPS5Game(idx) {
+    const game = PS5_GAMES[idx];
+    openWebApp('PS5 - ' + game.name, game.url);
+}
+
+// ============================================================
+// FEATURE 9: KOMAHUB COMMUNITY STORE
+// ============================================================
+const KOMAHUB_ITEMS = [
+    { name:'Cyberpunk Theme', type:'theme', desc:'Neon pink & cyan', action:() => { document.documentElement.style.setProperty('--primary','#f0f'); document.documentElement.style.setProperty('--accent','#0ff'); showNotification('KomaHub','Cyberpunk theme applied'); } },
+    { name:'Ocean Theme', type:'theme', desc:'Deep blue & teal', action:() => { document.documentElement.style.setProperty('--primary','#0077b6'); document.documentElement.style.setProperty('--accent','#00b4d8'); showNotification('KomaHub','Ocean theme applied'); } },
+    { name:'Sunset Theme', type:'theme', desc:'Warm orange & pink', action:() => { document.documentElement.style.setProperty('--primary','#f97316'); document.documentElement.style.setProperty('--accent','#ec4899'); showNotification('KomaHub','Sunset theme applied'); } },
+    { name:'Minimal White', type:'theme', desc:'Clean & bright', action:() => { document.documentElement.style.setProperty('--primary','#000'); document.documentElement.style.setProperty('--liquid-glass','rgba(255,255,255,0.7)'); document.body.style.color='#000'; showNotification('KomaHub','Minimal theme applied'); } },
+    { name:'Round Icons Pack', type:'icons', desc:'Soft rounded icon style', action:() => showNotification('KomaHub','Icon pack applied (visual only)') },
+    { name:'Pixel Pack', type:'icons', desc:'8-bit retro icons', action:() => showNotification('KomaHub','Pixel pack applied (visual only)') }
+];
+
+function renderKomaHub() {
+    const container = document.getElementById('komahub-items');
+    if(!container) return;
+    container.innerHTML = KOMAHUB_ITEMS.map((item, i) => `
+        <div class="widget-pick-item">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <div style="font-size:14px; font-weight:600;">${item.name}</div>
+                    <div style="font-size:11px; opacity:0.4;">${item.type.toUpperCase()} · ${item.desc}</div>
+                </div>
+                <button class="store-get-btn" onclick="KOMAHUB_ITEMS[${i}].action()">APPLY</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ============================================================
+// FEATURE 10: WIDGET PICKER PANEL (from right-click)
+// ============================================================
+function openWidgetPickerPanel() {
+    const old = document.getElementById('bg-ctx-menu');
+    if(old) old.remove();
+    
+    let panel = document.getElementById('widget-picker-panel');
+    if(!panel) {
+        panel = document.createElement('div');
+        panel.id = 'widget-picker-panel';
+        document.body.appendChild(panel);
+    }
+    
+    panel.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:16px; font-weight:700;">Widgets</h3>
+            <button onclick="document.getElementById('widget-picker-panel').classList.remove('active')" style="background:none;border:none;color:white;cursor:pointer;font-size:16px;opacity:0.4;">✕</button>
+        </div>
+        <div class="widget-pick-item" onclick="addDesktopWidget('weather'); document.getElementById('widget-picker-panel').classList.remove('active');">
+            <div style="font-size:14px; font-weight:600;">🌤 Weather</div>
+            <div style="font-size:11px; opacity:0.4;">Current conditions</div>
+        </div>
+        <div class="widget-pick-item" onclick="addDesktopWidget('clock'); document.getElementById('widget-picker-panel').classList.remove('active');">
+            <div style="font-size:14px; font-weight:600;">🕐 Clock</div>
+            <div style="font-size:11px; opacity:0.4;">Digital clock widget</div>
+        </div>
+        <div class="widget-pick-item" onclick="addDesktopWidget('calendar'); document.getElementById('widget-picker-panel').classList.remove('active');">
+            <div style="font-size:14px; font-weight:600;">📅 Calendar</div>
+            <div style="font-size:11px; opacity:0.4;">Today's date</div>
+        </div>
+        <div class="widget-pick-item" onclick="addDesktopWidget('system'); document.getElementById('widget-picker-panel').classList.remove('active');">
+            <div style="font-size:14px; font-weight:600;">💻 System Info</div>
+            <div style="font-size:11px; opacity:0.4;">Battery & memory</div>
+        </div>
+        <div class="widget-pick-item" onclick="addDesktopWidget('notes'); document.getElementById('widget-picker-panel').classList.remove('active');">
+            <div style="font-size:14px; font-weight:600;">📝 Sticky Note</div>
+            <div style="font-size:11px; opacity:0.4;">Quick note widget</div>
+        </div>
+    `;
+    panel.classList.add('active');
+}
+
+// ============================================================
+// FEATURE 11: FIX GHOST LOCK SCREEN BUG
+// ============================================================
+(function fixGhostLockScreen() {
+    const origUnlock = window.unlock;
+    window.unlock = function() {
+        if(origUnlock) origUnlock();
+        const lockScreen = document.getElementById('lock-screen');
+        if(lockScreen) {
+            lockScreen.classList.remove('active');
+            lockScreen.style.display = 'none';
+            lockScreen.style.pointerEvents = 'none';
+            lockScreen.style.zIndex = '-1';
+        }
+    };
+    
+    // Also fix returnToLockScreen to properly reset
+    const origReturn = window.returnToLockScreen;
+    window.returnToLockScreen = function() {
+        const lockScreen = document.getElementById('lock-screen');
+        if(lockScreen) {
+            lockScreen.style.display = 'flex';
+            lockScreen.style.pointerEvents = 'auto';
+            lockScreen.style.zIndex = '9000';
+            lockScreen.classList.add('active');
+        }
+        if(typeof setupLockUI === 'function') setupLockUI();
+        if(typeof applyLockPersonalization === 'function') applyLockPersonalization();
+        // Close control center
+        const cc = document.getElementById('control-center');
+        if(cc) cc.classList.remove('open');
+    };
+})();
+
+// ============================================================
+// ADD NEW APPS TO LAUNCHER & DOCK
+// ============================================================
+(function addNewAppsToLauncher() {
+    const container = document.getElementById('launcher-container');
+    if(!container) return;
+    
+    // KomaCall
+    const callIcon = document.createElement('div');
+    callIcon.className = 'launch-icon';
+    callIcon.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/724/724664.png"><span>KomaCall</span>';
+    callIcon.onclick = () => openApp('win-komacall');
+    container.appendChild(callIcon);
+    
+    // Contacts
+    const contactsIcon = document.createElement('div');
+    contactsIcon.className = 'launch-icon';
+    contactsIcon.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png"><span>Contacts</span>';
+    contactsIcon.onclick = () => { openApp('win-contacts'); renderContacts(); };
+    container.appendChild(contactsIcon);
+    
+    // PS5 Emulator
+    const ps5Icon = document.createElement('div');
+    ps5Icon.className = 'launch-icon';
+    ps5Icon.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/5969/5969076.png"><span>PS5</span>';
+    ps5Icon.onclick = () => { openApp('win-ps5'); renderPS5(); };
+    container.appendChild(ps5Icon);
+    
+    // KomaHub
+    const hubIcon = document.createElement('div');
+    hubIcon.className = 'launch-icon';
+    hubIcon.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/2920/2920349.png"><span>KomaHub</span>';
+    hubIcon.onclick = () => { openApp('win-komahub'); renderKomaHub(); };
+    container.appendChild(hubIcon);
+})();
+
+// Add PS5 to dock
+(function addPS5ToDock() {
+    const dock = document.getElementById('dock-bar');
+    if(!dock) return;
+    const lastSep = dock.querySelectorAll('.dock-sep');
+    const ps5Dock = document.createElement('div');
+    ps5Dock.className = 'dock-item';
+    ps5Dock.onclick = () => { openApp('win-ps5'); renderPS5(); };
+    ps5Dock.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/5969/5969076.png">';
+    if(lastSep.length > 0) lastSep[lastSep.length-1].after(ps5Dock);
+    else dock.appendChild(ps5Dock);
+})();
+
+// ============================================================
+// INIT ON LOAD
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // Restore mascot
+    if(localStorage.getItem('koma_mascot_active') === 'true') toggleMascotPet();
+    // Init contacts
+    renderContacts();
+});
+</script>
+
 </body>
 </html>
